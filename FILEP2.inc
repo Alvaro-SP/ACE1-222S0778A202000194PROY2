@@ -2,8 +2,6 @@
 ;! █▀░ █ █▄▄ ██▄ ▄█   █▀█ █░▀█ █▄▀   █▀▄ ██▄ █▀▀ █▄█ █▀▄ ░█░ ▄█
 ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 ; * ☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻  ARCHIVOS  ☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻
-     
-
 
 getChar macro
     mov ah, 01h
@@ -34,7 +32,6 @@ readFile macro handler,fileData,numBytes
     int 21h
     ; jc errorReading
 endm
-
 
 writeFile macro handler,array,numBytes
 ;macro para escribir en un fichero
@@ -76,8 +73,6 @@ getRuta macro array
     mov al,00h
     mov array[si],al
 endm
-
-
 
 escribir MACRO handler, buff, numbytes
     PUSHA
