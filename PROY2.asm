@@ -171,7 +171,7 @@ INCLUDE MACP2.inc
             int 21h
             HLT ; para decirle al CPU que se estara ejecutando varias veces (detiene CPU hasta sig interrupcion)
             RET
-    main    ENDP 
+    main    ENDP
 
     ;?☻ ===================== CONCATENAR TEXTO ENTRADA ======================= ☻
     readtext_ PROC NEAR
