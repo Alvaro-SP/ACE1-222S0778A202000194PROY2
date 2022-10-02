@@ -107,9 +107,10 @@ INCLUDE MACP2.inc
         MOV DS, AX
         MOV ES, AX
 
-        setAREADEJUEGO 0,5
-        CALL recorrerm1_
-
+        ; setAREADEJUEGO 0,5
+        ; CALL recorrerm1_
+        mov ah, 00h
+        int 16h
         readtext
         misdatos
         esperaenter  ;TODO: activar despues
