@@ -75,8 +75,8 @@ INCLUDE MACP2.inc
         Yaux2              DW      ?
         Xtempauxaux              DW      ?
         Ytempauxaux              DW      ?
-        POSXtemporal              DW      ? ;* PARA COORDENADAS EN MATRICES
-        POSYtemporal              DW      ?
+        setPOSX              DW      ? ;* PARA COORDENADAS EN MATRICES
+        setPOSY              DW      ?
         coloraux           DB      ? ;* coloar auxiliar cuadro
         AREADEJUEGO         DW 256 DUP(00)
         PIEZASKIETAS         DW 256 DUP(0)
@@ -107,7 +107,7 @@ INCLUDE MACP2.inc
         MOV DS, AX
         MOV ES, AX
 
-        CALL MODVALAREAJUEGO_
+        setAREADEJUEGO 0,5
         CALL recorrerm1_
 
         readtext
@@ -184,17 +184,17 @@ INCLUDE MACP2.inc
             RET
     main    ENDP
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
-    MODVALAREAJUEGO_ PROC NEAR
+    setAREADEJUEGO_ PROC NEAR
         ;! POSICION AL = Y     AX = X
         MOV AX, 2
-        MOV BX, POSXtemporal
+        MOV BX, setPOSX
         MUL BX
-        MOV POSXtemporal, BX
+        MOV setPOSX, BX
 
-        mov AX, POSYtemporal   ; indice externo a accesar
+        mov AX, setPOSY   ; indice externo a accesar
         mov BX, 16  ; tamaño de cada arreglo almacenado en el primer nivel de la matriz
         mul BX      ; nos deja la respuesta en el ax.  Ocupamos que la dirección sea en 16 bits
-        mov BX, POSXtemporal
+        mov BX, setPOSX
         add AX, BX   ; sumamos el indice interno a la cantidad de celdas acumulada
         mov si, AX  ; Movemos la dirección al puntero SI
         Mov AREADEJUEGO[SI],1 ; finalmente movemos el dato.  Es importante lo de word ptr para indicar el tamaño
@@ -202,7 +202,7 @@ INCLUDE MACP2.inc
         print RESULTADOPRINT
         print saltolinea
         RET
-    MODVALAREAJUEGO_ ENDP
+    setAREADEJUEGO_ ENDP
     ;?☻ ===================== RECORRER MATRIZ AREA DE JUEGO ======================= ☻
     recorrerm1_ PROC NEAR
         mov si, 00
