@@ -76,7 +76,8 @@ INCLUDE MACP2.inc
     Xtempauxaux              DW      ?
     Ytempauxaux              DW      ?
     coloraux           DB      ? ;* coloar auxiliar cuadro
-    AREADEJUEGO         DW 256 DUP(0)
+    AREADEJUEGO         DW 256 DUP(00)
+    PIEZASKIETAS         DW 256 DUP(0)
     INDEX           Dw ?
     INDEXtemp       Dw ?
     ;? --------------------------   COLORES   --------------------------
@@ -183,18 +184,19 @@ INCLUDE MACP2.inc
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
     MODVALAREAJUEGO_ PROC NEAR
         ;! POSICION AL = Y     AX = X
-        mov AX, 0   ; indice externo a accesar
-        mov BX, 10  ; tamaño de cada arreglo almacenado en el primer nivel de la matriz
+        mov AX, 2   ; indice externo a accesar
+        mov BX, 16  ; tamaño de cada arreglo almacenado en el primer nivel de la matriz
         mul BX      ; nos deja la respuesta en el ax.  Ocupamos que la dirección sea en 16 bits
-        mov BX, 0
+        mov BX, 4
         add AX, BX   ; sumamos el indice interno a la cantidad de celdas acumulada
         mov si, AX  ; Movemos la dirección al puntero SI
-        mov ax, 2
-        mul si
-        Mov AREADEJUEGO[si],50 ; finalmente movemos el dato.  Es importante lo de word ptr para indicar el tamaño
+        Mov AREADEJUEGO[SI],88 ; finalmente movemos el dato.  Es importante lo de word ptr para indicar el tamaño
+        printnum RESULTADOPRINT, AX
+        print RESULTADOPRINT
+        print saltolinea
         RET
     MODVALAREAJUEGO_ ENDP
-    ;?☻ ===================== RECORRER MATRIZ 1 ======================= ☻
+    ;?☻ ===================== RECORRER MATRIZ AREA DE JUEGO ======================= ☻
     recorrerm1_ PROC NEAR
         mov si, 00
         mov di, 00
@@ -209,11 +211,13 @@ INCLUDE MACP2.inc
             mov si, INDEX           ;* mostrar lo que hay en la matriz
             mov AX, AREADEJUEGO[si]
             printnum RESULTADOPRINT, AX
-            print RESULTADOPRINT
+            print numberF
             mov si, INDEXtemp
             INC si
             INC si
             INC index      ;* AUMENTO EL INDICE PRINCIPAL
+            INC index      ;* AUMENTO EL INDICE PRINCIPAL
+            
             JMP paintfila
 
         imprimirsaltolinea:

@@ -90,6 +90,7 @@ poscursor MACRO POSXTEMP, POSYTEMP
 ENDM poscursor
 printnum MACRO array, seek
     LOCAL Split, RepleaSplit, StringAnalizado, EndAnalisis, Minus,SIGO,ADDMINUS
+    
     PUSH  SI
     PUSH  CX
     MOV   si, 0
@@ -141,6 +142,7 @@ printnum MACRO array, seek
     EndAnalisis:
         POP   CX
         POP   SI
+
 ENDM printnum
 ;! ▀▀▀▀▀▀▀▀▀▀  REPORTES  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 concatenarHTML macro destino, fuente
