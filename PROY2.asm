@@ -65,40 +65,40 @@ INCLUDE MACP2.inc
         RESULTADOPRINT          dw 00h, '$'
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
-    Xtemp               DW      ?
-    Ytemp               DW      ?
-    X2temp              DW      ?
-    Y2temp              DW      ?
-    Xaux1              DW      ?    ;* posiciones de paint
-    Yaux1              DW      ?
-    Xaux2              DW      ?
-    Yaux2              DW      ?
-    Xtempauxaux              DW      ?
-    Ytempauxaux              DW      ?
-    POSXtemporal              DW      ? ;* PARA COORDENADAS EN MATRICES
-    POSYtemporal              DW      ?
-    coloraux           DB      ? ;* coloar auxiliar cuadro
-    AREADEJUEGO         DW 256 DUP(00)
-    PIEZASKIETAS         DW 256 DUP(0)
-    INDEX           Dw ?
-    INDEXtemp       Dw ?
-    ;? --------------------------   COLORES   --------------------------
-    GREEN               EQU  02H
-    BLUE                EQU  01H
-    GREEN               EQU  02H
-    CYAN                EQU  03H
-    RED                 EQU  04H
-    MAGENTA             EQU  05H
-    BROWN               EQU  06H
-    LIGHT_GRAY          EQU  07H
-    DARK_GRAY           EQU  08H
-    LIGHT_BLUE          EQU  09H
-    LIGHT_GREEN         EQU  0AH
-    LIGHT_CYAN          EQU  0BH
-    LIGHT_RED           EQU  0CH
-    LIGHT_MAGENTA       EQU  0DH
-    YELLOW              EQU  0EH
-    WHITE               EQU  0FH
+        Xtemp               DW      ?
+        Ytemp               DW      ?
+        X2temp              DW      ?
+        Y2temp              DW      ?
+        Xaux1              DW      ?    ;* posiciones de paint
+        Yaux1              DW      ?
+        Xaux2              DW      ?
+        Yaux2              DW      ?
+        Xtempauxaux              DW      ?
+        Ytempauxaux              DW      ?
+        POSXtemporal              DW      ? ;* PARA COORDENADAS EN MATRICES
+        POSYtemporal              DW      ?
+        coloraux           DB      ? ;* coloar auxiliar cuadro
+        AREADEJUEGO         DW 256 DUP(00)
+        PIEZASKIETAS         DW 256 DUP(0)
+        INDEX           Dw ?
+        INDEXtemp       Dw ?
+        ;? --------------------------   COLORES   --------------------------
+        GREEN               EQU  02H
+        BLUE                EQU  01H
+        GREEN               EQU  02H
+        CYAN                EQU  03H
+        RED                 EQU  04H
+        MAGENTA             EQU  05H
+        BROWN               EQU  06H
+        LIGHT_GRAY          EQU  07H
+        DARK_GRAY           EQU  08H
+        LIGHT_BLUE          EQU  09H
+        LIGHT_GREEN         EQU  0AH
+        LIGHT_CYAN          EQU  0BH
+        LIGHT_RED           EQU  0CH
+        LIGHT_MAGENTA       EQU  0DH
+        YELLOW              EQU  0EH
+        WHITE               EQU  0FH
 ;!████████████████████████████ SEGMENTO DE CODIGO ████████████████████████████
 .CODE
 
