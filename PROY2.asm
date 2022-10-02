@@ -75,6 +75,8 @@ INCLUDE MACP2.inc
     Yaux2              DW      ?
     Xtempauxaux              DW      ?
     Ytempauxaux              DW      ?
+    POSXtemporal              DW      ? ;* PARA COORDENADAS EN MATRICES
+    POSYtemporal              DW      ?
     coloraux           DB      ? ;* coloar auxiliar cuadro
     AREADEJUEGO         DW 256 DUP(00)
     PIEZASKIETAS         DW 256 DUP(0)
@@ -184,13 +186,18 @@ INCLUDE MACP2.inc
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
     MODVALAREAJUEGO_ PROC NEAR
         ;! POSICION AL = Y     AX = X
-        mov AX, 2   ; indice externo a accesar
+        MOV AX, 2
+        MOV BX, POSXtemporal
+        MUL BX
+        MOV POSXtemporal, BX
+
+        mov AX, POSYtemporal   ; indice externo a accesar
         mov BX, 16  ; tamaño de cada arreglo almacenado en el primer nivel de la matriz
         mul BX      ; nos deja la respuesta en el ax.  Ocupamos que la dirección sea en 16 bits
-        mov BX, 4
+        mov BX, POSXtemporal
         add AX, BX   ; sumamos el indice interno a la cantidad de celdas acumulada
         mov si, AX  ; Movemos la dirección al puntero SI
-        Mov AREADEJUEGO[SI],88 ; finalmente movemos el dato.  Es importante lo de word ptr para indicar el tamaño
+        Mov AREADEJUEGO[SI],1 ; finalmente movemos el dato.  Es importante lo de word ptr para indicar el tamaño
         printnum RESULTADOPRINT, AX
         print RESULTADOPRINT
         print saltolinea
