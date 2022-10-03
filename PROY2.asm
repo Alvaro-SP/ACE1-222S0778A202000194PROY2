@@ -63,6 +63,8 @@ INCLUDE MACP2.inc
         listestadistic          dw 2000 dup('$')
         indexbbsort             DW 0000
         RESULTADOPRINT          dw 00h, '$'
+        bufferauxiliar          EQU 50
+
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
         Xtemp               DW      ?
