@@ -285,9 +285,17 @@ ENDM PAINTSQUARE
 setAREADEJUEGO MACRO X,y
     PUSHA
     MOV AX, X
-    MOV setPOSX,AX
+    MOV setPOSX,AXamueblado de sala
     MOV AX, Y
     MOV setPOSY, AX
     CALL setAREADEJUEGO_
     POPA
 ENDM setAREADEJUEGO
+
+printdolar MACRO 
+    PUSHA
+    MOV AH, 09H
+    mov al, "$"
+    int 10h
+    POPA
+ENDM printdolar

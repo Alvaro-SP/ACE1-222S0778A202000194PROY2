@@ -63,7 +63,6 @@ INCLUDE MACP2.inc
         listestadistic          dw 2000 dup('$')
         indexbbsort             DW 0000
         RESULTADOPRINT          dw 00h, '$'
-        bufferauxiliar          EQU 50
 
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
@@ -108,7 +107,7 @@ INCLUDE MACP2.inc
         MOV AX, @DATA
         MOV DS, AX
         MOV ES, AX
-
+        limpiar
         ; setAREADEJUEGO 0,5
         ; CALL recorrerm1_
         mov ah, 00h
