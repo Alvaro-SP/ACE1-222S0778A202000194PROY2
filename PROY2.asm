@@ -10,19 +10,20 @@ INCLUDE MACP2.inc
 .DATA
 
     ;*--------------------------  MIS_DATOS -----------------------------
-        tb1             DB   34,'HOLA! BIENVENIDO A MI TETRIS  !!!!!!    '
-        tb2             DB   38,'Universidad de San Carlos de Guatemala'
-        tb3             DB   22,'Facultad de Ingenieria'
-        tb4             DB   30,'Escuela de Ciencias y Sistemas'
-        tb5             DB   9,'Seccion A'
-        tb6             DB   27,'ALVARO EMMANUEL SOCOP PEREZ'
-        tb7             DB   9,'202000194'
-        pressenter      DB   24,'ENTER: Para continuar...'
+        tb1             DB   'HOLA! BIENVENIDO A MI TETRIS  !!!!!!   ', "$"
+        tb2             DB   'Universidad de San Carlos de Guatemala', "$"
+        tb3             DB   'Facultad de Ingenieria', "$"
+        tb4             DB   'Escuela de Ciencias y Sistemas', "$"
+        tb5             DB   'Seccion A', "$"
+        tb6             DB   'ALVARO EMMANUEL SOCOP PEREZ', "$"
+        tb7             DB   '202000194', "$"
+        pressenter      DB   'ENTER: Para continuar...', "$"
         ;*--------------------------     MENU    -----------------------------
-        tm1             DB   29,'------- MENU PRINCIPAL ------'
-        tm2             DB   14,'F1. LOGIN     '
-        tm3             DB   13,'F5. REGISTRAR'
-        tm4             DB   9,'F9. SALIR'
+        ; tm1             DB   29,'------- MENU PRINCIPAL ------'
+        tm1             DB   "------- MENU PRINCIPAL ------", "$"
+        tm2             DB   'F1. LOGIN     $'
+        tm3             DB   'F5. REGISTRAR$'
+        tm4             DB   'F9. SALIR$'
         tm1c             DB   '------- MENU PRINCIPAL ------',10, 13, "$"
         tm2c             DB   '         F1. LOGIN',10, 13, "$"
         tm3c             DB   '         F5. REGISTRAR',10, 13, "$"
@@ -43,14 +44,15 @@ INCLUDE MACP2.inc
         keypress          DB ?
         keypresstempY          DB ?
         keypresstempX          DB ?
+        temprintvid          DB ?
     ;*--------------------------  MENSAJES -----------------------------
         ingpath db "Ingrese la ruta path del archivo:", 10, 13, "$"
         EXITO db "EXITO. ARCHIVO GUARDADO CON EXITO CARPETA BIN", 10, 13, "$"
         overflow db 00h
         numberF       dB ?
-        txLOGIN     DB 5,"LOGIN", "$"
-        txUSUARIO   DB "USUARIO: ","$"
-        txCONTRASENA      DB "CONTRASENA: ", "$"
+        txLOGIN     DB "LOGIN$"
+        txUSUARIO   DB "USUARIO: $"
+        txCONTRASENA      DB "CONTRASENA: $"
     ;* --------------------------  REPORTES -----------------------------
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?
@@ -115,14 +117,9 @@ INCLUDE MACP2.inc
         limpiar
         ; setAREADEJUEGO 0,5
         ; CALL recorrerm1_
-        
-        ; readtext
         misdatos
         esperaenter  ;TODO: activar despues
-        
         MENUPRINCIPAL
-
-        
         PINTARPANTALLADEJUEGO
         ; MOV Xtemp,540
         ; MOV Ytemp, 540+16
@@ -197,20 +194,21 @@ INCLUDE MACP2.inc
         paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
         GETNAME MY_USERNAME
         menu
-        MOV AH, 0
+        MOV AH, 0 ;Wait for keystroke and read
         INT 16H
-        CMP AH,3Ah    ; si tecla es F1
+        CMP AH,3BH    ; si tecla es F1
         JE LOGGEAR     ; SI SI ES SE VA A INICIARJUEGO
-        CMP AH,3Fh    ; si tecla es F5
+        CMP AH,3FH    ; si tecla es F5
         JE REGISTRAR     ; SI SI ES SE VA A INICIARJUEGO
         JNE Inicio
     REGISTRAR:
-        paint  0, 0, 800, 600, BLACK
+        paint  0, 0, 800, 600, GREEN
         logup
 
     LOGGEAR:
         paint  0, 0, 800, 600, BLACK
         login
+
 
     SALIR:
     FIN:
@@ -369,15 +367,20 @@ INCLUDE MACP2.inc
         RET
     menu_     ENDP
     ;?☻ ===================== METODO IMPRIMIR ======================= ☻
+    ; PAINTTEXT_    PROC NEAR
+    ;     MOV AX,1301H
+    ;     MOV BX,BP
+    ;     MOV CL,[BX]
+    ;     MOV CH,00H
+    ;     ADD BP,1H
+    ;     MOV BX,SI
+    ;     INT 10H
+    ;     RET
+    ; PAINTTEXT_    ENDP
     PAINTTEXT_    PROC NEAR
-        MOV AX,1301H
-        MOV BX,BP
-        MOV CL,[BX]
-        MOV CH,00H
-        ADD BP,1H
-        MOV BX,SI
-        INT 10H
+        
         RET
+
     PAINTTEXT_    ENDP
     ;?☻ ===================== PRESIONAR TECLAS ======================= ☻
     enterclick_    PROC    NEAR

@@ -6,10 +6,27 @@
             ;! ▀▀▀▀▀▀▀▀▀▀  MENU  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
 PAINTTEXT MACRO MYMESSAGE , LOCATION,COLOR                            ;? ▬▬▬▬▬ IMPRIMIR
+    LOCAL buc, BUCTEMP, sigo
     PUSHA
     MOV DX,LOCATION
-    MOV BP, OFFSET MYMESSAGE
     MOV SI, COLOR
+    MOV AX,1301H
+    mov cl, 1
+    MOV di,0
+    MOV BP, OFFSET MYMESSAGE
+    MOV BX,BP
+    buc:
+        cmp MYMESSAGE[di+1], '$'
+        JE sigo
+        JNE BUCTEMP
+        BUCTEMP:
+            inc di
+            inc cl
+            JMP buc
+    sigo:
+    MOV CH,00H
+    MOV BX,SI
+    INT 10H
     CALL  PAINTTEXT_
     POPA
 ENDM PAINTTEXT
