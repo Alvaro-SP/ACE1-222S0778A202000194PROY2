@@ -190,7 +190,7 @@ INCLUDE MACP2.inc
     
     
     MENUPRINCIPAL_ PROC NEAR
-    Inicio: 
+    Inicio:
         paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
         GETNAME MY_USERNAME
         menu
