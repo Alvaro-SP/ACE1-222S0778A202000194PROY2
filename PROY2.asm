@@ -10,7 +10,7 @@ INCLUDE MACP2.inc
 .DATA
 
     ;*--------------------------  MIS_DATOS -----------------------------
-        tb1             DB   34,'HOLA! BIENVENIDO A MI CALCULADORA !!!!!!'
+        tb1             DB   34,'HOLA! BIENVENIDO A MI TETRIS  !!!!!!    '
         tb2             DB   38,'Universidad de San Carlos de Guatemala'
         tb3             DB   22,'Facultad de Ingenieria'
         tb4             DB   30,'Escuela de Ciencias y Sistemas'
@@ -20,9 +20,9 @@ INCLUDE MACP2.inc
         pressenter      DB   24,'ENTER: Para continuar...'
         ;*--------------------------     MENU    -----------------------------
         tm1             DB   29,'------- MENU PRINCIPAL ------'
-        tm2             DB   14,'1. Calculadora'
-        tm3             DB   10,'2. Archivo'
-        tm4             DB   8,'3. Salir'
+        tm2             DB   14,'F1. LOGIN     '
+        tm3             DB   13,'F5. REGISTRAR'
+        tm4             DB   9,'F9. SALIR'
         tm1c             DB   '------- MENU PRINCIPAL ------',10, 13, "$"
         tm2c             DB   '         F1. LOGIN',10, 13, "$"
         tm3c             DB   '         F5. REGISTRAR',10, 13, "$"
@@ -48,6 +48,9 @@ INCLUDE MACP2.inc
         EXITO db "EXITO. ARCHIVO GUARDADO CON EXITO CARPETA BIN", 10, 13, "$"
         overflow db 00h
         numberF       dB ?
+        txLOGIN     DB "LOGIN", "$"
+        txUSUARIO   DB "USUARIO: ","$"
+        txCONTRASENA      DB "CONTRASENA: ", "$"
     ;* --------------------------  REPORTES -----------------------------
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?
@@ -83,6 +86,8 @@ INCLUDE MACP2.inc
         PIEZASKIETAS         DW 256 DUP(0)
         INDEX           Dw ?
         INDEXtemp       Dw ?
+        My_USERNAME         DB  16, ?, 16 DUP ('?')
+        My_PASS         DB  16, ?, 16 DUP ('?')
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -114,9 +119,8 @@ INCLUDE MACP2.inc
         ; readtext
         misdatos
         esperaenter  ;TODO: activar despues
-        paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
-        menu
-        capturateclaf
+        
+        MENUPRINCIPAL
 
         
         PINTARPANTALLADEJUEGO
@@ -186,6 +190,70 @@ INCLUDE MACP2.inc
             HLT ; para decirle al CPU que se estara ejecutando varias veces (detiene CPU hasta sig interrupcion)
             RET
     main    ENDP
+    
+    
+    MENUPRINCIPAL_ PROC NEAR
+    Inicio: 
+        paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
+        GETNAME MY_USERNAME
+        menu
+        capturateclaf
+        CMP AH,3Ah    ; si tecla es F1
+        JE LOGGEAR     ; SI SI ES SE VA A INICIARJUEGO
+        CMP AH,3Fh    ; si tecla es F5
+        JE REGISTRAR     ; SI SI ES SE VA A INICIARJUEGO
+        JNE SALIR
+    REGISTRAR:
+        paint  0, 0, 800, 600, BLACK
+        logup
+
+    LOGGEAR:
+        paint  0, 0, 800, 600, BLACK
+        login
+
+    SALIR:
+    FIN:
+    RET
+    MENUPRINCIPAL_ ENDP
+    
+    
+    GETNAME_     PROC NEAR
+        START_WRITING_HERE:
+            MOV AH,02H             ;MOVE THE CURSOR
+            MOV DX,122FH
+            INT 10H
+
+            MOV AH,0AH
+            MOV DX,DI
+            INT 21H
+            MOV BL,[DI+2]
+            mov keypress[di], al
+            CMP BL,13
+            JB START_WRITING_HERE
+            GET_USERNAME_SUCCESSFULLY:
+            RET
+    GETNAME_     ENDP
+    GETPASS_     PROC NEAR
+        START_WRITING_HERE:
+            MOV AH,02H             ;MOVE THE CURSOR
+            MOV DX,122FH
+            INT 10H
+
+            MOV AH,0AH
+            MOV DX,DI
+            INT 21H
+            MOV BL,[DI+2]
+            mov keypress[di], al
+            CMP BL,13
+            JB START_WRITING_HERE
+            GET_USERNAME_SUCCESSFULLY:
+            RET
+    GETPASS_     ENDP
+    
+    
+    
+    
+    
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
     setAREADEJUEGO_ PROC NEAR
         ;! POSICION AL = Y     AX = X

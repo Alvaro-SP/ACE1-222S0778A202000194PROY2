@@ -154,3 +154,34 @@ getDate macro
     ;year
     ;mov year, cx
 endm
+
+
+;* █░░ █▀█ █▀▀ █ █▄░█   ░░▄▀   █░░ █▀█ █▀▀ █▀█ █░█ ▀█▀
+;* █▄▄ █▄█ █▄█ █ █░▀█   ▄▀░░   █▄▄ █▄█ █▄█ █▄█ █▄█ ░█░
+
+login MACRO
+    PUSHA
+    PAINTTEXT txLOGIN , 0820H , 0FF26H
+    PAINTTEXT txUSUARIO , 0F10h , 0FF0FH
+    PAINTTEXT txCONTRASENA , 1210H , 0FF0FH
+    PAINTTEXT txCONTRASENA , 1410H , 0FF0FH
+    POPA
+ENDM login
+
+logup MACRO
+    PUSHA
+
+    POPA
+ENDM logup
+
+; logup MACRO
+    ; PUSHA
+    
+    ; POPA
+; ENDM logup
+
+
+
+
+
+
