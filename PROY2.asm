@@ -88,8 +88,6 @@ INCLUDE MACP2.inc
         PIEZASKIETAS         DW 256 DUP(0)
         INDEX           Dw ?
         INDEXtemp       Dw ?
-        My_USERNAME         DB  16, ?, 16 DUP ('?')
-        My_PASS         DB  16, ?, 16 DUP ('?')
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -192,7 +190,7 @@ INCLUDE MACP2.inc
     MENUPRINCIPAL_ PROC NEAR
     Inicio:
         paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
-        GETNAME MY_USERNAME
+        
         menu
         MOV AH, 0 ;Wait for keystroke and read
         INT 16H
@@ -216,38 +214,6 @@ INCLUDE MACP2.inc
     MENUPRINCIPAL_ ENDP
     
     
-    GETNAME_     PROC NEAR
-        START_WRITING_HERE:
-            MOV AH,02H             ;MOVE THE CURSOR
-            MOV DX,122FH
-            INT 10H
-
-            MOV AH,0AH
-            MOV DX,DI
-            INT 21H
-            MOV BL,[DI+2]
-            mov keypress[di], al
-            CMP BL,13
-            JB START_WRITING_HERE
-            GET_USERNAME_SUCCESSFULLY:
-            RET
-    GETNAME_     ENDP
-    GETPASS_     PROC NEAR
-        START_WRITING_HERE:
-            MOV AH,02H             ;MOVE THE CURSOR
-            MOV DX,122FH
-            INT 10H
-
-            MOV AH,0AH
-            MOV DX,DI
-            INT 21H
-            MOV BL,[DI+2]
-            mov keypress[di], al
-            CMP BL,13
-            JB START_WRITING_HERE
-            GET_USERNAME_SUCCESSFULLY:
-            RET
-    GETPASS_     ENDP
     
     
     

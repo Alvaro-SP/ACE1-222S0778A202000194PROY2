@@ -328,17 +328,16 @@ MENUPRINCIPAL MACRO
     CALL MENUPRINCIPAL_
     POPA
 ENDM MENUPRINCIPAL
-GETNAME MACRO USER_NAME
-	PUSHA
-	MOV DI, OFFSET USER_NAME
-	CALL GETNAME_
-	POPA
-ENDM GETNAME
-GETPASS MACRO PASSS
-	PUSHA
-	MOV DI, OFFSET PASSS
-	CALL GETPASS_
-	POPA
-ENDM GETPASS
 
+
+getLen macro var ; OBTENER LONGITUD DE UN BYTE :V
+    LOCAL wh, fin
+    xor si,si
+    wh:
+        cmp var[si],24h
+        je fin
+        inc si
+        jmp wh
+    fin:
+endm getLen
 
