@@ -24,9 +24,9 @@ INCLUDE MACP2.inc
         tm3             DB   10,'2. Archivo'
         tm4             DB   8,'3. Salir'
         tm1c             DB   '------- MENU PRINCIPAL ------',10, 13, "$"
-        tm2c             DB   '         1. CALCULADORA',10, 13, "$"
-        tm3c             DB   '         2. CARGAR ARCHIVO',10, 13, "$"
-        tm4c             DB   '         3. SALIR',10, 13, "$"
+        tm2c             DB   '         F1. LOGIN',10, 13, "$"
+        tm3c             DB   '         F5. REGISTRAR',10, 13, "$"
+        tm4c             DB   '         F9. SALIR',10, 13, "$"
         
     ;*----------- COORDENADAS PARA EL CURSOR  PARAMETROS DIBUJAR MODO VIDEO-----------------------------
         BLACK               EQU  00H
@@ -110,14 +110,15 @@ INCLUDE MACP2.inc
         limpiar
         ; setAREADEJUEGO 0,5
         ; CALL recorrerm1_
-        mov ah, 00h
-        int 16h
-        readtext
+        
+        ; readtext
         misdatos
         esperaenter  ;TODO: activar despues
         paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
-        ; menu
-        ; esperaenter
+        menu
+        capturateclaf
+
+        
         PINTARPANTALLADEJUEGO
         ; MOV Xtemp,540
         ; MOV Ytemp, 540+16
