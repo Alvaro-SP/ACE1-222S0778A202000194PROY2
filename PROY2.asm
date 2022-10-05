@@ -48,7 +48,7 @@ INCLUDE MACP2.inc
         EXITO db "EXITO. ARCHIVO GUARDADO CON EXITO CARPETA BIN", 10, 13, "$"
         overflow db 00h
         numberF       dB ?
-        txLOGIN     DB "LOGIN", "$"
+        txLOGIN     DB 5,"LOGIN", "$"
         txUSUARIO   DB "USUARIO: ","$"
         txCONTRASENA      DB "CONTRASENA: ", "$"
     ;* --------------------------  REPORTES -----------------------------
@@ -197,12 +197,13 @@ INCLUDE MACP2.inc
         paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
         GETNAME MY_USERNAME
         menu
-        capturateclaf
+        MOV AH, 0
+        INT 16H
         CMP AH,3Ah    ; si tecla es F1
         JE LOGGEAR     ; SI SI ES SE VA A INICIARJUEGO
         CMP AH,3Fh    ; si tecla es F5
         JE REGISTRAR     ; SI SI ES SE VA A INICIARJUEGO
-        JNE SALIR
+        JNE Inicio
     REGISTRAR:
         paint  0, 0, 800, 600, BLACK
         logup
