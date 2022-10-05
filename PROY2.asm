@@ -115,8 +115,8 @@ INCLUDE MACP2.inc
         limpiar
         ; setAREADEJUEGO 0,5
         ; CALL recorrerm1_
-        misdatos
-        esperaenter  ;TODO: activar despues
+                ; misdatos
+                ; esperaenter  ;TODO: activar despues
         MENUPRINCIPAL
         PINTARPANTALLADEJUEGO
         ; MOV Xtemp,540
