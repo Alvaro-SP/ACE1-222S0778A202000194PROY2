@@ -63,6 +63,9 @@ INCLUDE MACP2.inc
             error3      db "ALERTA == Nombre de usuario no debe iniciar con NUMERO.",10,'$'
             error4      db "ALERTA == Nombre de Usuario sobrepasa limites revisar.",10,'$'
             error5      db "ALERTA == La contrasena debe tener al menos 3 MAYUSCULAS",10,'$'
+            error6      db "ALERTA == La contrasena debe tener al menos 2 NUMEROS",10,'$'
+            error7      db "ALERTA == La contrasena debe tener al menos 2 CARACTERES ESPECIALES",10,'$'
+            error8      db "ALERTA == Contrasena tiene mal los limites revisar.",10,'$'
     ;* --------------------------  REPORTES -----------------------------
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?

@@ -250,11 +250,23 @@ logup MACRO
     ;? iv.	Más (+)
     ;? v.	asterisco (*)
     ;? d.	La longitud debe validarse entre 16 y 20 caracteres
+    getLen MYuserPass
+    cmp si, 16
+    JL ERR4
+    cmp si, 20
+    JG ERR4
+
     xor dx, dx
     CONTARMAYUSCULAS MYuserPass
-    CMP dx, 0
+    CMP dx, 1
     JE ERR5
-
+    CONTARNUMEROS MYuserPass
+    CMP dx, 1
+    JE ERR6
+    CONTARESPECIALES MYuserPass
+    CMP dx, 1
+    JE ERR7
+    
     ERR2:
         cleanBuffer MYuserName, SIZEOF MYuserName, 24h
         cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
@@ -277,6 +289,18 @@ logup MACRO
         cleanBuffer MYuserName, SIZEOF MYuserName, 24h
         cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
         print error5
+        readtext
+        JMP PRINCIPALMENULABEL
+    ERR6:
+        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
+        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        print error6
+        readtext
+        JMP PRINCIPALMENULABEL
+    ERR7:
+        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
+        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        print error7
         readtext
         JMP PRINCIPALMENULABEL
     POPA
