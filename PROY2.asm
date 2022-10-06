@@ -74,6 +74,7 @@ INCLUDE MACP2.inc
         SI_SIMULADO             DW ?
         SI_SIMULADO2             DW ?
     ;? ------------------------BUBBLESORT VARIABLES------------------------
+        buferdedatos          dw 2000 dup('$')
         listestadistic          dw 2000 dup('$')
         indexbbsort             DW 0000
         RESULTADOPRINT          dw 00h, '$'

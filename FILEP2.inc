@@ -161,7 +161,7 @@ endm
 
 getUSUARIOS macro
     openFile USERSTET, handler ;* Abro EL ARCHIVO DE USERS.tet
-    readFile handler, fileData, 1000 
+    readFile handler, buferdedatos, 1000
     closeFile handler
 endm
 
@@ -181,7 +181,7 @@ login MACRO
         isequal MYuserName, ADMINCREDUSER, 13
         cmp dx, 0
         je ESUSERNORMAL
-        isequal MYuserName, ADMINCREDUSER, 13
+        isequal MYuserPass, ADMINCREDPASS, 13
         cmp dx, 0
         JE ERR
         ; SESIONADMIN
@@ -191,11 +191,11 @@ login MACRO
         je ERR
         ; SESIONUSER
     ERR:
-        cleanBuffer userName, SIZEOF ADMINCREDUSER, 24h
-        cleanBuffer userPass, SIZEOF ADMINCREDUSER, 24h
+        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
+        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
         print error1
         readtext
-        jmp PRINCIPALMENULABEL
+        MENUPRINCIPAL
     POPA
 ENDM login
 logup MACRO
@@ -225,9 +225,10 @@ logup MACRO
     POPA
 ENDM logup
 
-BUSCARUSER MACRO
+BUSCARUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     PUSHA
-    
+    getUSUARIOS
+
     POPA
 ENDM BUSCARUSER
 ; logup MACRO

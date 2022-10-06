@@ -309,6 +309,7 @@ setAREADEJUEGO MACRO X,y
     POPA
 ENDM setAREADEJUEGO
 
+;*========================= CREDENTIALS AND LOGIN ===================================
 printdolar MACRO 
     PUSHA
     MOV AH, 09H
@@ -328,8 +329,6 @@ MENUPRINCIPAL MACRO
     CALL MENUPRINCIPAL_
     POPA
 ENDM MENUPRINCIPAL
-
-
 getLen macro var ; OBTENER LONGITUD DE UN BYTE :V
     LOCAL wh, fin
     xor si,si
@@ -383,3 +382,34 @@ LOCAL whi, fin, continue, neq, equal
 
     fin:
 endm isequal
+ESNUMERO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
+    cmp CHARNUM, 48
+    JE ESUNNUMERO
+    cmp CHARNUM, 49
+    JE ESUNNUMERO
+    cmp CHARNUM, 50
+    JE ESUNNUMERO
+    cmp CHARNUM, 51
+    JE ESUNNUMERO
+    cmp CHARNUM, 52
+    JE ESUNNUMERO
+    cmp CHARNUM, 53
+    JE ESUNNUMERO
+    cmp CHARNUM, 54
+    JE ESUNNUMERO
+    cmp CHARNUM, 55
+    JE ESUNNUMERO
+    cmp CHARNUM, 56
+    JE ESUNNUMERO
+    cmp CHARNUM, 57
+    JNE NOESNUMERO
+    JE ESUNNUMERO
+    ESUNNUMERO:
+        MOV dx, 1
+        JMP SALIR
+    NOESNUMERO:
+        MOV dx, 0
+        JMP SALIR
+    SALIR:
+    RET
+ENDM ESNUMERO
