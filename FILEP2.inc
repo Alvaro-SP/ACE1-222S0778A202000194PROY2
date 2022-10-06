@@ -159,6 +159,11 @@ endm
 ;* █░░ █▀█ █▀▀ █ █▄░█   ░░▄▀   █░░ █▀█ █▀▀ █▀█ █░█ ▀█▀
 ;* █▄▄ █▄█ █▄█ █ █░▀█   ▄▀░░   █▄▄ █▄█ █▄█ █▄█ █▄█ ░█░
 
+getUSUARIOS macro
+    openFile USERSTET, handler ;* Abro EL ARCHIVO DE USERS.tet
+    readFile handler, fileData, 1000 
+    closeFile handler
+endm
 
 login MACRO
     PUSHA
@@ -181,6 +186,7 @@ login MACRO
         JE ERR
         ; SESIONADMIN
     ESUSERNORMAL:
+        BUSCARUSER
         cmp dx, 0
         je ERR
         ; SESIONUSER
@@ -219,6 +225,16 @@ logup MACRO
     POPA
 ENDM logup
 
+BUSCARUSER MACRO
+    PUSHA
+    
+    POPA
+ENDM BUSCARUSER
+; logup MACRO
+    ; PUSHA
+    
+    ; POPA
+; ENDM logup
 ; logup MACRO
     ; PUSHA
     
