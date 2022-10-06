@@ -341,11 +341,37 @@ getLen macro var ; OBTENER LONGITUD DE UN BYTE :V
 endm getLen
 
 getStr macro array
-    PUSHA
     LOCAL getcad, endcad
-    xor si,si    
+    PUSHA
+    xor si,si
     getcad:
-        getChar
+        mov ah, 01h
+        int 21h
+        cmp al,0dh
+        je endcad
+        mov array[si],al
+        inc si
+        jmp getcad
+    endcad:
+    mov al,24h
+    mov array[si],al
+    POPA
+endm
+printdolar MACRO
+    mov AH, 02H
+    mov DL , '$'
+    INT 21H
+ENDM
+getStrPASS macro array
+    LOCAL getcad, endcad
+    PUSHA
+    xor si,si
+    getcad:
+        mov ah, 01h
+        int 21h
+        ; poscursor x,Y
+        ; printdolar
+
         cmp al,0dh
         je endcad
         mov array[si],al
@@ -383,6 +409,7 @@ LOCAL whi, fin, continue, neq, equal
     fin:
 endm isequal
 ESNUMERO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
+    LOCAL SALIR,NOESNUMERO,ESUNNUMERO
     cmp CHARNUM, 48
     JE ESUNNUMERO
     cmp CHARNUM, 49
@@ -413,3 +440,162 @@ ESNUMERO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
     SALIR:
     RET
 ENDM ESNUMERO
+
+ESCHARPERMITIDO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
+    LOCAL SALIR,NOESNUMERO,ESUNNUMERO
+    cmp CHARNUM, 48
+    JE ESUNNUMERO
+    cmp CHARNUM, 49
+    JE ESUNNUMERO
+    cmp CHARNUM, 50
+    JE ESUNNUMERO
+    cmp CHARNUM, 51
+    JE ESUNNUMERO
+    cmp CHARNUM, 52
+    JE ESUNNUMERO
+    cmp CHARNUM, 53
+    JE ESUNNUMERO
+    cmp CHARNUM, 54
+    JE ESUNNUMERO
+    cmp CHARNUM, 55
+    JE ESUNNUMERO
+    cmp CHARNUM, 56
+    JE ESUNNUMERO
+
+    cmp CHARNUM, 56
+    JE ESUNNUMERO
+    cmp CHARNUM, 56
+    JE ESUNNUMERO
+    cmp CHARNUM, 56
+    JE ESUNNUMERO
+    cmp CHARNUM, 56
+    JE ESUNNUMERO
+    cmp CHARNUM, 56
+    JE ESUNNUMERO
+    cmp CHARNUM, 65
+    JE ESUNNUMERO
+    cmp CHARNUM, 66
+    JE ESUNNUMERO
+    cmp CHARNUM, 67
+    JE ESUNNUMERO
+    cmp CHARNUM, 68
+    JE ESUNNUMERO
+    cmp CHARNUM, 69
+    JE ESUNNUMERO
+    cmp CHARNUM, 70
+    JE ESUNNUMERO
+    cmp CHARNUM, 71
+    JE ESUNNUMERO
+    cmp CHARNUM, 72
+    JE ESUNNUMERO
+    cmp CHARNUM, 73
+    JE ESUNNUMERO
+    cmp CHARNUM, 74
+    JE ESUNNUMERO
+    cmp CHARNUM, 75
+    JE ESUNNUMERO
+    cmp CHARNUM, 76
+    JE ESUNNUMERO
+    cmp CHARNUM, 77
+    JE ESUNNUMERO
+    cmp CHARNUM, 78
+    JE ESUNNUMERO
+    cmp CHARNUM, 79
+    JE ESUNNUMERO
+    cmp CHARNUM, 80
+    JE ESUNNUMERO
+    cmp CHARNUM, 81
+    JE ESUNNUMERO
+    cmp CHARNUM, 82
+    JE ESUNNUMERO
+    cmp CHARNUM, 83
+    JE ESUNNUMERO
+    cmp CHARNUM, 84
+    JE ESUNNUMERO
+    cmp CHARNUM, 85
+    JE ESUNNUMERO
+    cmp CHARNUM, 86
+    JE ESUNNUMERO
+    cmp CHARNUM, 87
+    JE ESUNNUMERO
+    cmp CHARNUM, 88
+    JE ESUNNUMERO
+    cmp CHARNUM, 89
+    JE ESUNNUMERO
+    cmp CHARNUM, 90
+    JE ESUNNUMERO
+
+    cmp CHARNUM, 97
+    JE ESUNNUMERO
+    cmp CHARNUM, 98
+    JE ESUNNUMERO
+    cmp CHARNUM, 99
+    JE ESUNNUMERO
+    cmp CHARNUM, 100
+    JE ESUNNUMERO
+    cmp CHARNUM, 101
+    JE ESUNNUMERO
+    cmp CHARNUM, 102
+    JE ESUNNUMERO
+    cmp CHARNUM, 103
+    JE ESUNNUMERO
+    cmp CHARNUM, 104
+    JE ESUNNUMERO
+    cmp CHARNUM, 105
+    JE ESUNNUMERO
+    cmp CHARNUM, 106
+    JE ESUNNUMERO
+    cmp CHARNUM, 107
+    JE ESUNNUMERO
+    cmp CHARNUM, 108
+    JE ESUNNUMERO
+    cmp CHARNUM, 109
+    JE ESUNNUMERO
+    cmp CHARNUM, 110
+    JE ESUNNUMERO
+    cmp CHARNUM, 111
+    JE ESUNNUMERO
+    cmp CHARNUM, 112
+    JE ESUNNUMERO
+    cmp CHARNUM, 113
+    JE ESUNNUMERO
+    cmp CHARNUM, 114
+    JE ESUNNUMERO
+    cmp CHARNUM, 115
+    JE ESUNNUMERO
+    cmp CHARNUM, 116
+    JE ESUNNUMERO
+    cmp CHARNUM, 117
+    JE ESUNNUMERO
+    cmp CHARNUM, 118
+    JE ESUNNUMERO
+    cmp CHARNUM, 119
+    JE ESUNNUMERO
+    cmp CHARNUM, 120
+    JE ESUNNUMERO
+    cmp CHARNUM, 121
+    JE ESUNNUMERO
+    cmp CHARNUM, 122
+
+    JE ESUNNUMERO
+    cmp CHARNUM, 45
+    JE ESUNNUMERO
+    cmp CHARNUM, 95
+    JE ESUNNUMERO
+    cmp CHARNUM, 46
+    JE ESUNNUMERO
+
+    cmp CHARNUM, 57
+    JNE NOESNUMERO
+    JE ESUNNUMERO
+    ESUNNUMERO:
+        MOV dx, 1
+        JMP SALIR
+    NOESNUMERO:
+        MOV dx, 0
+        JMP SALIR
+    SALIR:
+    RET
+ENDM ESCHARPERMITIDO
+
+

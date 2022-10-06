@@ -166,6 +166,7 @@ getUSUARIOS macro
 endm
 
 login MACRO
+    LOCAL ESELADMIN,ESUSERNORMAL,ERR
     PUSHA
     PAINTTEXT txLOGIN , 0820H , GREEN
     PAINTTEXT txUSUARIO , 0F10h , LIGHT_BLUE
@@ -199,6 +200,7 @@ login MACRO
     POPA
 ENDM login
 logup MACRO
+    LOCAL buc, buct,sigo, ERR2,ERR3
     PUSHA
     PAINTTEXT txLOGUP , 0820H , 0FF26H
     PAINTTEXT txUSUARIO , 0F10h , 0FF0FH
@@ -207,7 +209,7 @@ logup MACRO
     poscursor 15, 38
     getStr MYuserName
     ;? a.	No puede empezar por número
-    ;? b.	la longitud debe validarse entre 8 y 15 caracteres
+    ;? b.	la longitud debe validarse entre 8 y 15 caracteres *
     ;? c.	el nombre del usuario no debe existir
     ;? d.	los únicos caracteres especiales que pueden contener serán:
     ;? i.	guión
@@ -215,13 +217,68 @@ logup MACRO
     ;? iii.	punto
     getLen MYuserName
     cmp si, 8
-    je checkUserLength
+    JL ERR4
     cmp si, 15
-    jl checkNameUsed
+    JG ERR4
+    xor dx, dx
+    ESNUMERO MYuserName[0]
+    CMP dx, 1
+    JE ERR3
+    xor di, di
+    buc:        ; * BUcle para saber si los caracteres son validos
+        ESCHARPERMITIDO MYuserName[di]
+        CMP dx, 0
+        JE ERR2
+        CMP MYuserName[di+1], "$"
+        JE sigo
+        JNE buct
+        buct:
+            inc di
+            JMP buc
+    sigo:
+
     ;* leo la CONTRASENA
     poscursor 15, 38
-    getStr MYuserPass
+    getStrPASS MYuserPass
+    ;? 2.	se solicitará la contraseña para el usuario y se harán las siguientes validaciones:
+    ;? a.	debe tener al menos 3 mayúsculas
+    ;? b.	debe tener al menos 2 números
+    ;? c.	debe tener al menos 2 caracteres especiales de los siguientes:
+    ;? i.	Arroba (@)
+    ;? ii.	Mayor que (>)
+    ;? iii.	Numeral (#)
+    ;? iv.	Más (+)
+    ;? v.	asterisco (*)
+    ;? d.	La longitud debe validarse entre 16 y 20 caracteres
+    xor dx, dx
+    CONTARMAYUSCULAS MYuserPass
+    CMP dx, 0
+    JE ERR5
 
+    ERR2:
+        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
+        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        print error2
+        readtext
+        JMP PRINCIPALMENULABEL
+    ERR3:
+        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
+        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        print error3
+        readtext
+        JMP PRINCIPALMENULABEL
+    ERR4:
+        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
+        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        print error4
+        readtext
+        JMP PRINCIPALMENULABEL
+    ERR5:
+        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
+        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        print error5
+        readtext
+        JMP PRINCIPALMENULABEL
     POPA
 ENDM logup
 

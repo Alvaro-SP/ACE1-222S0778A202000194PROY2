@@ -59,6 +59,10 @@ INCLUDE MACP2.inc
         
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
+            error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
+            error3      db "ALERTA == Nombre de usuario no debe iniciar con NUMERO.",10,'$'
+            error4      db "ALERTA == Nombre de Usuario sobrepasa limites revisar.",10,'$'
+            error5      db "ALERTA == La contrasena debe tener al menos 3 MAYUSCULAS",10,'$'
     ;* --------------------------  REPORTES -----------------------------
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?
@@ -131,8 +135,29 @@ INCLUDE MACP2.inc
                 ; misdatos
                 ; esperaenter  ;TODO: activar despues
         PRINCIPALMENULABEL:
-        MENUPRINCIPAL
-        PINTARPANTALLADEJUEGO
+        ;! MENUPRINCIPAL
+        Inicio:
+            paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
+            
+            menu
+            MOV AH, 0 ;Wait for keystroke and read
+            INT 16H
+            CMP AH,3BH    ; si tecla es F1
+            JE LOGGEAR     ; SI SI ES SE VA A INICIARJUEGO
+            CMP AH,3FH    ; si tecla es F5
+            JE REGISTRAR     ; SI SI ES SE VA A INICIARJUEGO
+            JNE Inicio
+        REGISTRAR:
+            paint  0, 0, 800, 600, GREEN
+            logup
+
+        LOGGEAR:
+            paint  0, 0, 800, 600, BLACK
+            login
+            PINTARPANTALLADEJUEGO
+        SALIR:
+        FIN:
+        
         ; MOV Xtemp,540
         ; MOV Ytemp, 540+16
         ; MOV X2temp,144
@@ -202,28 +227,6 @@ INCLUDE MACP2.inc
     
     
     MENUPRINCIPAL_ PROC NEAR
-    Inicio:
-        paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
-        
-        menu
-        MOV AH, 0 ;Wait for keystroke and read
-        INT 16H
-        CMP AH,3BH    ; si tecla es F1
-        JE LOGGEAR     ; SI SI ES SE VA A INICIARJUEGO
-        CMP AH,3FH    ; si tecla es F5
-        JE REGISTRAR     ; SI SI ES SE VA A INICIARJUEGO
-        JNE Inicio
-    REGISTRAR:
-        paint  0, 0, 800, 600, GREEN
-        logup
-
-    LOGGEAR:
-        paint  0, 0, 800, 600, BLACK
-        login
-
-
-    SALIR:
-    FIN:
     RET
     MENUPRINCIPAL_ ENDP
    
