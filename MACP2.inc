@@ -341,3 +341,45 @@ getLen macro var ; OBTENER LONGITUD DE UN BYTE :V
     fin:
 endm getLen
 
+getStr macro array
+    PUSHA
+    LOCAL getcad, endcad
+    xor si,si    
+    getcad:
+        getChar
+        cmp al,0dh
+        je endcad
+        mov array[si],al
+        inc si
+        jmp getcad
+    endcad:
+    mov al,24h
+    mov array[si],al
+    POPA
+endm
+
+;! MACRO PARA COMPARAR 2 STRINGS
+isequal macro STRING1, STRING2, length
+LOCAL whi, fin, continue, neq, equal
+    xor di, di
+    xor bx, bx
+    xor dx, dx
+    whi:
+        cmp di, length
+        je equal
+        mov bh, STRING1[di]
+        mov bl, STRING2[di]
+        cmp bh, bl
+        je continue
+        jmp neq
+        continue:
+            inc di
+            jmp whi
+    neq:
+        mov dx, 0
+        jmp fin
+    equal:
+        mov dx, 1
+
+    fin:
+endm isequal

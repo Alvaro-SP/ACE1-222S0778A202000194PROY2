@@ -51,12 +51,21 @@ INCLUDE MACP2.inc
         overflow db 00h
         numberF       dB ?
         txLOGIN     DB "LOGIN$"
+        txLOGUP     DB "REGISTRAR USUARIO$"
         txUSUARIO   DB "USUARIO: $"
         txCONTRASENA      DB "CONTRASENA: $"
+        ADMINCREDUSER   DB "202000194AADM"
+        ADMINCREDPASS   DB "491000202"
+        
+            ;*--------------------------  ERRORES MESSAGES -----------------------------
+            error1      db "ALERTA == credenciales incorrectas",10,'$'
     ;* --------------------------  REPORTES -----------------------------
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?
         handler     dw ?
+        USERSTET  DB "C:\MASM\MASM611\BIN\users.tet",0
+        REPSORTREP  DB "C:\MASM\MASM611\BIN\REPSORT.REP",0
+        punttet  DB "C:\MASM\MASM611\BIN\punt.tet",0
         hour        db "00", "$"
         min         db "00", "$"
         sec         db "00", "$"
@@ -88,6 +97,9 @@ INCLUDE MACP2.inc
         PIEZASKIETAS         DW 256 DUP(0)
         INDEX           Dw ?
         INDEXtemp       Dw ?
+
+        MYuserPass    db 20 dup ('$') ; 
+        MYuserName    db 15 dup ('$')
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -117,6 +129,7 @@ INCLUDE MACP2.inc
         ; CALL recorrerm1_
                 ; misdatos
                 ; esperaenter  ;TODO: activar despues
+        PRINCIPALMENULABEL:
         MENUPRINCIPAL
         PINTARPANTALLADEJUEGO
         ; MOV Xtemp,540
@@ -212,6 +225,33 @@ INCLUDE MACP2.inc
     FIN:
     RET
     MENUPRINCIPAL_ ENDP
+   
+    ;?☻ =====================   ======================= ☻
+    ; BUSCARUSER_ PROC FAR
+    ;     RET
+    ; BUSCARUSER_ ENDP
+    ; BUSCARUSER_ PROC FAR
+    ;     RET
+    ; BUSCARUSER_ ENDP
+    ; BUSCARUSER_ PROC FAR
+    ;     RET
+    ; BUSCARUSER_ ENDP
+    ; BUSCARUSER_ PROC FAR
+    ;     RET
+    ; BUSCARUSER_ ENDP
+    ; BUSCARUSER_ PROC FAR
+    ;     RET
+    ; BUSCARUSER_ ENDP
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

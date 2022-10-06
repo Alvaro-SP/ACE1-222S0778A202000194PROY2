@@ -159,20 +159,62 @@ endm
 ;* █░░ █▀█ █▀▀ █ █▄░█   ░░▄▀   █░░ █▀█ █▀▀ █▀█ █░█ ▀█▀
 ;* █▄▄ █▄█ █▄█ █ █░▀█   ▄▀░░   █▄▄ █▄█ █▄█ █▄█ █▄█ ░█░
 
+
 login MACRO
     PUSHA
-    PAINTTEXT txLOGIN , 0820H , 0FF26H
-    PAINTTEXT txUSUARIO , 0F10h , 0FF0FH
-    PAINTTEXT txCONTRASENA , 1210H , 0FF0FH
-    
+    PAINTTEXT txLOGIN , 0820H , GREEN
+    PAINTTEXT txUSUARIO , 0F10h , LIGHT_BLUE
+    PAINTTEXT txCONTRASENA , 1210H , LIGHT_BLUE
+    ;* leo el NOMBRE DE USUARIO
     poscursor 15, 38
-    readtext
+    getStr MYuserName
+    ;* leo la CONTRASENA
+    poscursor 15, 38
+    getStr MYuserPass
 
+    ESELADMIN:
+        isequal MYuserName, ADMINCREDUSER, 13
+        cmp dx, 0
+        je ESUSERNORMAL
+        isequal MYuserName, ADMINCREDUSER, 13
+        cmp dx, 0
+        JE ERR
+        ; SESIONADMIN
+    ESUSERNORMAL:
+        cmp dx, 0
+        je ERR
+        ; SESIONUSER
+    ERR:
+        cleanBuffer userName, SIZEOF ADMINCREDUSER, 24h
+        cleanBuffer userPass, SIZEOF ADMINCREDUSER, 24h
+        print error1
+        readtext
+        jmp PRINCIPALMENULABEL
     POPA
 ENDM login
-
 logup MACRO
     PUSHA
+    PAINTTEXT txLOGUP , 0820H , 0FF26H
+    PAINTTEXT txUSUARIO , 0F10h , 0FF0FH
+    PAINTTEXT txCONTRASENA , 1210H , 0FF0FH
+    ;* leo el NOMBRE DE USUARIO
+    poscursor 15, 38
+    getStr MYuserName
+    ;? a.	No puede empezar por número
+    ;? b.	la longitud debe validarse entre 8 y 15 caracteres
+    ;? c.	el nombre del usuario no debe existir
+    ;? d.	los únicos caracteres especiales que pueden contener serán:
+    ;? i.	guión
+    ;? ii.	guion bajo
+    ;? iii.	punto
+    getLen MYuserName
+    cmp si, 8
+    je checkUserLength
+    cmp si, 15
+    jl checkNameUsed
+    ;* leo la CONTRASENA
+    poscursor 15, 38
+    getStr MYuserPass
 
     POPA
 ENDM logup
