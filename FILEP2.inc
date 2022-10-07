@@ -163,6 +163,7 @@ getUSUARIOS macro
     openFile USERSTET, handler ;* Abro EL ARCHIVO DE USERS.tet
     readFile handler, buferdedatos, 1000
     cerrar handler
+    ; print EXITO
 endm
 
 login MACRO

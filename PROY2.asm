@@ -164,7 +164,7 @@ INCLUDE MACP2.inc
             JE REGISTRAR     ; SI SI ES SE VA A INICIARJUEGO
             JNE Inicio
         REGISTRAR:
-            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
             logup
 
         LOGGEAR:
