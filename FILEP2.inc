@@ -16,7 +16,6 @@ openFile macro file,handler
     mov al,010b
     lea dx,file
     int 21h
-    ; jc errorOpening
     mov handler, ax
 endm
 
@@ -88,7 +87,6 @@ cerrar macro handler
     mov ah,3eh
     mov bx, handler
     int 21h
-    mov handler,ax
     POPA
 endm
 crear macro buffer, handler
@@ -163,7 +161,6 @@ getUSUARIOS macro
     openFile USERSTET, handler ;* Abro EL ARCHIVO DE USERS.tet
     readFile handler, buferdedatos, 1000
     cerrar handler
-    ; print EXITO
 endm
 
 login MACRO
@@ -201,7 +198,7 @@ login MACRO
     POPA
 ENDM login
 logup MACRO
-    LOCAL buc, buct,sigo, ERR2,ERR3,ERR4,ERR5,ERR6,ERR7,ERR8,ERR9, SALIDA
+    LOCAL buc, buct,sigo2, ERR2,ERR3,ERR4,ERR5,ERR6,ERR7,ERR8,ERR9, SALIDA
     PUSHA
     PAINTTEXT txLOGUP , 0820H , 0FF26H
     PAINTTEXT txUSUARIO , 0F10h , 0FF0FH
@@ -222,6 +219,7 @@ logup MACRO
     cmp si, 15
     JG ERR4
     Xor dx, dx
+    
     NOMBREUSADO MYuserName
     CMP dx, 1
     JE ERR9
@@ -236,15 +234,15 @@ logup MACRO
         CMP dx, 0
         JE ERR2
         CMP MYuserName[di+1], "$"
-        JE sigo
+        JE sigo2
         JNE buct
         buct:
             inc di
             JMP buc
-    sigo:
-
+    sigo2:
     ;* leo la CONTRASENA
-    poscursor 15, 38
+    
+    poscursor 19, 38
     getStrPASS MYuserPass
     ;? 2.	se solicitará la contraseña para el usuario y se harán las siguientes validaciones:
     ;? a.	debe tener al menos 3 mayúsculas
@@ -338,26 +336,27 @@ BUSCARUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     POPA
 ENDM BUSCARUSER
 NOMBREUSADO MACRO
-    LOCAL while, REVISARNOMBRE,CAMBIODESTATUS , cont,end
+    LOCAL while, REVISARNOMBRE,CAMBIODESTATUS , cont,finalizooo
     getUSUARIOS
+    mov dx, 0
     xor si, si
     xor ax, ax
     xor bx, bx
-    xor cx, cx  ;* flag for to say the status. 0 = getUser 
+    xor cx, cx  ;* flag for to say the status. 0 = getUser
                 ;* 1 = find the char of exit '\n' is my pivote
-
-    ;Split every data
-    while:
-        cmp tamfile, 0
-        je end
+    print buferdedatos
+    while:   ;!  NAME , PASS , 0 , 0
+        CMP buferdedatos[si], "$"
+        JE finalizooo
         xor ah, ah
         mov al, buferdedatos[si]
         cmp al, 10
         je REVISARNOMBRE
-        cmp al, ','
-        je CAMBIODESTATUS
+
         cmp cx, 1
         je cont
+        cmp al, ','
+        je CAMBIODESTATUS
         mov MYauxUserName[bx], al
         inc bx
         jmp cont
@@ -366,7 +365,8 @@ NOMBREUSADO MACRO
         cont:
             inc si
             jmp while
-        
+    
+
     REVISARNOMBRE:
         PUSH si
         getLen MyuserName
@@ -379,9 +379,9 @@ NOMBREUSADO MACRO
         xor bx, bx
         xor cx, cx
         cmp dx, 1
-        je end
+        je finalizooo
         jmp cont
-    end:
+    finalizooo:
         cleanBuffer MYauxUserName
         cleanBuffer buferdedatos
 ENDM

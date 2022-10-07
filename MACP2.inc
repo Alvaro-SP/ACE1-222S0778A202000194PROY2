@@ -358,14 +358,14 @@ MENUPRINCIPAL MACRO
     POPA
 ENDM MENUPRINCIPAL
 getLen macro var ; OBTENER LONGITUD DE UN BYTE :V
-    LOCAL wh, fin
+    LOCAL wh, endfinfin
     xor si,si
     wh:
         cmp var[si],24h
-        je fin
+        je endfinfin
         inc si
         jmp wh
-    fin:
+    endfinfin:
 endm getLen
 
 getStr macro array
@@ -413,7 +413,7 @@ endm
 
 ;! MACRO PARA COMPARAR 2 STRINGS
 isequal macro STRING1, STRING2, length
-LOCAL whi, fin, continue, neq, equal
+LOCAL whi, finalitoo, continue, neq, equal
     xor di, di
     xor bx, bx
     xor dx, dx
@@ -430,11 +430,11 @@ LOCAL whi, fin, continue, neq, equal
             jmp whi
     neq:
         mov dx, 0
-        jmp fin
+        jmp finalitoo
     equal:
         mov dx, 1
 
-    fin:
+    finalitoo:
 endm isequal
 ESNUMERO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
     LOCAL SALIR,NOESNUMERO,ESUNNUMERO

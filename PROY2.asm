@@ -71,9 +71,9 @@ INCLUDE MACP2.inc
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?
         handler     dw ?
-        USERSTET  DB "C:\MASM\MASM611\BIN\users.tet",0
-        REPSORTREP  DB "C:\MASM\MASM611\BIN\REPSORT.rep",0
-        punttet  DB "C:\MASM\MASM611\BIN\punt.tet",0
+        USERSTET  DB "users.tet",0
+        REPSORTREP  DB "REPSORT.rep",0
+        punttet  DB "punt.tet",0
         hour        db "00", "$"
         min         db "00", "$"
         sec         db "00", "$"
@@ -171,9 +171,7 @@ INCLUDE MACP2.inc
             paint  0, 0, 800, 600, BLACK
             login
             PINTARPANTALLADEJUEGO
-        SALIR:
         FIN:
-        
         ; MOV Xtemp,540
         ; MOV Ytemp, 540+16
         ; MOV X2temp,144
