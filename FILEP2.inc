@@ -435,9 +435,6 @@ PROMOVER MACRO
         getLen buferdedatos
         writeFile handler, buferdedatos, TEMP
         cerrar handler
-        print buferdedatos
-        toString handler, stringpuntos
-        print stringpuntos
         poscursor 22,30
         print msgpromovido
     erroruser:
@@ -451,6 +448,9 @@ DEGRADAR MACRO
     ;* SI CATEGORY ES 0 ---> 	mensaje "NO SE PUEDE DEGRADAR YA ES UN USUARIO NORMAL"
     LOCAL SOLOMESSAGE,DEGRADARFILE,SALIDA
     PUSHA
+    poscursor 6, 25
+    print msgUSERTODEGRADE
+    poscursor 8, 30
     getStr MYauxUserName ;! pido el nombre a DEGRADAR
     TOMARCATEGORIA MYauxUserName
     CMP TEMPDB, '0'
@@ -461,9 +461,19 @@ DEGRADAR MACRO
         print msgyaesnormal
         JMP SALIDA
     DEGRADARFILE:
-        DEGRADARUSUARIO MYauxUserName
+        CMP TEMPDB, '2'
+        JE erroruser
+        getUSUARIOS
+        MOV SI, handler2
+        Mov buferdedatos[SI], '0'
+        crear USERSTET, handler
+        getLen buferdedatos
+        writeFile handler, buferdedatos, TEMP
+        cerrar handler
         poscursor 22,30
         print msgdegradado
+    erroruser:
+        print error10
     SALIDA:
         cleanBuffer MYauxUserName
     POPA
@@ -471,22 +481,33 @@ ENDM
 DESBLOQUEAR MACRO
     ;* SI BLOQUEO ES 1 --->	cambio bloqueo a 0 
     ;* SI BLOQUEO ES 0 ---> 	mensaje el "USER ESTA DESBLOQUEADO"
-    LOCAL SOLOMESSAGE,DEGRADARFILE,SALIDA
+    LOCAL SOLOMESSAGE,UNLOCKFILE,SALIDA
     PUSHA
     getStr MYauxUserName ;! pido el nombre a UNLOCK
     TOMARBLOQUEO MYauxUserName
     CMP TEMPDB, '0'
     JE SOLOMESSAGE
-    JNE DEGRADARFILE
+    JNE UNLOCKFILE
     SOLOMESSAGE:
         poscursor 22,30
         print msgestaunlock
         JMP SALIDA
-    DEGRADARFILE:
-        DESBLOQUEARUSUARIO MYauxUserName
+    UNLOCKFILE:
+        CMP TEMPDB, '2'
+        JE erroruser
+        getUSUARIOS
+        MOV SI, handler2
+        Mov buferdedatos[SI], '0'
+        crear USERSTET, handler
+        getLen buferdedatos
+        writeFile handler, buferdedatos, TEMP
+        cerrar handler
         poscursor 22,30
         print msgdegradado
+    erroruser:
+        print error10
     SALIDA:
+        cleanBuffer MYauxUserName
     POPA
 ENDM
 
@@ -558,25 +579,74 @@ TOMARCATEGORIA MACRO usr
     POPA
 ENDM
 TOMARBLOQUEO MACRO usr
+    LOCAL fin,limpiarycont,NOSEENCONTRO,REVISARNOMBRE,continuar,while,buscaand,sigoauxi,nextchariscategory,yahaynombre
     PUSHA
-    
+    getUSUARIOS
+    mov dx, 0
+    MOV SI, 0
+    xor ax, ax
+    xor bx, bx
+    xor cx, cx  ;* flag for to say the status. 0 = getUser
+                ;* 1 = find the char of exit '\n' is my pivote
+
+    while:   ;!  NAME,PASS&0%0  \10
+        cmp si, tamfile
+        je NOSEENCONTRO
+        xor ah, ah
+        mov al, buferdedatos[si]
+        ;* COMPARAMOS CADA CARACTER DEL BUFFER
+        CMP al, 10 ; ? si es FIN DE LINEA SALTA
+        je limpiarycont
+        cmp al, ','  ; ? si es COMA YA TENGO EL USER EN MYAUX
+        je REVISARNOMBRE
+        CMP TEMP, 2  ; ? si 2 el temp porque ya encontro el user
+        JE buscaand
+        JNE sigoauxi
+        buscaand:
+            CMP al, "&" ;? si es & EL SIGUIENTE ES LA CATEGORY
+            JE nextchariscategory
+        sigoauxi:
+        mov MYauxUserName2[bx], al
+        inc bx
+        jmp continuar
+        continuar:
+            inc si
+            jmp while
+        nextchariscategory:
+            mov al, buferdedatos[si+3]
+            MOV TEMPDB, al   ;! TOMA SI ES 0 o SI ES 1
+            inc si
+            inc si
+            inc si
+            MOV handler2, si
+            JMP fin
+        limpiarycont:
+            xor bx, bx
+            cleanBuffer MYauxUserName2
+            jmp continuar
+        yahaynombre:
+            mov TEMP, 2
+            JMP continuar
+    REVISARNOMBRE:
+        print usr
+        print MYauxUserName2
+        print saltolinea
+        getLen usr
+        isequal usr, MYauxUserName2, TEMP
+        cleanBuffer MYauxUserName2
+        xor bx, bx
+        xor cx, cx
+        cmp TEMP, 1
+        je yahaynombre
+        jmp continuar
+    NOSEENCONTRO:
+        MOV TEMPDB, '2'
+    fin:
+        cleanBuffer buferdedatos
+        cleanBuffer MYauxUserName
     POPA
 ENDM
-PROMOVERUSUARIO MACRO usr
-    PUSHA
-    
-    POPA
-ENDM
-DEGRADARUSUARIO MACRO usr
-    PUSHA
-    
-    POPA
-ENDM
-DESBLOQUEARUSUARIO MACRO usr
-    PUSHA
-    
-    POPA
-ENDM
+
 ; logup MACRO
     ; PUSHA
     

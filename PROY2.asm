@@ -75,7 +75,7 @@ INCLUDE MACP2.inc
             error7      db "ALERTA == La contrasena debe tener al menos 2 CARACTERES ESPECIALES",10,'$'
             error8      db "ALERTA == Contrasena tiene mal los limites revisar.",10,'$'
             error9      db "ALERTA == El nombre de usuario ya esta en USO",10,'$'
-            error10      db "ALERTA ==NO SE ENCONTRO O INTENTA PROMOVER/DEGRADAR A ADMIN",10,'$'
+            error10      db "ALERTA ==NO SE ENCONTRO O INTENTA DESBLOQUEAR A ADMIN",10,'$'
     ;* --------------------------  REPORTES -----------------------------
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?
