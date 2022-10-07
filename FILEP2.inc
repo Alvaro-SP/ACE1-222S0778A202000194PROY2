@@ -219,7 +219,7 @@ logup MACRO
     cmp TEMP, 15
     JG ERR4
     Xor dx, dx
-    NOMBREUSADO MYuserName
+    NOMBREUSADO
     CMP dx, 1
     JE ERR9
     
@@ -409,10 +409,15 @@ ENDM SAVEUSERINFILE
 
 ;* ------------------------TIPOS DE USERS--------------------------
 PROMOVER MACRO
-    LOCAL SOLOMESSAGE,PROMOVERFILE,SALIDA
     ;* SI CATEGORY ES 1 --->mensaje "NO PUEDE PROMOVER YA ES UN ADMINISTRADOR EL USER"
     ;*SI CATEGORY ES 0 ---> 'USUARIO PROMOVIDO AHORA ES UN PRO ;v"
-    TOMARCATEGORIA MyuserName
+    LOCAL SOLOMESSAGE,PROMOVERFILE,SALIDA,erroruser
+    PUSHA
+    poscursor 6, 25
+    print msgUSERTOPROMOVE
+    poscursor 8, 30
+    getStr MYauxUserName ;! pido el nombre a PROMOVER
+    TOMARCATEGORIA MYauxUserName
     CMP TEMPDB, '1'
     JE SOLOMESSAGE
     JNE PROMOVERFILE
@@ -421,16 +426,33 @@ PROMOVER MACRO
         print msgyaesadmin
         JMP SALIDA
     PROMOVERFILE:
-        PROMOVERUSUARIO MyuserName
+        CMP TEMPDB, '2'
+        JE erroruser
+        getUSUARIOS
+        MOV SI, handler2
+        Mov buferdedatos[SI], '1'
+        crear USERSTET, handler
+        getLen buferdedatos
+        writeFile handler, buferdedatos, TEMP
+        cerrar handler
+        print buferdedatos
+        toString handler, stringpuntos
+        print stringpuntos
         poscursor 22,30
         print msgpromovido
+    erroruser:
+        print error10
     SALIDA:
+        cleanBuffer MYauxUserName
+    POPA
 ENDM
 DEGRADAR MACRO
     ;* SI CATEGORY ES 1 --->	USUARIO DEGRADADO AHORA ES UN ESCLAVO ;v"
     ;* SI CATEGORY ES 0 ---> 	mensaje "NO SE PUEDE DEGRADAR YA ES UN USUARIO NORMAL"
     LOCAL SOLOMESSAGE,DEGRADARFILE,SALIDA
-    TOMARCATEGORIA MyuserName
+    PUSHA
+    getStr MYauxUserName ;! pido el nombre a DEGRADAR
+    TOMARCATEGORIA MYauxUserName
     CMP TEMPDB, '0'
     JE SOLOMESSAGE
     JNE DEGRADARFILE
@@ -439,16 +461,20 @@ DEGRADAR MACRO
         print msgyaesnormal
         JMP SALIDA
     DEGRADARFILE:
-        DEGRADARUSUARIO MyuserName
+        DEGRADARUSUARIO MYauxUserName
         poscursor 22,30
         print msgdegradado
     SALIDA:
+        cleanBuffer MYauxUserName
+    POPA
 ENDM
 DESBLOQUEAR MACRO
     ;* SI BLOQUEO ES 1 --->	cambio bloqueo a 0 
     ;* SI BLOQUEO ES 0 ---> 	mensaje el "USER ESTA DESBLOQUEADO"
     LOCAL SOLOMESSAGE,DEGRADARFILE,SALIDA
-    TOMARBLOQUEO MyuserName
+    PUSHA
+    getStr MYauxUserName ;! pido el nombre a UNLOCK
+    TOMARBLOQUEO MYauxUserName
     CMP TEMPDB, '0'
     JE SOLOMESSAGE
     JNE DEGRADARFILE
@@ -457,21 +483,130 @@ DESBLOQUEAR MACRO
         print msgestaunlock
         JMP SALIDA
     DEGRADARFILE:
-        DEGRADARUSUARIO MyuserName
+        DESBLOQUEARUSUARIO MYauxUserName
         poscursor 22,30
         print msgdegradado
     SALIDA:
+    POPA
+ENDM
+
+;! =========================TAKE DATA FROM THE USERS.TET==============================
+TOMARCATEGORIA MACRO usr
+    LOCAL fin,limpiarycont,NOSEENCONTRO,REVISARNOMBRE,continuar,while,buscaand,sigoauxi,nextchariscategory,yahaynombre
+    PUSHA
+    getUSUARIOS
+    mov dx, 0
+    MOV SI, 0
+    xor ax, ax
+    xor bx, bx
+    xor cx, cx  ;* flag for to say the status. 0 = getUser
+                ;* 1 = find the char of exit '\n' is my pivote
+
+    while:   ;!  NAME,PASS&0%0  \10
+        cmp si, tamfile
+        je NOSEENCONTRO
+        xor ah, ah
+        mov al, buferdedatos[si]
+        ;* COMPARAMOS CADA CARACTER DEL BUFFER
+        CMP al, 10 ; ? si es FIN DE LINEA SALTA
+        je limpiarycont
+        cmp al, ','  ; ? si es COMA YA TENGO EL USER EN MYAUX
+        je REVISARNOMBRE
+        CMP TEMP, 2  ; ? si 2 el temp porque ya encontro el user
+        JE buscaand
+        JNE sigoauxi
+        buscaand:
+            CMP al, "&" ;? si es & EL SIGUIENTE ES LA CATEGORY
+            JE nextchariscategory
+        sigoauxi:
+        mov MYauxUserName2[bx], al
+        inc bx
+        jmp continuar
+        continuar:
+            inc si
+            jmp while
+        nextchariscategory:
+            mov al, buferdedatos[si+1]
+            MOV TEMPDB, al   ;! TOMA SI ES 0 o SI ES 1
+            inc si
+            MOV handler2, si
+            JMP fin
+        limpiarycont:
+            xor bx, bx
+            cleanBuffer MYauxUserName2
+            jmp continuar
+        yahaynombre:
+            mov TEMP, 2
+            JMP continuar
+    REVISARNOMBRE:
+        print usr
+        print MYauxUserName2
+        print saltolinea
+        getLen usr
+        isequal usr, MYauxUserName2, TEMP
+        cleanBuffer MYauxUserName2
+        xor bx, bx
+        xor cx, cx
+        cmp TEMP, 1
+        je yahaynombre
+        jmp continuar
+    NOSEENCONTRO:
+        MOV TEMPDB, '2'
+    fin:
+        cleanBuffer buferdedatos
+        cleanBuffer MYauxUserName
+    POPA
+ENDM
+TOMARBLOQUEO MACRO usr
+    PUSHA
+    
+    POPA
+ENDM
+PROMOVERUSUARIO MACRO usr
+    PUSHA
+    
+    POPA
+ENDM
+DEGRADARUSUARIO MACRO usr
+    PUSHA
+    
+    POPA
+ENDM
+DESBLOQUEARUSUARIO MACRO usr
+    PUSHA
+    
+    POPA
 ENDM
 ; logup MACRO
     ; PUSHA
     
     ; POPA
-; ENDM logup
+; ENDM
 ; logup MACRO
     ; PUSHA
     
     ; POPA
-; ENDM logup
+; ENDM
+; logup MACRO
+    ; PUSHA
+    
+    ; POPA
+; ENDM
+; logup MACRO
+    ; PUSHA
+    
+    ; POPA
+; ENDM
+; logup MACRO
+    ; PUSHA
+    
+    ; POPA
+; ENDM
+; logup MACRO
+    ; PUSHA
+    
+    ; POPA
+; ENDM
 
 
 

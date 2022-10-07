@@ -62,6 +62,9 @@ INCLUDE MACP2.inc
         msgdegradado DB 'USUARIO DEGRADADO AHORA ES UN ESCLAVO ;v', "$"
         msgyaesnormal DB 'NO SE PUEDE DEGRADAR YA ES UN USUARIO NORMAL', "$"
         msgestaunlock DB 'EL USUARIO ESTA DESBLOQUEADO', "$"
+        msgUSERTOPROMOVE DB 'DIGITE EL USUARIO A PROMOVER', "$"
+        msgUSERTODEGRADE DB 'DIGITE EL USUARIO A DEGRADAR', "$"
+        msgUSERTOUNLOCK DB 'DIGITE EL USUARIO A DESBLOQUEAR', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
@@ -72,10 +75,12 @@ INCLUDE MACP2.inc
             error7      db "ALERTA == La contrasena debe tener al menos 2 CARACTERES ESPECIALES",10,'$'
             error8      db "ALERTA == Contrasena tiene mal los limites revisar.",10,'$'
             error9      db "ALERTA == El nombre de usuario ya esta en USO",10,'$'
+            error10      db "ALERTA == NOMBRE DE USUARIO INEXISTENTE",10,'$'
     ;* --------------------------  REPORTES -----------------------------
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?
         handler     dw ?
+        handler2     dw ?
         USERSTET  DB "users.tet",0
         REPSORTREP  DB "REPSORT.rep",0
         punttet  DB "punt.tet",0
@@ -91,6 +96,7 @@ INCLUDE MACP2.inc
         TEMPDB             Db "0$"
         coma             db ","
         nuevalinea       db 10,'$'
+        delkey       dw 5300h
     ;? ------------------------BUBBLESORT VARIABLES------------------------
         buferdedatos          db 1000 dup('$')
         listestadistic          dw 2000 dup('$')
@@ -121,6 +127,7 @@ INCLUDE MACP2.inc
         MYuserPass    db 20 dup ('$') ; ! USUARIO Y CONTRASENA
         MYuserName    db 15 dup ('$')
         MYauxUserName     db 15 dup ('$')
+        MYauxUserName2     db 15 dup ('$')
         MYauxPass     db 20 dup ('$')
 
         CATEGORIA       DB "0$"
@@ -156,6 +163,12 @@ INCLUDE MACP2.inc
         ; CALL recorrerm1_
         misdatos
         esperaenter  ;TODO: activar despues
+        paint  0, 0, 800, 600, BLACK
+
+        PROMOVER
+        readtext
+
+
         PRINCIPALMENULABEL:
         ;! MENUPRINCIPAL
         Inicio:
