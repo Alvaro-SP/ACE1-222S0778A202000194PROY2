@@ -173,8 +173,19 @@ INCLUDE MACP2.inc
         misdatos
         esperaenter  ;TODO: activar despues
         paint  0, 0, 800, 600, BLACK
-
-        PROMOVER
+    ;set cursor 
+    mov dh, 01h     ;row
+    mov dl, 01h     ;col
+    mov bh, 0       ;page
+    mov ah, 02h
+    int 10h
+    ;print char in video
+    mov al, 'A'
+    mov bl, 15d     ;color
+    mov bh, 0       ;page
+    mov ah, 0Eh
+    int 10h
+        ; PROMOVER
         readtext
 
 
@@ -268,15 +279,6 @@ INCLUDE MACP2.inc
     main    ENDP
     
     ;?☻ ===================== MENUS  ======================= ☻
-·         F1 à Desbloquear usuario
-·         F2 à Promover usuario
-·         F3 à Degradar usuario
-
-·         F4 à Bubble Sort
-·         F5 à Heap Sort
-·         F6 à Quick Sort
-·         F10 à Cerrar sesión
-
     MENUADMINISTRADOR_ PROC NEAR
         ;! MENUPRINCIPAL
         Inicio:
@@ -314,18 +316,22 @@ INCLUDE MACP2.inc
         PROMOVERLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
+            PROMOVER
             JMP Inicio
         DegradarLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
+            DEGRADAR
             JMP Inicio
         BubbleSortLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
+            BUBBLESORT
             JMP Inicio
         HeapSort:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
+            HEAPSORT
             JMP Inicio
         QuickSortLB:
             JMP Inicio
