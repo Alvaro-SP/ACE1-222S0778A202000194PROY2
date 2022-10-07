@@ -268,6 +268,14 @@ INCLUDE MACP2.inc
     main    ENDP
     
     ;?☻ ===================== MENUS  ======================= ☻
+·         F1 à Desbloquear usuario
+·         F2 à Promover usuario
+·         F3 à Degradar usuario
+
+·         F4 à Bubble Sort
+·         F5 à Heap Sort
+·         F6 à Quick Sort
+·         F10 à Cerrar sesión
 
     MENUADMINISTRADOR_ PROC NEAR
         ;! MENUPRINCIPAL
@@ -283,17 +291,44 @@ INCLUDE MACP2.inc
             PAINTTEXT tAD8 , 1510H , 0FF0FH
             MOV AH, 0 ;Wait for keystroke and read
             INT 16H
-            CMP AH,3BH    ; si tecla es F1
-            JE LOGGEAR     ; SI SI ES SE VA A INICIARJUEGO
-            CMP AH,3FH    ; si tecla es F5
-            JE REGISTRAR     ; SI SI ES SE VA A INICIARJUEGO
+            CMP AH,3BH     ;* si tecla es F1
+            JE DESBLOQUEARLB     ;*           SE VA A DESBLOQUEAR
+            CMP AH,3CH     ;* si tecla es F2
+            JE PROMOVERLB   ;*           SE VA A PROMOVER
+            CMP AH,3DH     ;* si tecla es F3
+            JE DegradarLB   ;*           SE VA A Degradar
+            CMP AH,3EH     ;* si tecla es F4
+            JE BubbleSortLB   ;*           SE VA A Bubble Sort
+            CMP AH,3FH     ;* si tecla es F5
+            JE HeapSort   ;*           SE VA A Heap Sort
+            CMP AH,40H     ;* si tecla es F6
+            JE QuickSortLB   ;*           SE VA A Quick Sort
+            CMP AH,44H     ;* si tecla es F10
+            JE FIN   ;*           SE VA A CERRAR
             JNE Inicio
-        REGISTRAR:
+        DESBLOQUEARLB:
+            paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-
-        LOGGEAR:
+            DESBLOQUEAR
+            JMP Inicio
+        PROMOVERLB:
+            paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            PINTARPANTALLADEJUEGO
+            JMP Inicio
+        DegradarLB:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            JMP Inicio
+        BubbleSortLB:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            JMP Inicio
+        HeapSort:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            JMP Inicio
+        QuickSortLB:
+            JMP Inicio
         FIN:
         RET
     MENUADMINISTRADOR_ ENDP
