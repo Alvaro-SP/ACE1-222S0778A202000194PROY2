@@ -30,7 +30,7 @@ readFile macro handler,fileData,numBytes
     mov cx, numBytes
     lea dx, fileData
     int 21h
-    ; jc errorReading
+    MOV tamfile, ax
 endm
 
 writeFile macro handler,array,numBytes
@@ -162,7 +162,7 @@ endm
 getUSUARIOS macro
     openFile USERSTET, handler ;* Abro EL ARCHIVO DE USERS.tet
     readFile handler, buferdedatos, 1000
-    closeFile handler
+    cerrar handler
 endm
 
 login MACRO
@@ -192,15 +192,15 @@ login MACRO
         je ERR
         ; SESIONUSER
     ERR:
-        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
-        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        cleanBuffer MYuserName
+        cleanBuffer MYuserPass
         print error1
         readtext
-        MENUPRINCIPAL
+        JMP PRINCIPALMENULABEL
     POPA
 ENDM login
 logup MACRO
-    LOCAL buc, buct,sigo, ERR2,ERR3
+    LOCAL buc, buct,sigo, ERR2,ERR3,ERR4,ERR5,ERR6,ERR7,ERR8,ERR9, SALIDA
     PUSHA
     PAINTTEXT txLOGUP , 0820H , 0FF26H
     PAINTTEXT txUSUARIO , 0F10h , 0FF0FH
@@ -220,6 +220,11 @@ logup MACRO
     JL ERR4
     cmp si, 15
     JG ERR4
+    Xor dx, dx
+    NOMBREUSADO MYuserName
+    CMP dx, 1
+    JE ERR9
+
     xor dx, dx
     ESNUMERO MYuserName[0]
     CMP dx, 1
@@ -252,57 +257,76 @@ logup MACRO
     ;? d.	La longitud debe validarse entre 16 y 20 caracteres
     getLen MYuserPass
     cmp si, 16
-    JL ERR4
+    JL ERR8
     cmp si, 20
-    JG ERR4
+    JG ERR8
 
     xor dx, dx
-    CONTARMAYUSCULAS MYuserPass
+    CONTARMAYUSCULAS
     CMP dx, 1
     JE ERR5
-    CONTARNUMEROS MYuserPass
+    CONTARNUMEROS
     CMP dx, 1
     JE ERR6
-    CONTARESPECIALES MYuserPass
+    CONTARESPECIALES
     CMP dx, 1
     JE ERR7
-    
+
+    ;! AHORA SI GUARDO MI USUARIO NUEVO EL QUE SE VA A AGREGAR.
+    SAVEUSERINFILE MyuserName, MyuserPass
+    cleanBuffer MYuserName
+    cleanBuffer MYuserPass
+    JMP SALIDA
+
     ERR2:
-        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
-        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        cleanBuffer MYuserName
+        cleanBuffer MYuserPass
         print error2
         readtext
         JMP PRINCIPALMENULABEL
     ERR3:
-        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
-        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        cleanBuffer MYuserName
+        cleanBuffer MYuserPass
         print error3
         readtext
         JMP PRINCIPALMENULABEL
     ERR4:
-        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
-        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        cleanBuffer MYuserName
+        cleanBuffer MYuserPass
         print error4
         readtext
         JMP PRINCIPALMENULABEL
     ERR5:
-        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
-        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        cleanBuffer MYuserName
+        cleanBuffer MYuserPass
         print error5
         readtext
         JMP PRINCIPALMENULABEL
     ERR6:
-        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
-        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        cleanBuffer MYuserName
+        cleanBuffer MYuserPass
         print error6
         readtext
         JMP PRINCIPALMENULABEL
     ERR7:
-        cleanBuffer MYuserName, SIZEOF MYuserName, 24h
-        cleanBuffer MYuserPass, SIZEOF MYuserPass, 24h
+        cleanBuffer MYuserName
+        cleanBuffer MYuserPass
         print error7
         readtext
         JMP PRINCIPALMENULABEL
+    ERR8:
+        cleanBuffer MYuserName
+        cleanBuffer MYuserPass
+        print error8
+        readtext
+        JMP PRINCIPALMENULABEL
+    ERR9:
+        cleanBuffer MYuserName
+        cleanBuffer MYuserPass
+        print error9
+        readtext
+        JMP PRINCIPALMENULABEL
+    SALIDA:
     POPA
 ENDM logup
 
@@ -312,6 +336,71 @@ BUSCARUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
 
     POPA
 ENDM BUSCARUSER
+NOMBREUSADO MACRO
+    LOCAL while, REVISARNOMBRE,CAMBIODESTATUS , cont,end
+    getUSUARIOS
+    xor si, si
+    xor ax, ax
+    xor bx, bx
+    xor cx, cx  ;* flag for to say the status. 0 = getUser 
+                ;* 1 = find the char of exit '\n' is my pivote
+
+    ;Split every data
+    while:
+        cmp tamfile, 0
+        je end
+        xor ah, ah
+        mov al, buferdedatos[si]
+        cmp al, 10
+        je REVISARNOMBRE
+        cmp al, ','
+        je CAMBIODESTATUS
+        cmp cx, 1
+        je cont
+        mov MYauxUserName[bx], al
+        inc bx
+        jmp cont
+        CAMBIODESTATUS:
+            mov cx, 1
+        cont:
+            inc si
+            jmp while
+        
+    REVISARNOMBRE:
+        PUSH si
+        getLen MyuserName
+        MOV TEMP, si
+        isequal MyuserName, MYauxUserName, TEMP
+        pop si
+        pusha
+        cleanBuffer MYauxUserName
+        popa
+        xor bx, bx
+        xor cx, cx
+        cmp dx, 1
+        je end
+        jmp cont
+    end:
+        cleanBuffer MYauxUserName
+        cleanBuffer buferdedatos
+ENDM
+SAVEUSERINFILE MACRO user, pass ;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
+    openFile USERSTET, handler ; open my file Users.tet
+    getLen user  ;* take the length of my user
+    seekEnd handler ;* update the cursor or the pointer in the file writing
+    writeFile handler, user, si ;* write THE USER AND THE PASS.
+    writeFile handler, coma, 1
+    getLen pass  ;* take the length of my pass
+    writeFile handler, pass, si ;* write THE USER AND THE PASS.
+    writeFile handler, coma, 1
+    writeFile handler, CATEGORIA, 1
+    writeFile handler, coma, 1
+    writeFile handler, BLOQUEO, 1
+    writeFile handler, nuevalinea, 1         ;?==>    JUANITO,ABC123@@@,0,0,0  \n
+    cerrar handler
+    PAINTTEXT savedmessage , 2125H , 0FF30H
+    readtext
+ENDM SAVEUSERINFILE
 ; logup MACRO
     ; PUSHA
     

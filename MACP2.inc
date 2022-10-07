@@ -94,7 +94,35 @@ print macro texto
     int 21h
     POPA
 ENDM print
-
+;*  ----- convert an 'int' to 'string'-----
+toString macro num,buffer
+    PUSHA
+    LOCAL divide,getD,clr
+    xor si, si
+    xor bx, bx
+    xor cx, cx
+    mov bl, 10
+    mov ax, num
+    jmp divide
+    clr:
+        xor ah,ah
+    divide:
+        div bl
+        inc cx
+        push ax
+        cmp al, 0
+        je getD
+        jmp clr
+    getD:
+        pop ax
+        add ah,48
+        mov buffer[si],ah
+        inc si
+        loop getD
+        mov ah, 24h
+        mov buffer[si],ah
+    POPA
+endm
 ; POSICIONAR CURSOR
 poscursor MACRO POSXTEMP, POSYTEMP
     ; PUSHA
@@ -597,5 +625,174 @@ ESCHARPERMITIDO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
     SALIR:
     RET
 ENDM ESCHARPERMITIDO
+
+ESMAYUS macro CHARNUM ; ! PA SABER SI ES MAYUSCULA
+    LOCAL SALIR,NOESNUMERO,ESUNNUMERO
+    cmp CHARNUM, 65
+    JE ESUNNUMERO
+    cmp CHARNUM, 66
+    JE ESUNNUMERO
+    cmp CHARNUM, 67
+    JE ESUNNUMERO
+    cmp CHARNUM, 68
+    JE ESUNNUMERO
+    cmp CHARNUM, 69
+    JE ESUNNUMERO
+    cmp CHARNUM, 70
+    JE ESUNNUMERO
+    cmp CHARNUM, 71
+    JE ESUNNUMERO
+    cmp CHARNUM, 72
+    JE ESUNNUMERO
+    cmp CHARNUM, 73
+    JE ESUNNUMERO
+    cmp CHARNUM, 74
+    JE ESUNNUMERO
+    cmp CHARNUM, 75
+    JE ESUNNUMERO
+    cmp CHARNUM, 76
+    JE ESUNNUMERO
+    cmp CHARNUM, 77
+    JE ESUNNUMERO
+    cmp CHARNUM, 78
+    JE ESUNNUMERO
+    cmp CHARNUM, 79
+    JE ESUNNUMERO
+    cmp CHARNUM, 80
+    JE ESUNNUMERO
+    cmp CHARNUM, 81
+    JE ESUNNUMERO
+    cmp CHARNUM, 82
+    JE ESUNNUMERO
+    cmp CHARNUM, 83
+    JE ESUNNUMERO
+    cmp CHARNUM, 84
+    JE ESUNNUMERO
+    cmp CHARNUM, 85
+    JE ESUNNUMERO
+    cmp CHARNUM, 86
+    JE ESUNNUMERO
+    cmp CHARNUM, 87
+    JE ESUNNUMERO
+    cmp CHARNUM, 88
+    JE ESUNNUMERO
+    cmp CHARNUM, 89
+    JE ESUNNUMERO
+    cmp CHARNUM, 90
+    JNE NOESNUMERO
+    JE ESUNNUMERO
+    ESUNNUMERO:
+        INC TEMP
+        JMP SALIR
+    NOESNUMERO:
+        JMP SALIR
+    SALIR:
+    RET
+ENDM
+ESNUMERO macro CHARNUM ; ! PA SABER SI ES NUMERO
+    LOCAL SALIR,NOESNUMERO,ESUNNUMERO
+    cmp CHARNUM, 48
+    JE ESUNNUMERO
+    cmp CHARNUM, 49
+    JE ESUNNUMERO
+    cmp CHARNUM, 50
+    JE ESUNNUMERO
+    cmp CHARNUM, 51
+    JE ESUNNUMERO
+    cmp CHARNUM, 52
+    JE ESUNNUMERO
+    cmp CHARNUM, 53
+    JE ESUNNUMERO
+    cmp CHARNUM, 54
+    JE ESUNNUMERO
+    cmp CHARNUM, 55
+    JE ESUNNUMERO
+    cmp CHARNUM, 56
+    JE ESUNNUMERO
+    cmp CHARNUM, 57
+    JNE NOESNUMERO
+    JE ESUNNUMERO
+    ESUNNUMERO:
+        INC TEMP
+        JMP SALIR
+    NOESNUMERO:
+        JMP SALIR
+    SALIR:
+    RET
+ENDM
+ESESPECIAL macro CHARNUM ; ! PA SABER SI ES ESPECIAL
+    LOCAL SALIR,NOESNUMERO,ESUNNUMERO
+    cmp CHARNUM, 64
+    JE ESUNNUMERO
+    cmp CHARNUM, 62
+    JE ESUNNUMERO
+    cmp CHARNUM, 35
+    JE ESUNNUMERO
+    cmp CHARNUM, 43
+    JE ESUNNUMERO
+    cmp CHARNUM, 42
+    JNE NOESNUMERO
+    JE ESUNNUMERO
+    ESUNNUMERO:
+        INC TEMP
+        JMP SALIR
+    NOESNUMERO:
+        JMP SALIR
+    SALIR:
+ENDM
+CONTARMAYUSCULAS macro
+    LOCAL buc, sigo, buct,MAYUS,SALIR
+    MOV TEMP,0
+    buc:
+        ESMAYUS MYuserPass[di]
+        CMP MYuserPass[di+1], "$"
+        JE sigo
+        buct:
+            inc di
+            JMP buc
+    sigo:
+        CMP TEMP, 3
+        JL MAYUS ;SI TIENE MENOS DE 3 MAYUSCULAS
+        JMP SALIR
+    MAYUS:
+        MOV dx, 1
+    SALIR:
+ENDM
+CONTARNUMEROS macro
+    LOCAL buc, sigo, buct,MAYUS,SALIR
+    MOV TEMP,0
+    buc:
+        ESNUMERO MYuserPass[di]
+        CMP MYuserPass[di+1], "$"
+        JE sigo
+        buct:
+            inc di
+            JMP buc
+    sigo:
+        CMP TEMP, 2
+        JL MAYUS ;SI TIENE MENOS DE 3 MAYUSCULAS
+        JMP SALIR
+    MAYUS:
+        MOV dx, 1
+    SALIR:
+ENDM
+CONTARESPECIALES macro
+    LOCAL buc, sigo, buct,MAYUS,SALIR
+    MOV TEMP,0
+    buc:
+        ESESPECIAL MYuserPass[di]
+        CMP MYuserPass[di+1], "$"
+        JE sigo
+        buct:
+            inc di
+            JMP buc
+    sigo:
+        CMP TEMP, 2
+        JL MAYUS ;SI TIENE MENOS DE 3 MAYUSCULAS
+        JMP SALIR
+    MAYUS:
+        MOV dx, 1
+    SALIR:
+ENDM
 
 

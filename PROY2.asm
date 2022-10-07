@@ -56,7 +56,7 @@ INCLUDE MACP2.inc
         txCONTRASENA      DB "CONTRASENA: $"
         ADMINCREDUSER   DB "202000194AADM"
         ADMINCREDPASS   DB "491000202"
-        
+        savedmessage      DB   'USUARIO GUARDADO SATISFACTORIAMENTE :)', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
@@ -66,12 +66,13 @@ INCLUDE MACP2.inc
             error6      db "ALERTA == La contrasena debe tener al menos 2 NUMEROS",10,'$'
             error7      db "ALERTA == La contrasena debe tener al menos 2 CARACTERES ESPECIALES",10,'$'
             error8      db "ALERTA == Contrasena tiene mal los limites revisar.",10,'$'
+            error9      db "ALERTA == El nombre de usuario ya esta en USO",10,'$'
     ;* --------------------------  REPORTES -----------------------------
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?
         handler     dw ?
         USERSTET  DB "C:\MASM\MASM611\BIN\users.tet",0
-        REPSORTREP  DB "C:\MASM\MASM611\BIN\REPSORT.REP",0
+        REPSORTREP  DB "C:\MASM\MASM611\BIN\REPSORT.rep",0
         punttet  DB "C:\MASM\MASM611\BIN\punt.tet",0
         hour        db "00", "$"
         min         db "00", "$"
@@ -80,11 +81,16 @@ INCLUDE MACP2.inc
         dia         db "00", "$"
         SI_SIMULADO             DW ?
         SI_SIMULADO2             DW ?
+        tamfile             DW 0
+        TEMP             DW 0
+        coma             db ","
+        nuevalinea       db 10,'$'
     ;? ------------------------BUBBLESORT VARIABLES------------------------
-        buferdedatos          dw 2000 dup('$')
+        buferdedatos          db 1000 dup('$')
         listestadistic          dw 2000 dup('$')
         indexbbsort             DW 0000
         RESULTADOPRINT          dw 00h, '$'
+
 
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
@@ -106,8 +112,15 @@ INCLUDE MACP2.inc
         INDEX           Dw ?
         INDEXtemp       Dw ?
 
-        MYuserPass    db 20 dup ('$') ; 
+        MYuserPass    db 20 dup ('$') ; ! USUARIO Y CONTRASENA
         MYuserName    db 15 dup ('$')
+        MYauxUserName     db 15 dup ('$')
+        MYauxPass     db 20 dup ('$')
+
+        CATEGORIA       DB "0$"
+        BLOQUEO         DB "0$"
+
+        Stringpuntos    DB 4 dup ('$')
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -135,8 +148,8 @@ INCLUDE MACP2.inc
         limpiar
         ; setAREADEJUEGO 0,5
         ; CALL recorrerm1_
-                ; misdatos
-                ; esperaenter  ;TODO: activar despues
+        misdatos
+        esperaenter  ;TODO: activar despues
         PRINCIPALMENULABEL:
         ;! MENUPRINCIPAL
         Inicio:
