@@ -242,7 +242,7 @@ logup MACRO
     sigo2:
     ;* leo la CONTRASENA
     
-    poscursor 19, 38
+    poscursor 17, 38
     getStrPASS MYuserPass
     ;? 2.	se solicitará la contraseña para el usuario y se harán las siguientes validaciones:
     ;? a.	debe tener al menos 3 mayúsculas
@@ -278,48 +278,56 @@ logup MACRO
     JMP SALIDA
 
     ERR2:
+        poscursor 22, 38
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error2
         readtext
         JMP PRINCIPALMENULABEL
     ERR3:
+        poscursor 22, 38
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error3
         readtext
         JMP PRINCIPALMENULABEL
     ERR4:
+        poscursor 22, 38
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error4
         readtext
         JMP PRINCIPALMENULABEL
     ERR5:
+        poscursor 22, 38
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error5
         readtext
         JMP PRINCIPALMENULABEL
     ERR6:
+        poscursor 22, 38
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error6
         readtext
         JMP PRINCIPALMENULABEL
     ERR7:
+        poscursor 22, 38
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error7
         readtext
         JMP PRINCIPALMENULABEL
     ERR8:
+        poscursor 22, 38
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error8
         readtext
         JMP PRINCIPALMENULABEL
     ERR9:
+        poscursor 22, 38
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error9
@@ -398,6 +406,62 @@ SAVEUSERINFILE MACRO user, pass ;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME 
     PAINTTEXT savedmessage , 2125H , 0FF30H
     readtext
 ENDM SAVEUSERINFILE
+
+;* ------------------------TIPOS DE USERS--------------------------
+PROMOVER MACRO
+    LOCAL SOLOMESSAGE,PROMOVERFILE,SALIDA
+    ;* SI CATEGORY ES 1 --->mensaje "NO PUEDE PROMOVER YA ES UN ADMINISTRADOR EL USER"
+    ;*SI CATEGORY ES 0 ---> 'USUARIO PROMOVIDO AHORA ES UN PRO ;v"
+    TOMARCATEGORIA MyuserName
+    CMP TEMPDB, '1'
+    JE SOLOMESSAGE
+    JNE PROMOVERFILE
+    SOLOMESSAGE:
+        poscursor 22,30
+        print msgyaesadmin
+        JMP SALIDA
+    PROMOVERFILE:
+        PROMOVERUSUARIO MyuserName
+        poscursor 22,30
+        print msgpromovido
+    SALIDA:
+ENDM
+DEGRADAR MACRO
+    ;* SI CATEGORY ES 1 --->	USUARIO DEGRADADO AHORA ES UN ESCLAVO ;v"
+    ;* SI CATEGORY ES 0 ---> 	mensaje "NO SE PUEDE DEGRADAR YA ES UN USUARIO NORMAL"
+    LOCAL SOLOMESSAGE,DEGRADARFILE,SALIDA
+    TOMARCATEGORIA MyuserName
+    CMP TEMPDB, '0'
+    JE SOLOMESSAGE
+    JNE DEGRADARFILE
+    SOLOMESSAGE:
+        poscursor 22,30
+        print msgyaesnormal
+        JMP SALIDA
+    DEGRADARFILE:
+        DEGRADARUSUARIO MyuserName
+        poscursor 22,30
+        print msgdegradado
+    SALIDA:
+ENDM
+DESBLOQUEAR MACRO
+    ;* SI BLOQUEO ES 1 --->	cambio bloqueo a 0 
+    ;* SI BLOQUEO ES 0 ---> 	mensaje el "USER ESTA DESBLOQUEADO"
+    LOCAL SOLOMESSAGE,DEGRADARFILE,SALIDA
+    TOMARBLOQUEO MyuserName
+    CMP TEMPDB, '0'
+    JE SOLOMESSAGE
+    JNE DEGRADARFILE
+    SOLOMESSAGE:
+        poscursor 22,30
+        print msgestaunlock
+        JMP SALIDA
+    DEGRADARFILE:
+        DEGRADARUSUARIO MyuserName
+        poscursor 22,30
+        print msgdegradado
+    SALIDA:
+ENDM
 ; logup MACRO
     ; PUSHA
     

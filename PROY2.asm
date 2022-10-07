@@ -57,6 +57,11 @@ INCLUDE MACP2.inc
         ADMINCREDUSER   DB "202000194AADM"
         ADMINCREDPASS   DB "491000202"
         savedmessage      DB   'USUARIO GUARDADO SATISFACTORIAMENTE :)', "$"
+        msgyaesadmin DB 'NO PUEDE PROMOVER YA ES UN ADMINISTRADOR', "$"
+        msgpromovido DB 'USUARIO PROMOVIDO AHORA ES UN PRO ;v', "$"
+        msgdegradado DB 'USUARIO DEGRADADO AHORA ES UN ESCLAVO ;v', "$"
+        msgyaesnormal DB 'NO SE PUEDE DEGRADAR YA ES UN USUARIO NORMAL', "$"
+        msgestaunlock DB 'EL USUARIO ESTA DESBLOQUEADO', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
@@ -83,6 +88,7 @@ INCLUDE MACP2.inc
         SI_SIMULADO2             DW ?
         tamfile             DW 0
         TEMP             DW 0
+        TEMPDB             Db "0$"
         coma             db ","
         nuevalinea       db 10,'$'
     ;? ------------------------BUBBLESORT VARIABLES------------------------

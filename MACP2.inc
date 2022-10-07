@@ -746,9 +746,11 @@ CONTARMAYUSCULAS macro
     LOCAL buc, sigo, buct,MAYUS,SALIR
     MOV TEMP,0
     buc:
-        ESMAYUS MYuserPass[di]
         CMP MYuserPass[di+1], "$"
         JE sigo
+        ESMAYUS MYuserPass[di]
+        tostring TEMP, Stringpuntos
+        print stringpuntos
         buct:
             inc di
             JMP buc
