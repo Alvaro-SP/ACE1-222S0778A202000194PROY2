@@ -437,6 +437,7 @@ PROMOVER MACRO
         cerrar handler
         poscursor 22,30
         print msgpromovido
+        JMP SALIDA
     erroruser:
         print error10
     SALIDA:
@@ -472,6 +473,7 @@ DEGRADAR MACRO
         cerrar handler
         poscursor 22,30
         print msgdegradado
+        JMP SALIDA
     erroruser:
         print error10
     SALIDA:
@@ -504,6 +506,7 @@ DESBLOQUEAR MACRO
         cerrar handler
         poscursor 22,30
         print msgdegradado
+        JMP SALIDA
     erroruser:
         print error10
     SALIDA:
