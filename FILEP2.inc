@@ -178,10 +178,10 @@ login MACRO
 
     ESELADMIN:
         isequal MYuserName, ADMINCREDUSER, 13
-        cmp dx, 0
+        cmp TEMP, 0
         je ESUSERNORMAL
         isequal MYuserPass, ADMINCREDPASS, 13
-        cmp dx, 0
+        cmp TEMP, 0
         JE ERR
         ; SESIONADMIN
     ESUSERNORMAL:
@@ -214,20 +214,20 @@ logup MACRO
     ;? ii.	guion bajo
     ;? iii.	punto
     getLen MYuserName
-    cmp si, 8
+    cmp TEMP, 8
     JL ERR4
-    cmp si, 15
+    cmp TEMP, 15
     JG ERR4
     Xor dx, dx
-    
     NOMBREUSADO MYuserName
     CMP dx, 1
     JE ERR9
-
+    
     xor dx, dx
     ESNUMERO MYuserName[0]
     CMP dx, 1
     JE ERR3
+    
     xor di, di
     buc:        ; * BUcle para saber si los caracteres son validos
         ESCHARPERMITIDO MYuserName[di]
@@ -255,9 +255,9 @@ logup MACRO
     ;? v.	asterisco (*)
     ;? d.	La longitud debe validarse entre 16 y 20 caracteres
     getLen MYuserPass
-    cmp si, 16
+    cmp TEMP, 16
     JL ERR8
-    cmp si, 20
+    cmp TEMP, 20
     JG ERR8
 
     xor dx, dx
@@ -339,23 +339,23 @@ NOMBREUSADO MACRO
     LOCAL while, REVISARNOMBRE,CAMBIODESTATUS , cont,finalizooo
     getUSUARIOS
     mov dx, 0
-    xor si, si
+    MOV SI, 0
     xor ax, ax
     xor bx, bx
     xor cx, cx  ;* flag for to say the status. 0 = getUser
                 ;* 1 = find the char of exit '\n' is my pivote
-    print buferdedatos
+
     while:   ;!  NAME , PASS , 0 , 0
-        CMP buferdedatos[si], "$"
-        JE finalizooo
+        cmp si, tamfile
+        je finalizooo
         xor ah, ah
         mov al, buferdedatos[si]
+        ;* COMPARAMOS CADA CARACTER DEL BUFFER
         cmp al, 10
-        je REVISARNOMBRE
-
-        cmp cx, 1
+        je REVISARNOMBRE  ; ? si es FIN DE LINEA ve el nombre
+        cmp cx, 1    ;? flag para saltarse el resto de linea
         je cont
-        cmp al, ','
+        cmp al, ','  ;? 
         je CAMBIODESTATUS
         mov MYauxUserName[bx], al
         inc bx
@@ -368,20 +368,16 @@ NOMBREUSADO MACRO
     
 
     REVISARNOMBRE:
-        PUSH si
         getLen MyuserName
-        MOV TEMP, si
         isequal MyuserName, MYauxUserName, TEMP
-        pop si
-        pusha
         cleanBuffer MYauxUserName
-        popa
         xor bx, bx
         xor cx, cx
-        cmp dx, 1
+        cmp TEMP, 1
         je finalizooo
         jmp cont
     finalizooo:
+
         cleanBuffer MYauxUserName
         cleanBuffer buferdedatos
 ENDM
@@ -389,10 +385,10 @@ SAVEUSERINFILE MACRO user, pass ;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME 
     openFile USERSTET, handler ; open my file Users.tet
     getLen user  ;* take the length of my user
     seekEnd handler ;* update the cursor or the pointer in the file writing
-    writeFile handler, user, si ;* write THE USER AND THE PASS.
+    writeFile handler, user, TEMP ;* write THE USER AND THE PASS.
     writeFile handler, coma, 1
     getLen pass  ;* take the length of my pass
-    writeFile handler, pass, si ;* write THE USER AND THE PASS.
+    writeFile handler, pass, TEMP ;* write THE USER AND THE PASS.
     writeFile handler, coma, 1
     writeFile handler, CATEGORIA, 1
     writeFile handler, coma, 1

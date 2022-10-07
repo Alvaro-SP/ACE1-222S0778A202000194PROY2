@@ -96,8 +96,8 @@ print macro texto
 ENDM print
 ;*  ----- convert an 'int' to 'string'-----
 toString macro num,buffer
-    PUSHA
     LOCAL divide,getD,clr
+    PUSHA
     xor si, si
     xor bx, bx
     xor cx, cx
@@ -359,14 +359,18 @@ MENUPRINCIPAL MACRO
 ENDM MENUPRINCIPAL
 getLen macro var ; OBTENER LONGITUD DE UN BYTE :V
     LOCAL wh, endfinfin
-    xor si,si
+    PUSHA
+    MOV TEMP, 0
+    XOR SI, SI
     wh:
-        cmp var[si],24h
+        cmp var[SI],24h
         je endfinfin
-        inc si
+        inc TEMP
+        inc SI
         jmp wh
     endfinfin:
-endm getLen
+    POPA
+endm
 
 getStr macro array
     LOCAL getcad, endcad
@@ -413,7 +417,8 @@ endm
 
 ;! MACRO PARA COMPARAR 2 STRINGS
 isequal macro STRING1, STRING2, length
-LOCAL whi, finalitoo, continue, neq, equal
+    LOCAL whi, finalitoo, continue, neq, equal
+    PUSHA
     xor di, di
     xor bx, bx
     xor dx, dx
@@ -429,15 +434,16 @@ LOCAL whi, finalitoo, continue, neq, equal
             inc di
             jmp whi
     neq:
-        mov dx, 0
+        mov TEMP, 0
         jmp finalitoo
     equal:
-        mov dx, 1
+        mov TEMP, 1
 
     finalitoo:
+    POPA
 endm isequal
 ESNUMERO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
-    LOCAL SALIR,NOESNUMERO,ESUNNUMERO
+    LOCAL eeeeeeee,NOESNUMERO,ESUNNUMERO
     cmp CHARNUM, 48
     JE ESUNNUMERO
     cmp CHARNUM, 49
@@ -465,8 +471,7 @@ ESNUMERO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
     NOESNUMERO:
         MOV dx, 0
         JMP SALIR
-    SALIR:
-    RET
+    eeeeeeee:
 ENDM ESNUMERO
 
 ESCHARPERMITIDO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
@@ -623,7 +628,6 @@ ESCHARPERMITIDO macro CHARNUM ; ! PA SABER SI ES NUMNERO GUARDO DX
         MOV dx, 0
         JMP SALIR
     SALIR:
-    RET
 ENDM ESCHARPERMITIDO
 
 ESMAYUS macro CHARNUM ; ! PA SABER SI ES MAYUSCULA
@@ -687,7 +691,6 @@ ESMAYUS macro CHARNUM ; ! PA SABER SI ES MAYUSCULA
     NOESNUMERO:
         JMP SALIR
     SALIR:
-    RET
 ENDM
 ESNUMERO macro CHARNUM ; ! PA SABER SI ES NUMERO
     LOCAL SALIR,NOESNUMERO,ESUNNUMERO
@@ -718,7 +721,6 @@ ESNUMERO macro CHARNUM ; ! PA SABER SI ES NUMERO
     NOESNUMERO:
         JMP SALIR
     SALIR:
-    RET
 ENDM
 ESESPECIAL macro CHARNUM ; ! PA SABER SI ES ESPECIAL
     LOCAL SALIR,NOESNUMERO,ESUNNUMERO
