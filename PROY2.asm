@@ -21,14 +21,23 @@ INCLUDE MACP2.inc
         ;*--------------------------     MENU    -----------------------------
         ; tm1             DB   29,'------- MENU PRINCIPAL ------'
         tm1             DB   "------- MENU PRINCIPAL ------", "$"
-        tm2             DB   'F1. LOGIN     $'
+        tm2             DB   'F1. LOGIN$'
         tm3             DB   'F5. REGISTRAR$'
         tm4             DB   'F9. SALIR$'
-        tm1c             DB   '------- MENU PRINCIPAL ------',10, 13, "$"
-        tm2c             DB   '         F1. LOGIN',10, 13, "$"
-        tm3c             DB   '         F5. REGISTRAR',10, 13, "$"
-        tm4c             DB   '         F9. SALIR',10, 13, "$"
+        tAD1             DB   "------- MENU ADMINISTRADOR ------", "$"
+        tAD2             DB   'F1. Desbloquear usuario$'
+        tAD3             DB   'F2. Promover usuario$'
+        tAD4             DB   'F3. Degradar usuario$'
+        tAD5             DB   'F4. Bubble Sort$'
+        tAD6             DB   'F5. Heap Sort$'
+        tAD7             DB   'F6. Quick Sort$'
+        tAD8             DB   'F10. Cerrar sesión$'
         
+        tAD9             DB   "------- MENU USUARIO QUE ES ADMINISTRADOR ------", "$"
+        tAD10             DB   'F2. Mostrar el top 10 general de puntuaciones$'
+        tAD11             DB   'F3. Mostrar el top 10 de las puntuaciones del jugador$'
+        tAD12             DB   'F7. JUGAR$'
+
     ;*----------- COORDENADAS PARA EL CURSOR  PARAMETROS DIBUJAR MODO VIDEO-----------------------------
         BLACK               EQU  00H
         POSX            DB  ?
@@ -259,9 +268,32 @@ INCLUDE MACP2.inc
     main    ENDP
     
     
-    MENUPRINCIPAL_ PROC NEAR
-    RET
-    MENUPRINCIPAL_ ENDP
+    MENUADMINISTRADOR_ PROC NEAR
+        ;! MENUPRINCIPAL
+        Inicio:
+            paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
+            PAINTTEXT tm1 , 0820H , 0FF26H ; ! SETEO LOS TEXTOS
+            PAINTTEXT tm2 , 0F10h , 0FF0FH
+            PAINTTEXT tm3 , 1210H , 0FF0FH
+            PAINTTEXT tm4 , 1410H , 0FF0FH
+            MOV AH, 0 ;Wait for keystroke and read
+            INT 16H
+            CMP AH,3BH    ; si tecla es F1
+            JE LOGGEAR     ; SI SI ES SE VA A INICIARJUEGO
+            CMP AH,3FH    ; si tecla es F5
+            JE REGISTRAR     ; SI SI ES SE VA A INICIARJUEGO
+            JNE Inicio
+        REGISTRAR:
+            paint  0, 0, 800, 600, BLACK
+            logup
+
+        LOGGEAR:
+            paint  0, 0, 800, 600, BLACK
+            login
+            PINTARPANTALLADEJUEGO
+        FIN:
+        RET
+    MENUADMINISTRADOR_ ENDP
    
     ;?☻ =====================   ======================= ☻
     ; BUSCARUSER_ PROC FAR
