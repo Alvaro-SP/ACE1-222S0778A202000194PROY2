@@ -267,15 +267,20 @@ INCLUDE MACP2.inc
             RET
     main    ENDP
     
-    
+    ;?☻ ===================== MENUS  ======================= ☻
+
     MENUADMINISTRADOR_ PROC NEAR
         ;! MENUPRINCIPAL
         Inicio:
             paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
-            PAINTTEXT tm1 , 0820H , 0FF26H ; ! SETEO LOS TEXTOS
-            PAINTTEXT tm2 , 0F10h , 0FF0FH
-            PAINTTEXT tm3 , 1210H , 0FF0FH
-            PAINTTEXT tm4 , 1410H , 0FF0FH
+            PAINTTEXT tAD1 , 0620H , LIGHT_GREEN ; ! SETEO LOS TEXTOS
+            PAINTTEXT tAD2 , 0910h , 0FF0FH
+            PAINTTEXT tAD3 , 0B10H , 0FF0FH
+            PAINTTEXT tAD4 , 0D10H , 0FF0FH
+            PAINTTEXT tAD5 , 0F10h , 0FF0FH
+            PAINTTEXT tAD6 , 1110H , 0FF0FH
+            PAINTTEXT tAD7 , 1310H , 0FF0FH
+            PAINTTEXT tAD8 , 1510H , 0FF0FH
             MOV AH, 0 ;Wait for keystroke and read
             INT 16H
             CMP AH,3BH    ; si tecla es F1
@@ -285,16 +290,17 @@ INCLUDE MACP2.inc
             JNE Inicio
         REGISTRAR:
             paint  0, 0, 800, 600, BLACK
-            logup
 
         LOGGEAR:
             paint  0, 0, 800, 600, BLACK
-            login
             PINTARPANTALLADEJUEGO
         FIN:
         RET
     MENUADMINISTRADOR_ ENDP
-   
+    
+    MENUUSUARIOQUEESADMINISTRADOR_ PROC NEAR
+        RET
+    MENUUSUARIOQUEESADMINISTRADOR_ ENDP
     ;?☻ =====================   ======================= ☻
     ; BUSCARUSER_ PROC FAR
     ;     RET
@@ -424,7 +430,7 @@ INCLUDE MACP2.inc
         INT 10H
         ; imprimo el texto de inicio
         PAINTTEXT tb1 , 0820H , 0FF22H
-        PAINTTEXT tb2 , 0F10h , 0FF0FH
+        PAINTTEXT tb2 , 1010h , 0FF0FH
         PAINTTEXT tb3 , 1210H , 0FF0FH
         PAINTTEXT tb4 , 1410H , 0FF0FH
         PAINTTEXT tb5 , 1610H , 0FF0FH
