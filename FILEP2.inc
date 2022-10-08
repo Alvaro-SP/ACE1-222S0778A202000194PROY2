@@ -514,6 +514,19 @@ DESBLOQUEAR MACRO
     POPA
 ENDM
 
+VALIDARTIPODEUSUARIO MACRO
+    TOMARBLOQUEO MyuserName
+    CMP TEMPDB, '1'
+    JE ERRORUSUARIOBLOQUEADO
+
+    TOMARCATEGORIA MyuserName
+    CMP TEMPDB, '2'
+    JE MOSTRARMENUADMIN
+    CMP TEMPDB, '0'
+    JE MOSTRARMENUNORMAL
+    JE MOSTRARMENUUSERADMIN
+
+ENDM
 ;! =========================TAKE DATA FROM THE USERS.TET==============================
 TOMARCATEGORIA MACRO usr
     LOCAL fin,limpiarycont,NOSEENCONTRO,REVISARNOMBRE,continuar,while,buscaand,sigoauxi,nextchariscategory,yahaynombre

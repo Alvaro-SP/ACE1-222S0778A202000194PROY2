@@ -92,6 +92,7 @@ INCLUDE MACP2.inc
             error8      db "ALERTA == Contrasena tiene mal los limites revisar.",10,'$'
             error9      db "ALERTA == El nombre de usuario ya esta en USO",10,'$'
             error10      db "ALERTA ==NO SE ENCONTRO O INTENTA DESBLOQUEAR A ADMIN",10,'$'
+            error11      db "ALERTA ==IMPOSIBLE INICIAR SESION, USUARIO BLOQUEADO",10,'$'
     ;* --------------------------  REPORTES -----------------------------
         Filenamejug1  db  'Rep.xml'
         handlerentrada dw ?
@@ -208,8 +209,25 @@ INCLUDE MACP2.inc
         LOGGEAR:
             paint  0, 0, 800, 600, BLACK
             login
+            VALIDARTIPODEUSUARIO
             PAINTTEXT msgsesioniniciadasatisf , 2125H , 0FF30H
             readtext
+        ERRORUSUARIOBLOQUEADO:
+            poscursor 22, 38
+            cleanBuffer MYuserName
+            cleanBuffer MYuserPass
+            print error11
+            readtext
+            JMP Inicio
+        MOSTRARMENUNORMAL:
+            MENUUSUARIO
+            JMP Inicio
+        MOSTRARMENUUSERADMIN:
+            MENUUSUARIOQUEESADMINISTRADOR
+            JMP Inicio
+        MOSTRARMENUADMIN:
+            MENUADMINISTRADOR
+            JMP Inicio
         FIN:
         ; MOV Xtemp,540
         ; MOV Ytemp, 540+16
