@@ -143,6 +143,8 @@ INCLUDE MACP2.inc
         BLOQUEO         DB "0$"
 
         Stringpuntos    DB 4 dup ('$')
+        Stringnivel     DB "1$"
+
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -358,15 +360,17 @@ INCLUDE MACP2.inc
             CMP AH,3BH     ;* si tecla es F1
             JE DESBLOQUEARLB     ;*           SE VA A DESBLOQUEAR
             CMP AH,3CH     ;* si tecla es F2
-            JE PROMOVERLB   ;*           SE VA A PROMOVER
+            JE TOPGEN   ;*           SE VA A TOP 10 GENERAL
             CMP AH,3DH     ;* si tecla es F3
-            JE DegradarLB   ;*           SE VA A Degradar
+            JE TOPUSER   ;*           SE VA A TOP 10 DEL USER
             CMP AH,3EH     ;* si tecla es F4
             JE BubbleSortLB   ;*           SE VA A Bubble Sort
             CMP AH,3FH     ;* si tecla es F5
             JE HeapSortLB   ;*           SE VA A Heap Sort
             CMP AH,40H     ;* si tecla es F6
             JE QuickSortLB   ;*           SE VA A Quick Sort
+            CMP AH,41H     ;* si tecla es F7
+            JE JUGARRRR   ;*           SE VA A JUGARRRR
             CMP AH,44H     ;* si tecla es F10
             JE FIN   ;*           SE VA A CERRAR
             JNE Inicio
@@ -375,15 +379,15 @@ INCLUDE MACP2.inc
             paint  0, 0, 800, 600, BLACK
             DESBLOQUEAR
             JMP Inicio
-        PROMOVERLB:
+        TOPGEN:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            PROMOVER
+            TOP10GENERAL
             JMP Inicio
-        DegradarLB:
+        TOPUSER:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            DEGRADAR
+            TOP10USUARIO
             JMP Inicio
         BubbleSortLB:
             paint  0, 0, 800, 600, GREEN
@@ -400,9 +404,86 @@ INCLUDE MACP2.inc
             paint  0, 0, 800, 600, BLACK
             QUICKSORT
             JMP Inicio
+        JUGARRRR:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            INICIODELJUEGO
+            JMP Inicio
         FIN:
         RET
     MENUUSUARIOQUEESADMINISTRADOR_ ENDP
+    
+    MENUUSUARIO_ PROC NEAR
+        Inicio:
+            paint  0, 0, 800, 600, BLACK ;*LIMPIA TODO MODO VIDEO:V
+            PAINTTEXT tAD1 , 0620H , LIGHT_GREEN ; ! SETEO LOS TEXTOS
+            PAINTTEXT tAD2 , 0910h , 0FF0FH
+            PAINTTEXT tAD10 , 0B10H , 0FF0FH
+            PAINTTEXT tAD11 , 0D10H , 0FF0FH
+            PAINTTEXT tAD5 , 0F10h , 0FF0FH
+            PAINTTEXT tAD6 , 1110H , 0FF0FH
+            PAINTTEXT tAD7 , 1310H , 0FF0FH
+            PAINTTEXT tAD12 , 1510H , 0FF0FH
+            PAINTTEXT tAD8 , 1710H , 0FF0FH
+            MOV AH, 0 ;Wait for keystroke and read
+            INT 16H
+            CMP AH,3BH     ;* si tecla es F1
+            JE DESBLOQUEARLB     ;*           SE VA A DESBLOQUEAR
+            CMP AH,3CH     ;* si tecla es F2
+            JE TOPGEN   ;*           SE VA A TOP 10 GENERAL
+            CMP AH,3DH     ;* si tecla es F3
+            JE TOPUSER   ;*           SE VA A TOP 10 DEL USER
+            CMP AH,3EH     ;* si tecla es F4
+            JE BubbleSortLB   ;*           SE VA A Bubble Sort
+            CMP AH,3FH     ;* si tecla es F5
+            JE HeapSortLB   ;*           SE VA A Heap Sort
+            CMP AH,40H     ;* si tecla es F6
+            JE QuickSortLB   ;*           SE VA A Quick Sort
+            CMP AH,41H     ;* si tecla es F7
+            JE JUGARRRR   ;*           SE VA A JUGARRRR
+            CMP AH,44H     ;* si tecla es F10
+            JE FIN   ;*           SE VA A CERRAR
+            JNE Inicio
+        DESBLOQUEARLB:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            DESBLOQUEAR
+            JMP Inicio
+        TOPGEN:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            TOP10GENERAL
+            JMP Inicio
+        TOPUSER:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            TOP10USUARIO
+            JMP Inicio
+        BubbleSortLB:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            BUBBLESORT
+            JMP Inicio
+        HeapSortLB:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            HEAPSORT
+            JMP Inicio
+        QuickSortLB:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            QUICKSORT
+            JMP Inicio
+        JUGARRRR:
+            paint  0, 0, 800, 600, GREEN
+            paint  0, 0, 800, 600, BLACK
+            INICIODELJUEGO
+            JMP Inicio
+        FIN:
+        RET
+    MENUUSUARIO_ ENDP
+    
+    
     ;?☻ =====================   ======================= ☻
     ; BUSCARUSER_ PROC FAR
     ;     RET
@@ -435,7 +516,10 @@ INCLUDE MACP2.inc
     
     
     
-    
+    INICIODELJUEGO_ PROC NEAR
+        
+        RET
+    INICIODELJUEGO_ ENDP
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
     setAREADEJUEGO_ PROC NEAR
         ;! POSICION AL = Y     AX = X
@@ -939,7 +1023,16 @@ INCLUDE MACP2.inc
     QUICKSORT_ ENDP
     ;!  █▀█ █▀▀ █▀█ █▀█ █▀█ ▀█▀ █▀
     ;!  █▀▄ ██▄ █▀▀ █▄█ █▀▄ ░█░ ▄█☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻ GENERACION DE REPORTES
-
+    ;! TOP TEN
+    TOP10GENERAL_ PROC NEAR
+        RET
+    TOP10GENERAL_ ENDP
+    TOP10USUARIO_ PROC NEAR
+        RET
+    TOP10USUARIO_ ENDP
+    ; TOP10GENERAL_ PROC NEAR
+    ;     RET
+    ; TOP10GENERAL_ ENDP
     GENERARHTML1_ PROC NEAR
         MOV SI_SIMULADO,0
         MOV SI_SIMULADO2,0
