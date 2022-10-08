@@ -302,7 +302,7 @@ INCLUDE MACP2.inc
             CMP AH,3EH     ;* si tecla es F4
             JE BubbleSortLB   ;*           SE VA A Bubble Sort
             CMP AH,3FH     ;* si tecla es F5
-            JE HeapSort   ;*           SE VA A Heap Sort
+            JE HeapSortLB   ;*           SE VA A Heap Sort
             CMP AH,40H     ;* si tecla es F6
             JE QuickSortLB   ;*           SE VA A Quick Sort
             CMP AH,44H     ;* si tecla es F10
@@ -328,7 +328,7 @@ INCLUDE MACP2.inc
             paint  0, 0, 800, 600, BLACK
             BUBBLESORT
             JMP Inicio
-        HeapSort:
+        HeapSortLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
             HEAPSORT
