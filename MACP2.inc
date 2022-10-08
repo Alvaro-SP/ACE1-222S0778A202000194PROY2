@@ -207,7 +207,16 @@ concatenarHTML macro destino, fuente
         MOV SI_SIMULADO, si
     POPA
 endm concatenarHTML
-
+TOP10GENERAL MACRO index
+    PUSHA
+    CALL TOP10GENERAL_
+    POPA
+ENDM TOP10GENERAL
+TOP10USUARIO MACRO index
+    PUSHA
+    CALL TOP10USUARIO_
+    POPA
+ENDM TOP10USUARIO
 ;! ▀▀▀▀▀▀▀▀▀▀  METODOS DE ORDENAMIENTO  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 BUBBLESORT MACRO index
     PUSHA
@@ -225,6 +234,13 @@ QUICKSORT MACRO index
     POPA
 ENDM QUICKSORT
 
+;! ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+;! ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀  EL JUEGO  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+INICIODELJUEGO MACRO
+    PUSHA
+    CALL INICIODELJUEGO_
+    POPA
+ENDM
 delay MACRO fuera, dentro
     LOCAL uno,dos,tres
     PUSHA
