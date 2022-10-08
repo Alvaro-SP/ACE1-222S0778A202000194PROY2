@@ -80,6 +80,7 @@ INCLUDE MACP2.inc
         msgUSERTODEGRADE DB 'DIGITE EL USUARIO A DEGRADAR', "$"
         msgUSERTOUNLOCK DB 'DIGITE EL USUARIO A DESBLOQUEAR', "$"
         msguserguardado DB 'USUARIO GUARDADO SATISFACTORIAMENTE!', "$"
+        msgsesioniniciadasatisf DB 'SESION INICIADA SATISFACTORIAMENTE!', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
@@ -202,11 +203,13 @@ INCLUDE MACP2.inc
             paint  0, 0, 800, 600, BLACK
             logup
             PAINTTEXT msguserguardado , 2125H , 0FF30H
+            readtext
             JMP PRINCIPALMENULABEL
         LOGGEAR:
             paint  0, 0, 800, 600, BLACK
             login
-            
+            PAINTTEXT msgsesioniniciadasatisf , 2125H , 0FF30H
+            readtext
         FIN:
         ; MOV Xtemp,540
         ; MOV Ytemp, 540+16
