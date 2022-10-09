@@ -524,12 +524,12 @@ INCLUDE MACP2.inc
                 PAINTTEXT pause1 , 2125H , 0FF30H
                 PAINTTEXT pause2 , 2325H , 0FF30H
                 pauseGame2:
-                MOV AH, 0 ;Wait for keystroke and read
-                INT 16H
-                cmp ax, 011BH  ;* ESC PARA GUARDAR PUNTOS Y MENU.
+                xor ax, ax  ;ah = 0
+                int 16h
+                cmp al, 27  ;* ESC PARA GUARDAR PUNTOS Y MENU.
                 JE GUARDAYMENU
-                cmp ax, 5300H  ;* DEL PARA CONTINUAR
-                JE GUARDAYMENU
+                cmp ah, 83  ;* DEL PARA CONTINUAR
+                JE  siguewhile
                 jMP pauseGame2
             ROTATEPIECE:
 
