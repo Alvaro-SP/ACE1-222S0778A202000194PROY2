@@ -164,7 +164,7 @@ getUSUARIOS macro
 endm
 
 login MACRO
-    LOCAL ESELADMIN,ESUSERNORMAL,ERR
+    LOCAL ESUSERNORMAL,ERR,SALIR
     PUSHA
     PAINTTEXT txLOGIN , 0820H , GREEN
     PAINTTEXT txUSUARIO , 0F10h , LIGHT_BLUE
@@ -174,20 +174,21 @@ login MACRO
     getStr MYuserName
     ;* leo la CONTRASENA
     poscursor 18, 38
-    getStr MYuserPass
+    getStrPASS MYuserPass
 
-    ESELADMIN:
-        isequal MYuserName, ADMINCREDUSER, 13
-        cmp TEMP, 0
-        je ESUSERNORMAL
-        isequal MYuserPass, ADMINCREDPASS, 13
-        cmp TEMP, 0
-        JE ERR
+    ; ESELADMIN:
+    ;     isequal MYuserName, ADMINCREDUSER, 13
+    ;     cmp TEMP, 0
+    ;     je ESUSERNORMAL
+    ;     isequal MYuserPass, ADMINCREDPASS, 13
+    ;     cmp TEMP, 0
+    ;     JE ERR
         ; SESIONADMIN
     ESUSERNORMAL:
         BUSCARUSER
         cmp TEMP, 0
         je ERR
+        JMP SALIR
         ; SESIONUSER
     ERR:
         cleanBuffer MYuserName
@@ -196,6 +197,7 @@ login MACRO
         print error1
         readtext
         JMP PRINCIPALMENULABEL
+    SALIR:
     POPA
 ENDM login
 logup MACRO
@@ -375,7 +377,9 @@ BUSCARUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             print MYauxUserName2
             getLen MYuserPass   ;! COMPARO MI CONTRASENA
             isequal MYuserPass, MYauxUserName2, TEMP
-            
+            print MyuserPass
+            print saltolinea
+            print MYauxUserName2
             JMP fin
         limpiarycont:
             xor bx, bx

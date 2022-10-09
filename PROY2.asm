@@ -150,6 +150,9 @@ INCLUDE MACP2.inc
 
         Stringpuntos    DB 4 dup ('$')
         Stringnivel     DB "1$"
+        ;! VELOCIDAD DEL JUEGO
+        speed DW 1500
+        timeaux DW 0
 
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
@@ -181,7 +184,9 @@ INCLUDE MACP2.inc
         misdatos
         esperaenter  ;TODO: activar despues
         paint  0, 0, 800, 600, BLACK
+        INICIODELJUEGO
 
+        readtext
         PRINCIPALMENULABEL:
         ;! MENUPRINCIPAL
         Inicio:
@@ -435,7 +440,7 @@ INCLUDE MACP2.inc
             MOV AH, 0 ;Wait for keystroke and read
             INT 16H
             CMP AH,3DH     ;* si tecla es F3
-            JE JUGARRRR   ;*           SE VA A JUGARRRRRRR
+            JE JUGARRRR   ;*           SE VA A JUGARRR RRRR
             CMP AH,3EH     ;* si tecla es F4
             JE TOPGEN   ;*           SE VA A TOP 10 GENERAL
             CMP AH,3FH     ;* si tecla es F5
@@ -494,9 +499,43 @@ INCLUDE MACP2.inc
     
     
     
-    
+    ;?☻ ===================== MAIN JUEGO ======================= ☻
     INICIODELJUEGO_ PROC NEAR
         PINTARPANTALLADEJUEGO
+        esperaenter
+        whilee:
+            mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA
+            int 21h
+            cmp al, 0  ;* SI NO SE PRESIONA SIGUEWHILE
+            je siguewhile
+            moverbloque:
+                xor ax, ax  ;* TOMO VALOR DE LA TECLA
+                int 16h
+                cmp al, 27  ;* ESC PARA PAUSAR
+                je pauseGame
+                cmp al, 32  ;* SPACE GIRAR PIEZA
+                je ROTATEPIECE
+            pauseGame:
+                print EXITO
+            ROTATEPIECE:
+
+            siguewhile:
+                print EXITO
+                Delay speed
+
+                inc timeaux
+                mov dx, timeaux
+                cmp dx, 5
+                je nextLevel
+                cmp dx, 15
+                je nextLevel
+                jmp whilee
+            nextLevel:
+                SUB speed, 500
+                jmp whilee
+
+
+
         RET
     INICIODELJUEGO_ ENDP
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻

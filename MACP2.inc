@@ -241,14 +241,14 @@ INICIODELJUEGO MACRO
     CALL INICIODELJUEGO_
     POPA
 ENDM
-delay MACRO fuera, dentro
+delay MACRO fuera
     LOCAL uno,dos,tres
     PUSHA
     MOV SI, fuera
     dos:
         DEC SI
         JZ tres
-        MOV DI, dentro
+        MOV DI, fuera
     uno:
         DEC DI
         JNZ uno
@@ -434,16 +434,26 @@ getStrPASS macro array
     LOCAL getcad, endcad
     PUSHA
     xor si,si
+    MOV TEMPDB,0
     getcad:
         mov ah, 01h
         int 21h
-        ; poscursor x,Y
-        ; printdolar
-
+        
         cmp al,0dh
         je endcad
         mov array[si],al
         inc si
+        ;TODO: ACTIVAR--------------
+        ; mov ah, 02h ; FUNCION PARA COLOCAR EL CURSOR
+        ; mov dh, 18 ; 12 FILA
+        ; mov dl, 38 ; 12 COLUMNA
+        ; ADD DL, TEMPDB
+        ; INC TEMPDB
+        ; INT 10h
+        ; mov AH, 02H
+        ; mov DL , '$'
+        ; INT 21H
+        ;TODO --------------
         jmp getcad
     endcad:
     mov al,24h
