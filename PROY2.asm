@@ -160,6 +160,14 @@ INCLUDE MACP2.inc
         speed DW 1500
         timeaux DW 0
 
+        auxpX1      DW 0       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
+        auxpX2      DW 0
+        auxpX3      DW 0
+        auxpX4      DW 0
+        auxpX1      DW 0
+        auxpX2      DW 0
+        auxpX3      DW 0
+        auxpX4      DW 0
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -530,6 +538,28 @@ INCLUDE MACP2.inc
     INICIODELJUEGO_ ENDP
     ;?☻ ===================== CONTROL DE MATRICES  ======================= ☻
     GENERARCUADRO_ PROC FAR
+        ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
+        ;* VARIAR COLUMNA DE 0 A 5 = X
+        LIMPIARFRAMEANTERIOR
+        MOV CX, Xtemp
+        MOV Xaux1, CX
+        MOV CX, Ytemp
+        MOV Yaux1, CX
+        setAREADEJUEGO Xaux1, Yaux1, 2
+        MOV CX, Xtemp
+        ADD CX, 1
+        MOV Xaux1, CX
+        setAREADEJUEGO Xaux1, Yaux1, 2
+        MOV CX, Xtemp
+        MOV Xaux1, CX
+        MOV CX, Ytemp
+        ADD CX, 1
+        MOV Yaux1, CX
+        setAREADEJUEGO Xaux1, Yaux1, 2
+        MOV CX, Xtemp
+        ADD CX, 1
+        MOV Xaux1, CX
+        setAREADEJUEGO Xaux1, Yaux1, 2
         RET
     GENERARCUADRO_ ENDP
     ; BUSCARUSER_ PROC FAR
@@ -574,7 +604,7 @@ INCLUDE MACP2.inc
         mov BX, setPOSX
         add AX, BX   ; sumamos el indice interno a la cantidad de celdas acumulada
         mov si, AX  ; Movemos la dirección al puntero SI
-        Mov AREADEJUEGO[SI],1 ; finalmente movemos el dato.  Es importante lo de word ptr para indicar el tamaño
+        Mov AREADEJUEGO[SI],POSTOSET; finalmente movemos el dato.  Es importante lo de word ptr para indicar el tamaño
         printnum RESULTADOPRINT, AX
         print RESULTADOPRINT
         print saltolinea

@@ -373,23 +373,54 @@ PAINTSQUARE MACRO X,Y, col
     CALL PAINTSQUARE_
     POPA
 ENDM PAINTSQUARE
-setAREADEJUEGO MACRO X,y
+setAREADEJUEGO MACRO X,y, col
     PUSHA
     MOV AX, X
     MOV setPOSX,AX
     MOV AX, Y
     MOV setPOSY, AX
+    MOV AX, col
+    MOV POSTOSET, AX
     CALL setAREADEJUEGO_
     POPA
 ENDM setAREADEJUEGO
-GENERARCUADRO MACRO X,Y
+getAREADEJUEGO MACRO X,y
+    PUSHA
+    MOV AX, X
+    MOV setPOSX,AX
+    MOV AX, Y
+    MOV setPOSY, AX
+    CALL getAREADEJUEGO_
+    POPA
+ENDM getAREADEJUEGO
+UPDATECUADRO_ MACRO X,Y
     PUSHA
     MOV AX, X
     MOV Xtemp,AX
     MOV AX, Y
     MOV Ytemp, AX
-    CALL GENERARCUADRO_
+    CALL UPDATECUADRO_
     POPA
+ENDM
+LIMPIARFRAMEANTERIOR MACRO
+    setAREADEJUEGO auxpX1,auxpY1,0 ;* LIMPIO ANTERIOR
+    setAREADEJUEGO auxpX2,auxpY2,0
+    setAREADEJUEGO auxpX3,auxpY3,0
+    setAREADEJUEGO auxpX4,auxpY4,0
+    PAINTPOS auxpX1,auxpY1,BLUE ;* LIMPIO ANTERIOR
+    PAINTPOS auxpX2,auxpY2,BLUE
+    PAINTPOS auxpX3,auxpY3,BLUE
+    PAINTPOS auxpX4,auxpY4,BLUE
+ENDM
+RESETAUXSBLOQUES MACRO
+    MOV auxpX1,0
+    MOV auxpX2,0
+    MOV auxpX3,0
+    MOV auxpX4,0
+    MOV auxpY1,0
+    MOV auxpY2,0
+    MOV auxpY3,0
+    MOV auxpY4,0
 ENDM
 ;*========================= CREDENTIALS AND LOGIN ===================================
 printdolar MACRO 
