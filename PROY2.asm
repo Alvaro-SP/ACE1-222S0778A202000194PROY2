@@ -187,8 +187,11 @@ INCLUDE MACP2.inc
         misdatos
         esperaenter  ;TODO: activar despues
         paint  0, 0, 800, 600, BLACK
-        INICIODELJUEGO
-
+        PINTARPANTALLADEJUEGO
+        PAINTPOS 0,1, LIGHT_MAGENTA
+        PAINTPOS 1,1, LIGHT_MAGENTA
+        PAINTPOS 1,2, LIGHT_MAGENTA
+        PAINTPOS 5,10, LIGHT_MAGENTA
         readtext
         PRINCIPALMENULABEL:
         ;! MENUPRINCIPAL

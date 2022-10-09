@@ -288,9 +288,26 @@ PINTARCUADRO MACRO X,Y
     MOV Xtemp,AX
     MOV AX, Y
     MOV Ytemp, AX
-    CALL PINTARCUADRO_
+    CALL PAINTSQUARE_
     POPA
 ENDM PINTARCUADRO
+PAINTPOS MACRO X,Y, col
+    PUSHA
+    MOV AX, X
+    MOV BX, 20
+    MUL BX
+    ADD AX, 486
+    MOV Xtempauxaux,AX
+    MOV AX, Y
+    MOV BX, 20
+    MUL BX
+    ADD AX, 162
+    MOV Ytempauxaux, AX
+    MOV AL, col
+    MOV coloraux, AL
+    CALL PAINTSQUARE_
+    POPA
+ENDM PAINTPOS
 PINTARPALITO MACRO X,Y
     PUSHA
     MOV AX, X
