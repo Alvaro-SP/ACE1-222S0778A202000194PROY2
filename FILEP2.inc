@@ -166,6 +166,7 @@ endm
 login MACRO
     LOCAL ESUSERNORMAL,ERR,SALIR
     PUSHA
+    STARTINT:
     PAINTTEXT txLOGIN , 0820H , GREEN
     PAINTTEXT txUSUARIO , 0F10h , LIGHT_BLUE
     PAINTTEXT txCONTRASENA , 1210H , LIGHT_BLUE
@@ -191,11 +192,17 @@ login MACRO
         JMP SALIR
         ; SESIONUSER
     ERR:
+        COOLDOWN
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
+
+
         poscursor 22, 30
         print error1
         readtext
+
+    BLOQUEARYSALIR:
+        BLOQUEAR
         JMP PRINCIPALMENULABEL
     SALIR:
     POPA
@@ -345,11 +352,9 @@ BUSCARUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     getUSUARIOS
     mov dx, 0
     MOV SI, 0
-    xor ax, ax
+    xor ax, ax;* flag for to say the status. 0 = getUser
     xor bx, bx
-    xor cx, cx  ;* flag for to say the status. 0 = getUser
-                ;* 1 = find the char of exit '\n' is my pivote
-
+    xor cx, cx  ;* 1 = find the char of exit '\n' is my pivote
     while:   ;!  NAME,PASS&0%0  \10
         cmp si, tamfile
         je NOSEENCONTRO
@@ -374,7 +379,6 @@ BUSCARUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             inc si
             jmp while
         nextchariscategory:
-            print MYauxUserName2
             getLen MYuserPass   ;! COMPARO MI CONTRASENA
             isequal MYuserPass, MYauxUserName2, TEMP
             print MyuserPass
@@ -590,6 +594,15 @@ VALIDARTIPODEUSUARIO MACRO
     JE MOSTRARMENUNORMAL
     JE MOSTRARMENUUSERADMIN
 
+ENDM
+COOLDOWN MACRO
+
+    TOMARBLOQUEO MyuserName
+    INC cooldowncont
+    DELAY 30000
+    CMP cooldowncont, 3
+    JE BLOQUEARYSALIR
+    JMP STARTINT
 ENDM
 ;! =========================TAKE DATA FROM THE USERS.TET==============================
 TOMARCATEGORIA MACRO usr
