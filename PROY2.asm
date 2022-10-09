@@ -74,8 +74,10 @@ INCLUDE MACP2.inc
         msgyaesadmin DB 'NO PUEDE PROMOVER YA ES UN ADMINISTRADOR', "$"
         msgpromovido DB 'USUARIO PROMOVIDO AHORA ES UN PRO ;v', "$"
         msgdegradado DB 'USUARIO DEGRADADO AHORA ES UN ESCLAVO ;v', "$"
+        msgbloqueado DB 'USUARIO BLOQUEADO POR INTENTOS FALLIDOS', "$"
         msgyaesnormal DB 'NO SE PUEDE DEGRADAR YA ES UN USUARIO NORMAL', "$"
         msgestaunlock DB 'EL USUARIO ESTA DESBLOQUEADO', "$"
+        msgestalock DB 'EL USUARIO YA ESTA BLOQUEADO', "$"
         msgUSERTOPROMOVE DB 'DIGITE EL USUARIO A PROMOVER', "$"
         msgUSERTODEGRADE DB 'DIGITE EL USUARIO A DEGRADAR', "$"
         msgUSERTOUNLOCK DB 'DIGITE EL USUARIO A DESBLOQUEAR', "$"
@@ -215,7 +217,7 @@ INCLUDE MACP2.inc
         LOGGEAR:
             paint  0, 0, 800, 600, BLACK
             login
-            
+
             VALIDARTIPODEUSUARIO
             PAINTTEXT msgsesioniniciadasatisf , 2125H , 0FF30H
             readtext

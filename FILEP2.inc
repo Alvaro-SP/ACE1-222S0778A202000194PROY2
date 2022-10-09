@@ -581,6 +581,38 @@ DESBLOQUEAR MACRO
         cleanBuffer MYauxUserName
     POPA
 ENDM
+BLOQUEAR MACRO
+    ;* SI BLOQUEO ES 1 --->	cambio bloqueo a 0 
+    ;* SI BLOQUEO ES 0 ---> 	mensaje el "USER ESTA DESBLOQUEADO"
+    LOCAL SOLOMESSAGE,UNLOCKFILE,SALIDA,erroruser
+    PUSHA
+    TOMARBLOQUEO MYUserName
+    CMP TEMPDB, '1'
+    JE SOLOMESSAGE
+    JNE UNLOCKFILE
+    SOLOMESSAGE:
+        poscursor 22,30
+        print msgestalock
+        JMP SALIDA
+    UNLOCKFILE:
+        CMP TEMPDB, '2'
+        JE erroruser
+        getUSUARIOS
+        MOV SI, handler2
+        Mov buferdedatos[SI], '1'
+        crear USERSTET, handler
+        getLen buferdedatos
+        writeFile handler, buferdedatos, TEMP
+        cerrar handler
+        poscursor 22,30
+        print msgbloqueado
+        JMP SALIDA
+    erroruser:
+        print error10
+    SALIDA:
+        cleanBuffer MYauxUserName
+    POPA
+ENDM
 
 VALIDARTIPODEUSUARIO MACRO
     TOMARBLOQUEO MyuserName
