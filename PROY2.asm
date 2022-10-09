@@ -477,38 +477,6 @@ INCLUDE MACP2.inc
         RET
     MENUUSUARIO_ ENDP
     
-    
-    ;?☻ =====================   ======================= ☻
-    ; BUSCARUSER_ PROC FAR
-    ;     RET
-    ; BUSCARUSER_ ENDP
-    ; BUSCARUSER_ PROC FAR
-    ;     RET
-    ; BUSCARUSER_ ENDP
-    ; BUSCARUSER_ PROC FAR
-    ;     RET
-    ; BUSCARUSER_ ENDP
-    ; BUSCARUSER_ PROC FAR
-    ;     RET
-    ; BUSCARUSER_ ENDP
-    ; BUSCARUSER_ PROC FAR
-    ;     RET
-    ; BUSCARUSER_ ENDP
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     ;?☻ ===================== MAIN JUEGO ======================= ☻
     INICIODELJUEGO_ PROC NEAR
         PINTARPANTALLADEJUEGO
@@ -560,6 +528,38 @@ INCLUDE MACP2.inc
         SALIR:
         RET
     INICIODELJUEGO_ ENDP
+    ;?☻ ===================== CONTROL DE MATRICES  ======================= ☻
+    GENERARCUADRO_ PROC FAR
+        RET
+    GENERARCUADRO_ ENDP
+    ; BUSCARUSER_ PROC FAR
+    ;     RET
+    ; BUSCARUSER_ ENDP
+    ; BUSCARUSER_ PROC FAR
+    ;     RET
+    ; BUSCARUSER_ ENDP
+    ; BUSCARUSER_ PROC FAR
+    ;     RET
+    ; BUSCARUSER_ ENDP
+    ; BUSCARUSER_ PROC FAR
+    ;     RET
+    ; BUSCARUSER_ ENDP
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
     setAREADEJUEGO_ PROC NEAR
         ;! POSICION AL = Y     AX = X
@@ -796,7 +796,6 @@ INCLUDE MACP2.inc
         PAINTSQUARE  Xaux1,Yaux1,LIGHT_CYAN
         RET
     PINTARCUADRO_ ENDP
-    
     PINTARPALITO_ PROC NEAR;! PALITO
         MOV CX, Xtemp
         MOV Xaux1, CX

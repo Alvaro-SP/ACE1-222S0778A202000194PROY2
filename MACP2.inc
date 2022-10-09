@@ -376,13 +376,21 @@ ENDM PAINTSQUARE
 setAREADEJUEGO MACRO X,y
     PUSHA
     MOV AX, X
-    MOV setPOSX,AXamueblado de sala
+    MOV setPOSX,AX
     MOV AX, Y
     MOV setPOSY, AX
     CALL setAREADEJUEGO_
     POPA
 ENDM setAREADEJUEGO
-
+GENERARCUADRO MACRO X,Y
+    PUSHA
+    MOV AX, X
+    MOV Xtemp,AX
+    MOV AX, Y
+    MOV Ytemp, AX
+    CALL GENERARCUADRO_
+    POPA
+ENDM
 ;*========================= CREDENTIALS AND LOGIN ===================================
 printdolar MACRO 
     PUSHA
