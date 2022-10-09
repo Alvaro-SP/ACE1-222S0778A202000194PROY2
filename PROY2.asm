@@ -81,6 +81,9 @@ INCLUDE MACP2.inc
         msgUSERTOUNLOCK DB 'DIGITE EL USUARIO A DESBLOQUEAR', "$"
         msguserguardado DB 'USUARIO GUARDADO SATISFACTORIAMENTE!', "$"
         msgsesioniniciadasatisf DB 'SESION INICIADA SATISFACTORIAMENTE!', "$"
+        pause0 DB '------------------- PAUSA ---------------------', "$"
+        pause1 DB 'ESC = para guardar SCORE y salir al MENU', "$"
+        pause2 DB 'DEL = para continuar el JUEGO', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
@@ -516,7 +519,18 @@ INCLUDE MACP2.inc
                 cmp al, 32  ;* SPACE GIRAR PIEZA
                 je ROTATEPIECE
             pauseGame:
-                print EXITO
+                paint  0, 0, 800, 600, BLACK
+                PAINTTEXT pause0 , 0B17H , WHITE
+                PAINTTEXT pause1 , 2125H , 0FF30H
+                PAINTTEXT pause2 , 2325H , 0FF30H
+                pauseGame2:
+                MOV AH, 0 ;Wait for keystroke and read
+                INT 16H
+                cmp ax, 011BH  ;* ESC PARA GUARDAR PUNTOS Y MENU.
+                JE GUARDAYMENU
+                cmp ax, 5300H  ;* DEL PARA CONTINUAR
+                JE GUARDAYMENU
+                jMP pauseGame2
             ROTATEPIECE:
 
             siguewhile:
@@ -533,9 +547,10 @@ INCLUDE MACP2.inc
             nextLevel:
                 SUB speed, 500
                 jmp whilee
+            GUARDAYMENU:
+                JMP SALIR
 
-
-
+        SALIR:
         RET
     INICIODELJUEGO_ ENDP
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
