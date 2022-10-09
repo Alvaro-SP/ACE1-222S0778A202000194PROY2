@@ -779,59 +779,44 @@ ESESPECIAL macro CHARNUM ; ! PA SABER SI ES ESPECIAL
     SALIR:
 ENDM
 CONTARMAYUSCULAS macro
-    LOCAL buc, sigo, buct,MAYUS,SALIR
+    LOCAL buc,  buct,SALIR
     MOV TEMP,0
+    XOR di, di
     buc:
         CMP MYuserPass[di+1], "$"
-        JE sigo
+        JE SALIR
         ESMAYUS MYuserPass[di]
-        tostring TEMP, Stringpuntos
-        print stringpuntos
         buct:
             inc di
             JMP buc
-    sigo:
-        CMP TEMP, 3
-        JL MAYUS ;SI TIENE MENOS DE 3 MAYUSCULAS
-        JMP SALIR
-    MAYUS:
-        MOV dx, 1
     SALIR:
 ENDM
 CONTARNUMEROS macro
     LOCAL buc, sigo, buct,MAYUS,SALIR
     MOV TEMP,0
+    XOR di, di
     buc:
         ESNUMERO MYuserPass[di]
         CMP MYuserPass[di+1], "$"
-        JE sigo
+        JE SALIR
         buct:
             inc di
             JMP buc
-    sigo:
-        CMP TEMP, 2
-        JL MAYUS ;SI TIENE MENOS DE 3 MAYUSCULAS
-        JMP SALIR
-    MAYUS:
-        MOV dx, 1
+
     SALIR:
 ENDM
 CONTARESPECIALES macro
     LOCAL buc, sigo, buct,MAYUS,SALIR
     MOV TEMP,0
+    XOR di, di
     buc:
         ESESPECIAL MYuserPass[di]
         CMP MYuserPass[di+1], "$"
-        JE sigo
+        JE SALIR
         buct:
             inc di
             JMP buc
-    sigo:
-        CMP TEMP, 2
-        JL MAYUS ;SI TIENE MENOS DE 3 MAYUSCULAS
-        JMP SALIR
-    MAYUS:
-        MOV dx, 1
+
     SALIR:
 ENDM
 

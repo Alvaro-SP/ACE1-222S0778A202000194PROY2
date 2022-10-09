@@ -111,9 +111,7 @@ INCLUDE MACP2.inc
         tamfile             DW 0
         TEMP             DW 0
         TEMPDB             Db "0$"
-        coma             db ","
         nuevalinea       db 10,'$'
-        delkey       dw 5300h
     ;? ------------------------BUBBLESORT VARIABLES------------------------
         buferdedatos          db 1000 dup('$')
         listestadistic          dw 2000 dup('$')
@@ -183,10 +181,6 @@ INCLUDE MACP2.inc
         misdatos
         esperaenter  ;TODO: activar despues
         paint  0, 0, 800, 600, BLACK
-
-        ; PROMOVER
-        readtext
-
 
         PRINCIPALMENULABEL:
         ;! MENUPRINCIPAL

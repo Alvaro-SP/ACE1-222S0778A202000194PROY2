@@ -186,7 +186,7 @@ login MACRO
         ; SESIONADMIN
     ESUSERNORMAL:
         BUSCARUSER
-        cmp dx, 0
+        cmp TEMP, 0
         je ERR
         ; SESIONUSER
     ERR:
@@ -203,7 +203,7 @@ logup MACRO
     PAINTTEXT txLOGUP , 0820H , 0FF26H
     PAINTTEXT txUSUARIO , 0F10h , 0FF0FH
     PAINTTEXT txCONTRASENA , 1210H , 0FF0FH
-    ;* leo el NOMBRE DE USUARIO
+    ;* ********************leo el NOMBRE DE USUARIO********************
     poscursor 15, 38
     getStr MYuserName
     ;? a.	No puede empezar por número
@@ -223,9 +223,9 @@ logup MACRO
     CMP dx, 1
     JE ERR9
     
-    xor dx, dx
+    MOV TEMP, 0
     ESNUMERO MYuserName[0]
-    CMP dx, 1
+    CMP TEMP, 1
     JE ERR3
     
     xor di, di
@@ -240,9 +240,8 @@ logup MACRO
             inc di
             JMP buc
     sigo2:
-    ;* leo la CONTRASENA
-    
-    poscursor 17, 38
+    ;* ******************** leo la CONTRASENA ********************
+    poscursor 18, 38
     getStrPASS MYuserPass
     ;? 2.	se solicitará la contraseña para el usuario y se harán las siguientes validaciones:
     ;? a.	debe tener al menos 3 mayúsculas
@@ -260,16 +259,16 @@ logup MACRO
     cmp TEMP, 20
     JG ERR8
 
-    xor dx, dx
+    MOV TEMP, 0
     CONTARMAYUSCULAS
-    CMP dx, 1
-    JE ERR5
+    CMP TEMP, 3
+    JL ERR5
     CONTARNUMEROS
-    CMP dx, 1
-    JE ERR6
+    CMP TEMP, 2
+    JL ERR6
     CONTARESPECIALES
-    CMP dx, 1
-    JE ERR7
+    CMP TEMP, 2
+    JL ERR7
 
     ;! AHORA SI GUARDO MI USUARIO NUEVO EL QUE SE VA A AGREGAR.
     SAVEUSERINFILE MyuserName, MyuserPass
@@ -338,9 +337,66 @@ logup MACRO
 ENDM logup
 
 BUSCARUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
+    LOCAL fin,limpiarycont,NOSEENCONTRO,REVISARNOMBRE,continuar,while,buscaand,sigoauxi,nextchariscategory,yahaynombre
     PUSHA
     getUSUARIOS
+    mov dx, 0
+    MOV SI, 0
+    xor ax, ax
+    xor bx, bx
+    xor cx, cx  ;* flag for to say the status. 0 = getUser
+                ;* 1 = find the char of exit '\n' is my pivote
 
+    while:   ;!  NAME,PASS&0%0  \10
+        cmp si, tamfile
+        je NOSEENCONTRO
+        xor ah, ah
+        mov al, buferdedatos[si]
+        ;* COMPARAMOS CADA CARACTER DEL BUFFER
+        CMP al, 10 ; ? si es FIN DE LINEA SALTA
+        je limpiarycont
+        cmp al, ','  ; ? si es COMA YA TENGO EL USER EN MYAUX
+        je REVISARNOMBRE
+        CMP TEMP, 2  ; ? si 2 el temp porque ya encontro el user
+        JE buscaand
+        JNE sigoauxi
+        buscaand:
+            CMP al, "&" ;? si es & EL SIGUIENTE ES LA CATEGORY
+            JE nextchariscategory
+        sigoauxi:
+        mov MYauxUserName2[bx], al
+        inc bx
+        jmp continuar
+        continuar:
+            inc si
+            jmp while
+        nextchariscategory:
+            print MYauxUserName2
+            getLen MYuserPass   ;! COMPARO MI CONTRASENA
+            isequal MYuserPass, MYauxUserName2, TEMP
+            
+            JMP fin
+        limpiarycont:
+            xor bx, bx
+            cleanBuffer MYuserName
+            jmp continuar
+        yahaynombre:
+            mov TEMP, 2
+            JMP continuar
+    REVISARNOMBRE:
+        getLen MYuserName
+        isequal MYuserName, MYauxUserName2, TEMP
+        cleanBuffer MYauxUserName2
+        xor bx, bx
+        xor cx, cx
+        cmp TEMP, 1
+        je yahaynombre
+        jmp continuar
+    NOSEENCONTRO:
+        MOV TEMPDB, '2'
+    fin:
+        cleanBuffer buferdedatos
+        cleanBuffer MYauxUserName
     POPA
 ENDM BUSCARUSER
 NOMBREUSADO MACRO
@@ -394,12 +450,15 @@ SAVEUSERINFILE MACRO user, pass ;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME 
     getLen user  ;* take the length of my user
     seekEnd handler ;* update the cursor or the pointer in the file writing
     writeFile handler, user, TEMP ;* write THE USER AND THE PASS.
-    writeFile handler, coma, 1
+    MOV TEMPDB, ','
+    writeFile handler, TEMPDB, 1
     getLen pass  ;* take the length of my pass
     writeFile handler, pass, TEMP ;* write THE USER AND THE PASS.
-    writeFile handler, coma, 1
+    MOV TEMPDB, '&'
+    writeFile handler, TEMPDB, 1
     writeFile handler, CATEGORIA, 1
-    writeFile handler, coma, 1
+    MOV TEMPDB, '%'
+    writeFile handler, TEMPDB, 1
     writeFile handler, BLOQUEO, 1
     writeFile handler, nuevalinea, 1         ;?==>    JUANITO,ABC123@@@,0,0,0  \n
     cerrar handler
@@ -576,9 +635,6 @@ TOMARCATEGORIA MACRO usr
             mov TEMP, 2
             JMP continuar
     REVISARNOMBRE:
-        print usr
-        print MYauxUserName2
-        print saltolinea
         getLen usr
         isequal usr, MYauxUserName2, TEMP
         cleanBuffer MYauxUserName2
@@ -644,9 +700,6 @@ TOMARBLOQUEO MACRO usr
             mov TEMP, 2
             JMP continuar
     REVISARNOMBRE:
-        print usr
-        print MYauxUserName2
-        print saltolinea
         getLen usr
         isequal usr, MYauxUserName2, TEMP
         cleanBuffer MYauxUserName2
