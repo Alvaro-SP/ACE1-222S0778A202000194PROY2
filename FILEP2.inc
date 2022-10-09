@@ -173,7 +173,7 @@ login MACRO
     poscursor 15, 38
     getStr MYuserName
     ;* leo la CONTRASENA
-    poscursor 15, 38
+    poscursor 18, 38
     getStr MYuserPass
 
     ESELADMIN:
@@ -192,6 +192,7 @@ login MACRO
     ERR:
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
+        poscursor 22, 30
         print error1
         readtext
         JMP PRINCIPALMENULABEL
@@ -277,56 +278,56 @@ logup MACRO
     JMP SALIDA
 
     ERR2:
-        poscursor 22, 38
+        poscursor 22, 30
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error2
         readtext
         JMP PRINCIPALMENULABEL
     ERR3:
-        poscursor 22, 38
+        poscursor 22, 30
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error3
         readtext
         JMP PRINCIPALMENULABEL
     ERR4:
-        poscursor 22, 38
+        poscursor 22, 30
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error4
         readtext
         JMP PRINCIPALMENULABEL
     ERR5:
-        poscursor 22, 38
+        poscursor 22, 30
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error5
         readtext
         JMP PRINCIPALMENULABEL
     ERR6:
-        poscursor 22, 38
+        poscursor 22, 30
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error6
         readtext
         JMP PRINCIPALMENULABEL
     ERR7:
-        poscursor 22, 38
+        poscursor 22, 30
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error7
         readtext
         JMP PRINCIPALMENULABEL
     ERR8:
-        poscursor 22, 38
+        poscursor 22, 30
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error8
         readtext
         JMP PRINCIPALMENULABEL
     ERR9:
-        poscursor 22, 38
+        poscursor 22, 30
         cleanBuffer MYuserName
         cleanBuffer MYuserPass
         print error9
