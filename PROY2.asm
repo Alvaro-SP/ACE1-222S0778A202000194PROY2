@@ -164,12 +164,13 @@ INCLUDE MACP2.inc
         auxpX2      DW 0
         auxpX3      DW 0
         auxpX4      DW 0
-        auxpX1      DW 0
-        auxpX2      DW 0
-        auxpX3      DW 0
-        auxpX4      DW 0
+        auxpY1      DW 0
+        auxpY2      DW 0
+        auxpY3      DW 0
+        auxpY4      DW 0
 
         BANDERATIESO      DW 0
+        POSTOSET      DW 0
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -201,10 +202,12 @@ INCLUDE MACP2.inc
         esperaenter  ;TODO: activar despues
         paint  0, 0, 800, 600, BLACK
         PINTARPANTALLADEJUEGO
-        PAINTPOS 0,1, LIGHT_MAGENTA
-        PAINTPOS 1,1, LIGHT_MAGENTA
-        PAINTPOS 1,2, LIGHT_MAGENTA
-        PAINTPOS 5,10, LIGHT_MAGENTA
+        ; PAINTPOS 0,1, LIGHT_MAGENTA
+        ; PAINTPOS 1,1, LIGHT_MAGENTA
+        ; PAINTPOS 1,2, LIGHT_MAGENTA
+        ; PAINTPOS 5,10, LIGHT_MAGENTA
+        UPDATECUADRO 0,14
+        ; INICIODELJUEGO
         readtext
         PRINCIPALMENULABEL:
         ;! MENUPRINCIPAL
@@ -490,6 +493,7 @@ INCLUDE MACP2.inc
     ;?☻ ===================== MAIN JUEGO ======================= ☻
     INICIODELJUEGO_ PROC NEAR
         PINTARPANTALLADEJUEGO
+        MOV DI, 0
         esperaenter
         whilee:
             mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA
@@ -519,9 +523,9 @@ INCLUDE MACP2.inc
             ROTATEPIECE:
 
             siguewhile:
-                print EXITO
+                UPDATECUADRO 0, DI
+                INC DI
                 Delay speed
-
                 inc timeaux
                 mov dx, timeaux
                 cmp dx, 5
@@ -539,12 +543,14 @@ INCLUDE MACP2.inc
         RET
     INICIODELJUEGO_ ENDP
     ;?☻ ===================== CONTROL DE MATRICES  ======================= ☻
-    UPDATECUADRO_ PROC FAR
+    UPDATECUADRO_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
         LIMPIARFRAMEANTERIOR
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         INC auxpY3
+        CMP auxpY3, 15  ;* sI LLEGO AL FONDO
+        JE SEQUEDAKIETO
         getAREADEJUEGO auxpX3, auxpY3
         CMP TEMP, 0
         JNE SEQUEDAKIETO
@@ -558,6 +564,7 @@ INCLUDE MACP2.inc
         MOV CX, Ytemp
         MOV auxpY1, CX
         setAREADEJUEGO auxpX1, auxpY1, 2
+        PAINTPOS auxpX1,auxpY1,LIGHT_GREEN
 
         MOV CX, Xtemp
         MOV auxpX2, CX
@@ -565,6 +572,7 @@ INCLUDE MACP2.inc
         ADD CX, 1
         MOV auxpY2, CX
         setAREADEJUEGO auxpX2, auxpY2, 2
+        PAINTPOS auxpX2,auxpY2,LIGHT_GREEN
 
         MOV CX, Xtemp
         ADD CX, 1
@@ -572,6 +580,7 @@ INCLUDE MACP2.inc
         MOV CX, Ytemp
         MOV auxpY3, CX
         setAREADEJUEGO auxpX3, auxpY3, 2
+        PAINTPOS auxpX3,auxpY3,LIGHT_GREEN
 
         MOV CX, Xtemp
         ADD CX, 1
@@ -580,11 +589,13 @@ INCLUDE MACP2.inc
         ADD CX, 1
         MOV auxpY4, CX
         setAREADEJUEGO auxpX4, auxpY4, 2
-        JMP SALIR
+        PAINTPOS auxpX4,auxpY4,LIGHT_GREEN
+        JMP SALIRZ
         SEQUEDAKIETO:
+            print EXITO
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
-        SALIR:
+        SALIRZ:
         RET
     UPDATECUADRO_ ENDP
     ; BUSCARUSER_ PROC FAR
@@ -629,10 +640,11 @@ INCLUDE MACP2.inc
         mov BX, setPOSX
         add AX, BX   ; sumamos el indice interno a la cantidad de celdas acumulada
         mov si, AX  ; Movemos la dirección al puntero SI
-        Mov AREADEJUEGO[SI],POSTOSET; finalmente movemos el dato.  Es importante lo de word ptr para indicar el tamaño
-        printnum RESULTADOPRINT, AX
-        print RESULTADOPRINT
-        print saltolinea
+        MOV BX, POSTOSET
+        Mov AREADEJUEGO[SI],BX; finalmente movemos el dato.  Es importante lo de word ptr para indicar el tamaño
+        ; printnum RESULTADOPRINT, AX
+        ; print RESULTADOPRINT
+        ; print saltolinea
         RET
     setAREADEJUEGO_ ENDP
     getAREADEJUEGO_ PROC NEAR
@@ -815,9 +827,9 @@ INCLUDE MACP2.inc
     DRAW_RECTANGLE_ ENDP
     PINTARPANTALLADEJUEGO_ PROC NEAR
         DRAW_RECTANGLE 468,144,656, 144+18, CYAN
-        DRAW_RECTANGLE 468,144,468+18, 484, CYAN
-        DRAW_RECTANGLE 468,484-18,656, 484, CYAN
-        DRAW_RECTANGLE 656-18,144,656, 484, CYAN
+        DRAW_RECTANGLE 468,144,468+18, 500, CYAN
+        DRAW_RECTANGLE 468,500-18,656, 500, CYAN
+        DRAW_RECTANGLE 656-18,144,656, 500, CYAN
         ;PINTAR TITULO
         DRAW_RECTANGLE 144+18,108+36,144+36, 108+36+18, WHITE
         DRAW_RECTANGLE 54,108,324, 108+18, WHITE
