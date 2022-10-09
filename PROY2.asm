@@ -168,6 +168,8 @@ INCLUDE MACP2.inc
         auxpX2      DW 0
         auxpX3      DW 0
         auxpX4      DW 0
+
+        BANDERATIESO      DW 0
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -537,31 +539,54 @@ INCLUDE MACP2.inc
         RET
     INICIODELJUEGO_ ENDP
     ;?☻ ===================== CONTROL DE MATRICES  ======================= ☻
-    GENERARCUADRO_ PROC FAR
+    UPDATECUADRO_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
         LIMPIARFRAMEANTERIOR
+        ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+        INC auxpY3
+        getAREADEJUEGO auxpX3, auxpY3
+        CMP TEMP, 0
+        JNE SEQUEDAKIETO
+        INC auxpY4
+        getAREADEJUEGO auxpX4, auxpY4
+        CMP TEMP, 0
+        JNE SEQUEDAKIETO
+
         MOV CX, Xtemp
-        MOV Xaux1, CX
+        MOV auxpX1, CX
         MOV CX, Ytemp
-        MOV Yaux1, CX
-        setAREADEJUEGO Xaux1, Yaux1, 2
+        MOV auxpY1, CX
+        setAREADEJUEGO auxpX1, auxpY1, 2
+
         MOV CX, Xtemp
-        ADD CX, 1
-        MOV Xaux1, CX
-        setAREADEJUEGO Xaux1, Yaux1, 2
-        MOV CX, Xtemp
-        MOV Xaux1, CX
+        MOV auxpX2, CX
         MOV CX, Ytemp
         ADD CX, 1
-        MOV Yaux1, CX
-        setAREADEJUEGO Xaux1, Yaux1, 2
+        MOV auxpY2, CX
+        setAREADEJUEGO auxpX2, auxpY2, 2
+
         MOV CX, Xtemp
         ADD CX, 1
-        MOV Xaux1, CX
-        setAREADEJUEGO Xaux1, Yaux1, 2
+        MOV auxpX3, CX
+        MOV CX, Ytemp
+        MOV auxpY3, CX
+        setAREADEJUEGO auxpX3, auxpY3, 2
+
+        MOV CX, Xtemp
+        ADD CX, 1
+        MOV auxpX4, CX
+        MOV CX, Ytemp
+        ADD CX, 1
+        MOV auxpY4, CX
+        setAREADEJUEGO auxpX4, auxpY4, 2
+        JMP SALIR
+        SEQUEDAKIETO:
+            RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
+            MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
+        SALIR:
         RET
-    GENERARCUADRO_ ENDP
+    UPDATECUADRO_ ENDP
     ; BUSCARUSER_ PROC FAR
     ;     RET
     ; BUSCARUSER_ ENDP
@@ -610,6 +635,23 @@ INCLUDE MACP2.inc
         print saltolinea
         RET
     setAREADEJUEGO_ ENDP
+    getAREADEJUEGO_ PROC NEAR
+        ;! POSICION AL = Y     AX = X
+        MOV AX, 2
+        MOV BX, setPOSX
+        MUL BX
+        MOV setPOSX, BX
+
+        mov AX, setPOSY   ; indice externo a accesar
+        mov BX, 16  ; tamaño de cada arreglo almacenado en el primer nivel de la matriz
+        mul BX      ; nos deja la respuesta en el ax.  Ocupamos que la dirección sea en 16 bits
+        mov BX, setPOSX
+        add AX, BX   ; sumamos el indice interno a la cantidad de celdas acumulada
+        mov si, AX  ; Movemos la dirección al puntero SI
+        MOV DI, AREADEJUEGO[SI]
+        MOV TEMP, DI
+        RET
+    getAREADEJUEGO_ ENDP
     ;?☻ ===================== RECORRER MATRIZ AREA DE JUEGO ======================= ☻
     recorrerm1_ PROC NEAR
         mov si, 00
