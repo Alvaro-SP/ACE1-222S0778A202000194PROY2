@@ -116,6 +116,7 @@ INCLUDE MACP2.inc
         tamfile             DW 0
         TEMP             DW 0
         TEMP2             DW 0
+        TEMP3             DW 0
         TEMPDB             Db "0$"
         nuevalinea       db 10,'$'
         cooldowncont       dw 0
@@ -174,6 +175,7 @@ INCLUDE MACP2.inc
         POSTOSET            DW 0
         POSXHANDLE          DW 0  ;* POSICION HORIZONTAL DE LA PIEZA
         TIPODEPIEZA         DW 0 ;* HANDLER DEL TIPO DE PIEZA
+        NEXTPIECE         DW 0
         ROTACIONDEPIEZA     DW 0 ;* HANDLER DE LA ROTACION DE LA PIEZA
 
         ;? --------------------------   COLORES   --------------------------
@@ -516,6 +518,7 @@ INCLUDE MACP2.inc
             RANDOMPIECE ; * Genero la pieza siguiente para despues
             MOV SI, TEMP
             MOV NEXTPIECE, SI
+            PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
         whilee:
             mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA
@@ -676,13 +679,13 @@ INCLUDE MACP2.inc
         FORJ:
             CMP DI, 8
             JE VALIDAR
-            getAREADEJUEGO di, pos
+            getAREADEJUEGO di, TEMP3
             CMP TEMP,0
             JE SUMONO ;* si hay cero no sumo
             SUMOSI:
                 INC TEMP2
             SUMONO:
-                inc si
+                inc DI
                 JMP FORJ
         VALIDAR:
             CMP TEMP2, 8
