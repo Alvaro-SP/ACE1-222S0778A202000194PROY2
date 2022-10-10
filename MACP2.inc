@@ -322,9 +322,32 @@ PINTARUNIT MACRO X,Y, col
     CMP col, 6
     JE PL6
     CMP col, 7
+    JNE PL88
     JE PL7
     PL1:
-        PAINTPOS X,Y, col
+        PAINTPOS X,Y, LIGHT_GREEN
+        JMP SALIDA
+    PL2:
+        PAINTPOS X,Y, LIGHT_GREEN
+        JMP SALIDA
+    PL3:
+        PAINTPOS X,Y, LIGHT_GREEN
+        JMP SALIDA
+    PL4:
+        PAINTPOS X,Y, LIGHT_GREEN
+        JMP SALIDA
+    PL5:
+        PAINTPOS X,Y, LIGHT_GREEN
+        JMP SALIDA
+    PL6:
+        PAINTPOS X,Y, LIGHT_GREEN
+        JMP SALIDA
+    PL7:
+        PAINTPOS X,Y, LIGHT_GREEN
+        JMP SALIDA
+    PL88:
+        PAINTPOS X,Y, BLUE
+    SALIDA:
 ENDM
 PINTARPALITO MACRO X,Y
     PUSHA
