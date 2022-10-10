@@ -145,11 +145,11 @@ INCLUDE MACP2.inc
         INDEX           Dw ?
         INDEXtemp       Dw ?
 
-        MYuserPass    db 20 dup ('$') ; ! USUARIO Y CONTRASENA
-        MYuserName    db 15 dup ('$')
-        MYauxUserName     db 15 dup ('$')
-        MYauxUserName2     db 15 dup ('$')
-        MYauxPass     db 20 dup ('$')
+        MYuserPass          db 20 dup ('$') ; ! USUARIO Y CONTRASENA
+        MYuserName          db 15 dup ('$')
+        MYauxUserName       db 15 dup ('$')
+        MYauxUserName2      db 15 dup ('$')
+        MYauxPass           db 20 dup ('$')
 
         CATEGORIA       DB "0$"
         BLOQUEO         DB "0$"
@@ -169,10 +169,10 @@ INCLUDE MACP2.inc
         auxpY3      DW 0
         auxpY4      DW 0
 
-        BANDERATIESO      DW 0
-        POSTOSET      DW 0
-        POSXHANDLE       DW 0  ;* POSICION HORIZONTAL DE LA PIEZA
-        TIPODEPIEZA     DW 0 ;
+        BANDERATIESO        DW 0
+        POSTOSET            DW 0
+        POSXHANDLE          DW 0  ;* POSICION HORIZONTAL DE LA PIEZA
+        TIPODEPIEZA         DW 0 ;* HANDLER DEL TIPO DE PIEZA
         ROTACIONDEPIEZA     DW 0 ;* HANDLER DE LA ROTACION DE LA PIEZA
 
         ;? --------------------------   COLORES   --------------------------
