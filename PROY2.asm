@@ -206,8 +206,9 @@ INCLUDE MACP2.inc
         ; PAINTPOS 1,1, LIGHT_MAGENTA
         ; PAINTPOS 1,2, LIGHT_MAGENTA
         ; PAINTPOS 5,10, LIGHT_MAGENTA
-        UPDATECUADRO 0,14
-        ; INICIODELJUEGO
+        setAREADEJUEGO 0,9,2
+        ; UPDATECUADRO 0,14
+        INICIODELJUEGO
         readtext
         PRINCIPALMENULABEL:
         ;! MENUPRINCIPAL
@@ -555,6 +556,8 @@ INCLUDE MACP2.inc
         CMP TEMP, 0
         JNE SEQUEDAKIETO
         INC auxpY4
+        printnum RESULTADOPRINT, auxpY3
+        print RESULTADOPRINT
         getAREADEJUEGO auxpX4, auxpY4
         CMP TEMP, 0
         JNE SEQUEDAKIETO
@@ -593,6 +596,7 @@ INCLUDE MACP2.inc
         JMP SALIRZ
         SEQUEDAKIETO:
             print EXITO
+            readtext
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
