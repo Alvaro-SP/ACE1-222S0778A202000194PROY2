@@ -206,7 +206,7 @@ INCLUDE MACP2.inc
         ; PAINTPOS 1,1, LIGHT_MAGENTA
         ; PAINTPOS 1,2, LIGHT_MAGENTA
         ; PAINTPOS 5,10, LIGHT_MAGENTA
-        setAREADEJUEGO 0,9,2
+        
         ; UPDATECUADRO 0,14
         INICIODELJUEGO
         readtext
@@ -496,6 +496,8 @@ INCLUDE MACP2.inc
         PINTARPANTALLADEJUEGO
         MOV DI, 0
         esperaenter
+        setAREADEJUEGO 0,9,2
+        PAINTPOS 0,9,LIGHT_GREEN
         whilee:
             mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA
             int 21h
@@ -549,9 +551,9 @@ INCLUDE MACP2.inc
         ;* VARIAR COLUMNA DE 0 A 5 = X
         LIMPIARFRAMEANTERIOR
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        INC auxpY3
-        CMP auxpY3, 15  ;* sI LLEGO AL FONDO
+        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
+        INC auxpY2
         getAREADEJUEGO auxpX2, auxpY2
         CMP TEMP, 0
         JNE SEQUEDAKIETO
