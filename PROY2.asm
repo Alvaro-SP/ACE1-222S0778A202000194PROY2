@@ -171,6 +171,10 @@ INCLUDE MACP2.inc
 
         BANDERATIESO      DW 0
         POSTOSET      DW 0
+        POSXHANDLE       DW 0  ;* POSICION HORIZONTAL DE LA PIEZA
+        TIPODEPIEZA     DW 0 ;
+        ROTACIONDEPIEZA     DW 0 ;* HANDLER DE LA ROTACION DE LA PIEZA
+
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -498,10 +502,18 @@ INCLUDE MACP2.inc
         esperaenter
         setAREADEJUEGO 0,9,2
         PAINTPOS 0,9,LIGHT_GREEN
+        RANDOMPIECE
+        MOV SI, TEMP
+        MOV NEXTPIECE, SI
+        
         GENFIGURA:
             MOV BANDERATIESO,0  ; * SET flag de figura quieta
-            RANDOMPIECE
-            CMP TEMPDB
+            MOV SI, NEXTPIECE ;* paso a actual la pieza que era la siguiente
+            MOV TIPODEPIEZA, SI
+            RANDOMPIECE ; * Genero la pieza siguiente para despues
+            MOV SI, TEMP
+            MOV NEXTPIECE, SI
+            RANDOMPOSITION ;* Genero la posicion random de inicio
         whilee:
             mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA
             int 21h
@@ -514,13 +526,28 @@ INCLUDE MACP2.inc
                 je pauseGame
                 cmp al, 32  ;* SPACE GIRAR PIEZA
                 je ROTATEPIECE
+                cmp al, 32  ;* MOVER IZQUIERDA
+                je moveLeft
+                cmp al, 32  ;* MOVER DERECHA
+                je moveRight
+            moveLeft:
+                CMP POSXHANDLE, 0
+                JNE siguewhile  ;* si esta x=0 no puede moverse
+                INC POSXHANDLE
+                jmp siguewhile
+
+            moveRight:
+                CMP POSXHANDLE, 7
+                JNE siguewhile  ;* si esta x=7 no puede moverse
+                DEC POSXHANDLE
+                jmp siguewhile
             pauseGame:
                 paint  0, 0, 800, 600, BLACK
                 PAINTTEXT pause0 , 0B17H , WHITE
                 PAINTTEXT pause1 , 2125H , 0FF30H
                 PAINTTEXT pause2 , 2325H , 0FF30H
                 pauseGame2:
-                xor ax, ax  ;ah = 0
+                xor ax, ax  ;*ah = 0
                 int 16h
                 cmp al, 27  ;* ESC PARA GUARDAR PUNTOS Y MENU.
                 JE GUARDAYMENU
@@ -528,9 +555,10 @@ INCLUDE MACP2.inc
                 JE  siguewhile
                 jMP pauseGame2
             ROTATEPIECE:
+                ROTATEBLOCKS
 
             siguewhile:
-                UPDATECUADRO 0, DI
+                UPDATEPIEZA POSXHANDLE,DI ;!UPDATE OF THE PIECE.
                 CMP BANDERATIESO, 1  ;* SI ES 1 SIGUIENTE FIGURA
                 JE GENFIGURA
                 INC DI
