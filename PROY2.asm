@@ -663,7 +663,7 @@ INCLUDE MACP2.inc
             JE CORRERFILALABEL
             JNE SALTAR
             CORRERFILALABEL:
-                CORRERFILALABEL
+                CORRERFILA
             SALTAR:
                 inc si
                 JMP FORI
@@ -693,7 +693,7 @@ INCLUDE MACP2.inc
         SALIR:
         RET
     VALIDARFILALLENA_ ENDP
-    CORRERFILALABEL_ PROC FAR
+    CORRERFILA_ PROC FAR
         MOV SI, 14  ; ! FILAS
         MOV DI, 0   ;! COLUMNAS
         FORI:
@@ -720,7 +720,7 @@ INCLUDE MACP2.inc
                 JMP FORI
         SALIR:
         RET
-    CORRERFILALABEL_ ENDP
+    CORRERFILA_ ENDP
     ; BUSCARUSER_ PROC FAR
     ;     RET
     ; BUSCARUSER_ ENDP
