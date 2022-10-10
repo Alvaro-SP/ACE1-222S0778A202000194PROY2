@@ -552,11 +552,13 @@ INCLUDE MACP2.inc
         INC auxpY3
         CMP auxpY3, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
-        getAREADEJUEGO auxpX3, auxpY3
+        getAREADEJUEGO auxpX2, auxpY2
         CMP TEMP, 0
         JNE SEQUEDAKIETO
         INC auxpY4
-        printnum RESULTADOPRINT, auxpY3
+        printnum RESULTADOPRINT, auxpX2
+        print RESULTADOPRINT
+        printnum RESULTADOPRINT, auxpY2
         print RESULTADOPRINT
         getAREADEJUEGO auxpX4, auxpY4
         CMP TEMP, 0
