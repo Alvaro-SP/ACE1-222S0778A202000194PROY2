@@ -422,6 +422,49 @@ RESETAUXSBLOQUES MACRO
     MOV auxpY3,0
     MOV auxpY4,0
 ENDM
+RANDOMPIECE MACRO
+    LOCAL CERO, UNO, DOS, TRES, CUATRO, CINCO, SALIR
+    PUSHA
+    MOV AH, 00h  ; interrupcion para jalar el tiempo en el sistema
+    INT 1AH      ; CX:DX  toma numeros del reloj desde medianoche
+    mov  ax, dx         ;! RANDOM
+    xor  dx, dx
+    mov  cx, 5
+    div  cx       ;DX tiene la divicion en mi caso - de 0 a 5
+    add  dl, '0'  ; DL TIENE EL VALOR ENTRE 0 Y 5
+    CMP DL, '0'
+    JE CERO
+    CERO:
+        MOV POSXHANDLE, 0
+        JMP SALIR
+    CMP DL, '1'
+    JE UNO
+    UNO:
+        MOV POSXHANDLE, 1
+        JMP SALIR
+    CMP DL, '2'
+    JE DOS
+    DOS:
+        MOV POSXHANDLE, 2
+        JMP SALIR
+    CMP DL, '3'
+    JE TRES
+    TRES:
+        MOV POSXHANDLE, 3
+        JMP SALIR
+    CMP DL, '4'
+    JE CUATRO
+    CUATRO:
+        MOV POSXHANDLE, 4
+        JMP SALIR
+    CMP DL, '5'
+    JE CINCO
+    CINCO:
+        MOV POSXHANDLE, 5
+        JMP SALIR
+    SALIR:
+    POPA
+ENDM
 ;*========================= CREDENTIALS AND LOGIN ===================================
 printdolar MACRO 
     PUSHA
