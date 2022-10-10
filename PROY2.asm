@@ -498,6 +498,10 @@ INCLUDE MACP2.inc
         esperaenter
         setAREADEJUEGO 0,9,2
         PAINTPOS 0,9,LIGHT_GREEN
+        GENFIGURA:
+            MOV BANDERATIESO,0  ; * SET flag de figura quieta
+            RANDOMPIECE
+            CMP TEMPDB
         whilee:
             mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA
             int 21h
@@ -527,6 +531,8 @@ INCLUDE MACP2.inc
 
             siguewhile:
                 UPDATECUADRO 0, DI
+                CMP BANDERATIESO, 1  ;* SI ES 1 SIGUIENTE FIGURA
+                JE GENFIGURA
                 INC DI
                 Delay speed
                 inc timeaux
