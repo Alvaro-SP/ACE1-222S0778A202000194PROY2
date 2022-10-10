@@ -422,8 +422,8 @@ RESETAUXSBLOQUES MACRO
     MOV auxpY3,0
     MOV auxpY4,0
 ENDM
-RANDOMPIECE MACRO
-    LOCAL CERO, UNO, DOS, TRES, CUATRO, CINCO, SALIR
+RANDOMPOSITION MACRO
+    LOCAL CERO, UNO, DOS, TRES, CUATRO, CINCO,SEIS, SIETE, SALIR
     PUSHA
     MOV AH, 00h  ; interrupcion para jalar el tiempo en el sistema
     INT 1AH      ; CX:DX  toma numeros del reloj desde medianoche
@@ -465,6 +465,60 @@ RANDOMPIECE MACRO
     SALIR:
     POPA
 ENDM
+RANDOMPIECE MACRO
+    LOCAL CERO, UNO, DOS, TRES, CUATRO, CINCO,SEIS, SIETE, SALIR
+    PUSHA
+    MOV AH, 00h  ; interrupcion para jalar el tiempo en el sistema
+    INT 1AH      ; CX:DX  toma numeros del reloj desde medianoche
+    mov  ax, dx         ;! RANDOM
+    xor  dx, dx
+    mov  cx, 7
+    div  cx       ;DX tiene la divicion en mi caso - de 0 a 5
+    add  dl, '1'  ; DL TIENE EL VALOR ENTRE 0 Y 5
+    CMP DL, '1'
+    JE UNO
+    UNO:
+        MOV TIPODEPIEZA, 1
+        JMP SALIR
+    CMP DL, '2'
+    JE DOS
+    DOS:
+        MOV TIPODEPIEZA, 2
+        JMP SALIR
+    CMP DL, '3'
+    JE TRES
+    TRES:
+        MOV TIPODEPIEZA, 3
+        JMP SALIR
+    CMP DL, '4'
+    JE CUATRO
+    CUATRO:
+        MOV TIPODEPIEZA, 4
+        JMP SALIR
+    CMP DL, '5'
+    JE CINCO
+    CINCO:
+        MOV TIPODEPIEZA, 5
+        JMP SALIR
+    CMP DL, '6'
+    JE SEIS
+    SEIS:
+        MOV TIPODEPIEZA, 6
+        JMP SALIR
+    CMP DL, '7'
+    JE SIETE
+    SIETE:
+        MOV TIPODEPIEZA, 7
+        JMP SALIR
+    SALIR:
+    POPA
+ENDM
+UPDATEPIEZA MACRO
+
+    UPDATECUADRO POSXHANDLE, DI
+ENDM
+
+
 ;*========================= CREDENTIALS AND LOGIN ===================================
 printdolar MACRO 
     PUSHA
