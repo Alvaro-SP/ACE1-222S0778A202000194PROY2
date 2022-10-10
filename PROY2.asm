@@ -115,6 +115,7 @@ INCLUDE MACP2.inc
         SI_SIMULADO2             DW ?
         tamfile             DW 0
         TEMP             DW 0
+        TEMP2             DW 0
         TEMPDB             Db "0$"
         nuevalinea       db 10,'$'
         cooldowncont       dw 0
@@ -507,6 +508,8 @@ INCLUDE MACP2.inc
         MOV NEXTPIECE, SI
         
         GENFIGURA:
+            ELIMINARFILAS ;! SCAN SI HAY FILAS RELLENITAS XD
+            MOV ROTACIONDEPIEZA, 0
             MOV BANDERATIESO,0  ; * SET flag de figura quieta
             MOV SI, NEXTPIECE ;* paso a actual la pieza que era la siguiente
             MOV TIPODEPIEZA, SI
@@ -555,9 +558,19 @@ INCLUDE MACP2.inc
                 JE  siguewhile
                 jMP pauseGame2
             ROTATEPIECE:
-                ROTATEBLOCKS
+                CMP ROTACIONDEPIEZA, 3
+                JE RESTARTROTACION
+                JNE INCROTACION
+                RESTARTROTACION:
+                    MOV ROTACIONDEPIEZA,0
+                    JMP ROTATELABEL
+                INCROTACION:
+                    INC ROTACIONDEPIEZA
+                ROTATELABEL:
+                    ROTATEBLOCKS
 
             siguewhile:
+                
                 UPDATEPIEZA POSXHANDLE,DI ;!UPDATE OF THE PIECE.
                 CMP BANDERATIESO, 1  ;* SI ES 1 SIGUIENTE FIGURA
                 JE GENFIGURA
@@ -640,15 +653,74 @@ INCLUDE MACP2.inc
         SALIRZ:
         RET
     UPDATECUADRO_ ENDP
-    ; BUSCARUSER_ PROC FAR
-    ;     RET
-    ; BUSCARUSER_ ENDP
-    ; BUSCARUSER_ PROC FAR
-    ;     RET
-    ; BUSCARUSER_ ENDP
-    ; BUSCARUSER_ PROC FAR
-    ;     RET
-    ; BUSCARUSER_ ENDP
+    ELIMINARFILAS_ PROC FAR
+        MOV SI, 0
+        FORI:
+            CMP SI, 16
+            JE SALIR
+            VALIDARFILALLENA SI
+            CMP TEMP,1
+            JE CORRERFILALABEL
+            JNE SALTAR
+            CORRERFILALABEL:
+                CORRERFILALABEL
+            SALTAR:
+                inc si
+                JMP FORI
+        SALIR:
+        RET
+    ELIMINARFILAS_ ENDP
+    VALIDARFILALLENA_ PROC FAR
+        MOV TEMP2, 0
+        MOV DI, 0
+        FORJ:
+            CMP DI, 8
+            JE VALIDAR
+            getAREADEJUEGO di, pos
+            CMP TEMP,0
+            JE SUMONO ;* si hay cero no sumo
+            SUMOSI:
+                INC TEMP2
+            SUMONO:
+                inc si
+                JMP FORJ
+        VALIDAR:
+            CMP TEMP2, 8
+            JE SIESTALLENO
+            JNE SALIR
+            SIESTALLENO:
+                MOV TEMP,1
+        SALIR:
+        RET
+    VALIDARFILALLENA_ ENDP
+    CORRERFILALABEL_ PROC FAR
+        MOV SI, 14  ; ! FILAS
+        MOV DI, 0   ;! COLUMNAS
+        FORI:
+            CMP SI, -1
+            JE SALIR
+
+                FORJ:
+                    CMP DI, 8
+                    JE SALIR2
+                    ;* TOMO VALOR de fila anterior y paso a fila actual
+                    MOV TEMP2, SI
+                    INC TEMP2
+
+                    getAREADEJUEGO SI, DI
+                    setAREADEJUEGO TEMP2, DI, TEMP ; !set dato en la fila posterior
+                    PINTARUNIT  TEMP2,DI,TEMP
+                    
+                    SALTAR2:
+                        inc si
+                        JMP FORJ
+                SALIR2:
+            SALTAR:
+                dec si
+                JMP FORI
+        SALIR:
+        RET
+    CORRERFILALABEL_ ENDP
     ; BUSCARUSER_ PROC FAR
     ;     RET
     ; BUSCARUSER_ ENDP

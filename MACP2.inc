@@ -308,6 +308,24 @@ PAINTPOS MACRO X,Y, col
     CALL PAINTSQUARE_
     POPA
 ENDM PAINTPOS
+PINTARUNIT MACRO X,Y, col
+    CMP col, 1
+    JE PL1
+    CMP col, 2
+    JE PL2
+    CMP col, 3
+    JE PL3
+    CMP col, 4
+    JE PL4
+    CMP col, 5
+    JE PL5
+    CMP col, 6
+    JE PL6
+    CMP col, 7
+    JE PL7
+    PL1:
+        PAINTPOS X,Y, col
+ENDM
 PINTARPALITO MACRO X,Y
     PUSHA
     MOV AX, X
@@ -552,7 +570,21 @@ UPDATEPIEZA MACRO
         JMP SALIDA
 ENDM
 
-
+ELIMINARFILAS MACRO
+    PUSHA
+    CALL ELIMINARFILAS_
+    POPA
+ENDM
+VALIDARFILALLENA MACRO POS
+    PUSHA
+    CALL VALIDARFILALLENA_
+    POPA
+ENDM
+CORRERFILALABEL MACRO POS
+    PUSHA
+    CALL CORRERFILALABEL_
+    POPA
+ENDM
 ;*========================= CREDENTIALS AND LOGIN ===================================
 printdolar MACRO 
     PUSHA
