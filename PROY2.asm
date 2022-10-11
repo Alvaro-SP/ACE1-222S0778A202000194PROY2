@@ -566,15 +566,13 @@ INCLUDE MACP2.inc
                 JNE INCROTACION
                 RESTARTROTACION:
                     MOV ROTACIONDEPIEZA,0
-                    JMP ROTATELABEL
+                    JMP siguewhile
                 INCROTACION:
                     INC ROTACIONDEPIEZA
-                ROTATELABEL:
-                    ROTATEBLOCKS
 
             siguewhile:
                 
-                UPDATEPIEZA POSXHANDLE,DI ;!UPDATE OF THE PIECE.
+                UPDATEPIEZA  ;!UPDATE OF THE PIECE.
                 CMP BANDERATIESO, 1  ;* SI ES 1 SIGUIENTE FIGURA
                 JE GENFIGURA
                 INC DI
@@ -713,7 +711,7 @@ INCLUDE MACP2.inc
                     getAREADEJUEGO SI, DI
                     setAREADEJUEGO TEMP2, DI, TEMP ; !set dato en la fila posterior
                     PINTARUNIT  TEMP2,DI,TEMP
-                    
+                           
                     SALTAR2:
                         inc si
                         JMP FORJ
