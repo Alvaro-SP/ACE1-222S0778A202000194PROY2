@@ -443,6 +443,60 @@ UPDATECUADRO MACRO X,Y
     CALL UPDATECUADRO_
     POPA
 ENDM
+UPDATETE MACRO X,Y
+    PUSHA
+    MOV AX, X
+    MOV Xtemp,AX
+    MOV AX, Y
+    MOV Ytemp, AX
+    CALL UPDATETE_
+    POPA
+ENDM
+UPDAPALITO MACRO X,Y
+    PUSHA
+    MOV AX, X
+    MOV Xtemp,AX
+    MOV AX, Y
+    MOV Ytemp, AX
+    CALL UPDAPALITO_
+    POPA
+ENDM
+UPDATEELE1 MACRO X,Y
+    PUSHA
+    MOV AX, X
+    MOV Xtemp,AX
+    MOV AX, Y
+    MOV Ytemp, AX
+    CALL UPDATEELE1_
+    POPA
+ENDM
+UPDATEELE2 MACRO X,Y
+    PUSHA
+    MOV AX, X
+    MOV Xtemp,AX
+    MOV AX, Y
+    MOV Ytemp, AX
+    CALL UPDATEELE2_
+    POPA
+ENDM
+UPDATEZETA1 MACRO X,Y
+    PUSHA
+    MOV AX, X
+    MOV Xtemp,AX
+    MOV AX, Y
+    MOV Ytemp, AX
+    CALL UPDATEZETA1_
+    POPA
+ENDM
+UPDATEZETA2 MACRO X,Y
+    PUSHA
+    MOV AX, X
+    MOV Xtemp,AX
+    MOV AX, Y
+    MOV Ytemp, AX
+    CALL UPDATEZETA2_
+    POPA
+ENDM
 LIMPIARFRAMEANTERIOR MACRO
     setAREADEJUEGO auxpX1,auxpY1,0 ;* LIMPIO ANTERIOR
     setAREADEJUEGO auxpX2,auxpY2,0
@@ -661,13 +715,7 @@ printdolar MACRO
     int 10h
     POPA
 ENDM printdolar
-capturateclaf MACRO
-    PUSHA
-    mov ah, 00h
-    int 16h
-    MOV keypress, AH
-    POPA
-ENDM capturateclaf
+
 MENUADMINISTRADOR MACRO
     PUSHA
     CALL MENUADMINISTRADOR_
