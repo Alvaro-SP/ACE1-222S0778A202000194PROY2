@@ -725,10 +725,8 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
-            LRTETE0
-            
-
-
+            ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
+            LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpY4,auxpY4
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY2    ;! ----------  ;!|//!      ██
