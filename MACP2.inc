@@ -744,8 +744,15 @@ LEFTRIGHT_DECUATRO MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,au
                 INC TEMP2
                 getAREADEJUEGO TEMP2, auxpX2env3
                 CMP TEMP, 0
-                JE SIMOVRIGHT
+                JE SIMOVRIGHTM1
                 JNE movleftlb
+                SIMOVRIGHTM1:
+                    mov TEMP2, auxpX1env4
+                    INC TEMP2
+                    getAREADEJUEGO TEMP2, auxpX2env4
+                    CMP TEMP, 0
+                    JE SIMOVRIGHT
+                    JNE movleftlb
         SIMOVRIGHT:
             INC Xtemp
             jmp sigoscan
@@ -774,8 +781,15 @@ LEFTRIGHT_DECUATRO MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,au
                     INC TEMP2
                     getAREADEJUEGO TEMP2, auxpX2env3
                     CMP TEMP, 0
-                    JE SIMOVLEFT
+                    JE SIMOVLEFTM1
                     JNE movleftlb
+                    SIMOVLEFTM1:
+                        mov TEMP2, auxpX1env4
+                        INC TEMP2
+                        getAREADEJUEGO TEMP2, auxpX2env4
+                        CMP TEMP, 0
+                        JE SIMOVLEFT
+                        JNE movleftlb
             SIMOVLEFT:
                 DEC Xtemp
                 jmp sigoscan
