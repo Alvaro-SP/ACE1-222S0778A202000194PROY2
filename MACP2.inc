@@ -665,7 +665,7 @@ CORRERFILA MACRO POS
     CALL CORRERFILA_
     POPA
 ENDM
-LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2
+LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1envA,auxpX2envA,auxpX1env2A,auxpX2env2A
     LOCAL movleftlb,VALIDARMOVERRIGHT,SIMOVRIGHT1,SIMOVRIGHT,sigoscan,VALIDARMOVERLEFT,SIMOVLEFT1,SIMOVLEFT
 
     ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
@@ -697,16 +697,16 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2
         JE VALIDARMOVERLEFT
         VALIDARMOVERLEFT:
             MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX1env
+            mov TEMP2, auxpX1envA
             INC TEMP2
-            getAREADEJUEGO TEMP2, auxpX2env
+            getAREADEJUEGO TEMP2, auxpX2envA
             CMP TEMP, 0
             JE SIMOVLEFT1
             JNE movleftlb
             SIMOVLEFT1:
-                mov TEMP2, auxpX1env2
+                mov TEMP2, auxpX1env2A
                 INC TEMP2
-                getAREADEJUEGO TEMP2, auxpX2env2
+                getAREADEJUEGO TEMP2, auxpX2env2A
                 CMP TEMP, 0
                 JE SIMOVLEFT
                 JNE movleftlb
@@ -797,7 +797,7 @@ LEFTRIGHT_DECUATRO MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,au
     
     sigoscan:
 ENDM
-LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxpX2env3
+LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxpX2env3,auxpX1envA,auxpX2envA,auxpX1env2A,auxpX2env2A,auxpX1env3A,auxpX2env3A
     LOCAL SIMOVRIGHT0,SIMOVLEFT0, movleftlb,VALIDARMOVERRIGHT,SIMOVRIGHT1,SIMOVRIGHT,sigoscan,VALIDARMOVERLEFT,SIMOVLEFT1,SIMOVLEFT
 
     ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
@@ -836,23 +836,23 @@ LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxp
         JE VALIDARMOVERLEFT
         VALIDARMOVERLEFT:
             MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX1env
+            mov TEMP2, auxpX1envA
             INC TEMP2
-            getAREADEJUEGO TEMP2, auxpX2env
+            getAREADEJUEGO TEMP2, auxpX2envA
             CMP TEMP, 0
             JE SIMOVLEFT1
             JNE movleftlb
             SIMOVLEFT1:
-                mov TEMP2, auxpX1env2
+                mov TEMP2, auxpX1env2A
                 INC TEMP2
-                getAREADEJUEGO TEMP2, auxpX2env2
+                getAREADEJUEGO TEMP2, auxpX2env2A
                 CMP TEMP, 0
                 JE SIMOVLEFT0
                 JNE movleftlb
                 SIMOVLEFT0:
-                    mov TEMP2, auxpX1env3
+                    mov TEMP2, auxpX1env3A
                     INC TEMP2
-                    getAREADEJUEGO TEMP2, auxpX2env3
+                    getAREADEJUEGO TEMP2, auxpX2env3A
                     CMP TEMP, 0
                     JE SIMOVLEFT
                     JNE movleftlb
