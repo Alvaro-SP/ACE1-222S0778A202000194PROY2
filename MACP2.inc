@@ -665,6 +665,59 @@ CORRERFILA MACRO POS
     CALL CORRERFILA_
     POPA
 ENDM
+LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2
+    LOCAL movleftlb,VALIDARMOVERRIGHT,SIMOVRIGHT1,SIMOVRIGHT,sigoscan,VALIDARMOVERLEFT,SIMOVLEFT1,SIMOVLEFT,,,,
+    PUSHA
+    ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
+    CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
+    JNE movleftlb
+    JE VALIDARMOVERRIGHT
+    VALIDARMOVERRIGHT:
+        MOV FLAGMOVERIGHT,0
+        mov TEMP2, auxpX1env
+        INC TEMP2
+        getAREADEJUEGO TEMP2, auxpX2env
+        CMP TEMP, 0
+        JE SIMOVRIGHT1
+        JNE movleftlb
+        SIMOVRIGHT1:
+            mov TEMP2, auxpX1env2
+            INC TEMP2
+            getAREADEJUEGO TEMP2, auxpX2env2
+            CMP TEMP, 0
+            JE SIMOVRIGHT
+            JNE movleftlb
+        SIMOVRIGHT:
+            INC Xtemp
+            jmp sigoscan
+
+    movleftlb:      ; ! PRESIONO IZQUIERDA
+        CMP FLAGMOVELEFT,1
+        JNE sigoscan
+        JE VALIDARMOVERLEFT
+        VALIDARMOVERLEFT:
+            MOV FLAGMOVELEFT,0
+            mov TEMP2, auxpX1
+            INC TEMP2
+            getAREADEJUEGO TEMP2, auxpY1
+            CMP TEMP, 0
+            JE SIMOVLEFT1
+            JNE movleftlb
+            SIMOVLEFT1:
+                mov TEMP2, auxpX2
+                INC TEMP2
+                getAREADEJUEGO TEMP2, auxpY2
+                CMP TEMP, 0
+                JE SIMOVLEFT
+                JNE movleftlb
+            SIMOVLEFT:
+                DEC Xtemp
+                jmp sigoscan
+        ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+    
+    sigoscan:
+    POPA
+ENDM
 
 PINTARPIEZASIGUIENTE MACRO PIEZA
     LOCAL P1,P2,P3,P4,P5,P6,P7,SALIDA

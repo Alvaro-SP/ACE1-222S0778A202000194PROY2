@@ -641,7 +641,7 @@ INCLUDE MACP2.inc
                 INC TEMP2
                 getAREADEJUEGO TEMP2, auxpY4
                 CMP TEMP, 0
-                JE SIMOVRIGHT
+                JE SIMOVLEFT
                 JNE movleftlb
             SIMOVLEFT:
                 DEC Xtemp
@@ -714,54 +714,6 @@ INCLUDE MACP2.inc
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
-        ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
-        CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
-        JNE movleftlb
-        JE VALIDARMOVERRIGHT
-        VALIDARMOVERRIGHT:
-            MOV FLAGMOVERIGHT,0
-            mov TEMP2, auxpX3
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY3
-            CMP TEMP, 0
-            JE SIMOVRIGHT1
-            JNE movleftlb
-            SIMOVRIGHT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY3
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVRIGHT:
-                INC Xtemp
-                jmp sigoscan
-
-        movleftlb:      ; ! PRESIONO IZQUIERDA
-            CMP FLAGMOVELEFT,1
-            JNE sigoscan
-            JE VALIDARMOVERLEFT
-        VALIDARMOVERLEFT:
-            MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX4
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY4
-            CMP TEMP, 0
-            JE SIMOVLEFT1
-            JNE movleftlb
-            SIMOVLEFT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY4
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVLEFT:
-                DEC Xtemp
-                jmp sigoscan
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-        
-        sigoscan:
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
         JE POSICIONPIEZA0
@@ -773,6 +725,11 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
+            LRTETE0
+            
+
+
+
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY2    ;! ----------  ;!|//!      ██
             INC TEMP2                           ;!|//!    ██████
