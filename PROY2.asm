@@ -956,54 +956,6 @@ INCLUDE MACP2.inc
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
-        ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
-        CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
-        JNE movleftlb
-        JE VALIDARMOVERRIGHT
-        VALIDARMOVERRIGHT:
-            MOV FLAGMOVERIGHT,0
-            mov TEMP2, auxpX3
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY3
-            CMP TEMP, 0
-            JE SIMOVRIGHT1
-            JNE movleftlb
-            SIMOVRIGHT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY3
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVRIGHT:
-                INC Xtemp
-                jmp sigoscan
-
-        movleftlb:      ; ! PRESIONO IZQUIERDA
-            CMP FLAGMOVELEFT,1
-            JNE sigoscan
-            JE VALIDARMOVERLEFT
-        VALIDARMOVERLEFT:
-            MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX4
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY4
-            CMP TEMP, 0
-            JE SIMOVLEFT1
-            JNE movleftlb
-            SIMOVLEFT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY4
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVLEFT:
-                DEC Xtemp
-                jmp sigoscan
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-        
-        sigoscan:
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
         JE POSICIONPIEZA0
@@ -1015,9 +967,42 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA1
         
         POSICIONPIEZA0:
+            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
+            CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
+            JNE movleftlb
+            JE VALIDARMOVERRIGHT
+            VALIDARMOVERRIGHT:
+                MOV FLAGMOVERIGHT,0
+                mov TEMP2, auxpX4
+                INC TEMP2
+                getAREADEJUEGO TEMP2, auxpY4
+                CMP TEMP, 0
+                JE SIMOVRIGHT
+                JNE movleftlb
+                SIMOVRIGHT:
+                    INC Xtemp
+                    jmp sigoscan
+
+            movleftlb:      ; ! PRESIONO IZQUIERDA
+                CMP FLAGMOVELEFT,1
+                JNE sigoscan
+                JE VALIDARMOVERLEFT
+                VALIDARMOVERLEFT:
+                    MOV FLAGMOVELEFT,0
+                    mov TEMP2, auxpX1
+                    INC TEMP2
+                    getAREADEJUEGO TEMP2, auxpY1
+                    CMP TEMP, 0
+                    JE SIMOVLEFT
+                    JNE movleftlb
+                    SIMOVLEFT:
+                        DEC Xtemp
+                        jmp sigoscan
+                ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+            sigoscan:
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY2    ;! ----------  ;!|
-            INC TEMP2                           ;!|//!    ████████
+            INC TEMP2                           ;!|    ████████
             getAREADEJUEGO auxpX2, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
@@ -1073,6 +1058,7 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA1:
+            LEFTRIGHT_DECUATRO auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3,auxpX4, auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY4                   ;!|//!    ██
             INC TEMP2                           ;!|//!    ██
@@ -1128,54 +1114,6 @@ INCLUDE MACP2.inc
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
-        ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
-        CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
-        JNE movleftlb
-        JE VALIDARMOVERRIGHT
-        VALIDARMOVERRIGHT:
-            MOV FLAGMOVERIGHT,0
-            mov TEMP2, auxpX3
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY3
-            CMP TEMP, 0
-            JE SIMOVRIGHT1
-            JNE movleftlb
-            SIMOVRIGHT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY3
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVRIGHT:
-                INC Xtemp
-                jmp sigoscan
-
-        movleftlb:      ; ! PRESIONO IZQUIERDA
-            CMP FLAGMOVELEFT,1
-            JNE sigoscan
-            JE VALIDARMOVERLEFT
-        VALIDARMOVERLEFT:
-            MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX4
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY4
-            CMP TEMP, 0
-            JE SIMOVLEFT1
-            JNE movleftlb
-            SIMOVLEFT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY4
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVLEFT:
-                DEC Xtemp
-                jmp sigoscan
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-        
-        sigoscan:
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
         JE POSICIONPIEZA0
@@ -1187,6 +1125,8 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
+            ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
+            LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY1    ;! ----------  ;!|//!    ████
             INC TEMP2                           ;!|//!      ██
@@ -1405,54 +1345,6 @@ INCLUDE MACP2.inc
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
-        ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
-        CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
-        JNE movleftlb
-        JE VALIDARMOVERRIGHT
-        VALIDARMOVERRIGHT:
-            MOV FLAGMOVERIGHT,0
-            mov TEMP2, auxpX3
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY3
-            CMP TEMP, 0
-            JE SIMOVRIGHT1
-            JNE movleftlb
-            SIMOVRIGHT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY3
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVRIGHT:
-                INC Xtemp
-                jmp sigoscan
-
-        movleftlb:      ; ! PRESIONO IZQUIERDA
-            CMP FLAGMOVELEFT,1
-            JNE sigoscan
-            JE VALIDARMOVERLEFT
-        VALIDARMOVERLEFT:
-            MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX4
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY4
-            CMP TEMP, 0
-            JE SIMOVLEFT1
-            JNE movleftlb
-            SIMOVLEFT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY4
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVLEFT:
-                DEC Xtemp
-                jmp sigoscan
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-        
-        sigoscan:
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
         JE POSICIONPIEZA0
@@ -1682,54 +1574,6 @@ INCLUDE MACP2.inc
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
-        ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
-        CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
-        JNE movleftlb
-        JE VALIDARMOVERRIGHT
-        VALIDARMOVERRIGHT:
-            MOV FLAGMOVERIGHT,0
-            mov TEMP2, auxpX3
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY3
-            CMP TEMP, 0
-            JE SIMOVRIGHT1
-            JNE movleftlb
-            SIMOVRIGHT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY3
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVRIGHT:
-                INC Xtemp
-                jmp sigoscan
-
-        movleftlb:      ; ! PRESIONO IZQUIERDA
-            CMP FLAGMOVELEFT,1
-            JNE sigoscan
-            JE VALIDARMOVERLEFT
-        VALIDARMOVERLEFT:
-            MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX4
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY4
-            CMP TEMP, 0
-            JE SIMOVLEFT1
-            JNE movleftlb
-            SIMOVLEFT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY4
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVLEFT:
-                DEC Xtemp
-                jmp sigoscan
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-        
-        sigoscan:
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
         JE POSICIONPIEZA0
@@ -1860,54 +1704,6 @@ INCLUDE MACP2.inc
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
-        ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
-        CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
-        JNE movleftlb
-        JE VALIDARMOVERRIGHT
-        VALIDARMOVERRIGHT:
-            MOV FLAGMOVERIGHT,0
-            mov TEMP2, auxpX3
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY3
-            CMP TEMP, 0
-            JE SIMOVRIGHT1
-            JNE movleftlb
-            SIMOVRIGHT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY3
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVRIGHT:
-                INC Xtemp
-                jmp sigoscan
-
-        movleftlb:      ; ! PRESIONO IZQUIERDA
-            CMP FLAGMOVELEFT,1
-            JNE sigoscan
-            JE VALIDARMOVERLEFT
-        VALIDARMOVERLEFT:
-            MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX4
-            INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY4
-            CMP TEMP, 0
-            JE SIMOVLEFT1
-            JNE movleftlb
-            SIMOVLEFT1:
-                mov TEMP2, auxpX4
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY4
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-            SIMOVLEFT:
-                DEC Xtemp
-                jmp sigoscan
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-        
-        sigoscan:
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
         JE POSICIONPIEZA0
