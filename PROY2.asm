@@ -1774,62 +1774,14 @@ INCLUDE MACP2.inc
         CMP ROTACIONDEPIEZA, 1
         JE POSICIONPIEZA1
         CMP ROTACIONDEPIEZA, 2
-        JE POSICIONPIEZA2
+        JE POSICIONPIEZA0
         CMP ROTACIONDEPIEZA, 3
-        JE POSICIONPIEZA3
+        JE POSICIONPIEZA1
         
         POSICIONPIEZA0:
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY1    ;! ----------  ;!|//!    ████
-            INC TEMP2                           ;!|//!      ██
-            getAREADEJUEGO auxpX1, TEMP2        ;!|         ██
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
-            INC TEMP2                           ;!|
-            getAREADEJUEGO auxpX4, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-            MOV CX, Xtemp
-            MOV auxpX1, CX
-            MOV CX, Ytemp
-            MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 1
-            MOV auxpX2, CX
-            MOV CX, Ytemp            
-            MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 1
-            MOV auxpX3, CX
-            MOV CX, Ytemp
-            ADD CX, 1
-            MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 1
-            MOV auxpX4, CX
-            MOV CX, Ytemp
-            ADD CX, 2
-            MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
-             JMP SALIRZ
-        POSICIONPIEZA1:
-            ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!        ██
-            INC TEMP2                           ;!|//!    ██████
+            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ████
+            INC TEMP2                           ;!|//!  ████
             getAREADEJUEGO auxpX2, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
@@ -1848,7 +1800,7 @@ INCLUDE MACP2.inc
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
             MOV CX, Xtemp
-            ADD CX, 2
+            ADD CX, 1
             MOV auxpX1, CX
             MOV CX, Ytemp
             MOV auxpY1, CX
@@ -1856,15 +1808,14 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX1,auxpY1,LIGHT_RED
 
             MOV CX, Xtemp
+            ADD CX, 2
             MOV auxpX2, CX
             MOV CX, Ytemp
-            ADD CX, 1
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
             PAINTPOS auxpX2,auxpY2,LIGHT_RED
 
             MOV CX, Xtemp
-            ADD CX, 1
             MOV auxpX3, CX
             MOV CX, Ytemp
             ADD CX, 1
@@ -1873,7 +1824,7 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX3,auxpY3,LIGHT_RED
 
             MOV CX, Xtemp
-            ADD CX, 2
+            ADD CX, 1
             MOV auxpX4, CX
             MOV CX, Ytemp
             ADD CX, 1
@@ -1881,12 +1832,12 @@ INCLUDE MACP2.inc
             setAREADEJUEGO auxpX4, auxpY4, 2
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
-        POSICIONPIEZA2:
+        POSICIONPIEZA1:
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
-            INC TEMP2                           ;!|//!    ██
-            getAREADEJUEGO auxpX3, TEMP2        ;!|//!    ██
-            CMP TEMP, 0                         ;!|//!    ████
+            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ██
+            INC TEMP2                           ;!|//!    ████
+            getAREADEJUEGO auxpX2, TEMP2        ;!|//!      ██
+            CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
             MOV TEMP2, auxpY4    ;! ----------  ;!|
@@ -1912,9 +1863,10 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX2,auxpY2,LIGHT_RED
 
             MOV CX, Xtemp
+            ADD CX, 1
             MOV auxpX3, CX
             MOV CX, Ytemp
-            ADD CX, 2
+            ADD CX, 1
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
             PAINTPOS auxpX3,auxpY3,LIGHT_RED
@@ -1928,59 +1880,7 @@ INCLUDE MACP2.inc
             setAREADEJUEGO auxpX4, auxpY4, 2
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
-        POSICIONPIEZA3:
-            ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ██████
-            INC TEMP2                           ;!|//!    ██
-            getAREADEJUEGO auxpX2, TEMP2        ;!
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
-            INC TEMP2                           ;!|
-            getAREADEJUEGO auxpX3, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
-            INC TEMP2                           ;!|
-            getAREADEJUEGO auxpX4, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-            MOV CX, Xtemp
-            MOV auxpX1, CX
-            MOV CX, Ytemp
-            MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 1
-            MOV auxpX2, CX
-            MOV CX, Ytemp
-            MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 2
-            MOV auxpX3, CX
-            MOV CX, Ytemp
-            MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
-
-            MOV CX, Xtemp
-            MOV auxpX4, CX
-            MOV CX, Ytemp
-            ADD CX, 1
-            MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
-             JMP SALIRZ
-        JMP SALIRZ
+        
         SEQUEDAKIETO:
             print EXITO
             readtext
@@ -1989,6 +1889,7 @@ INCLUDE MACP2.inc
         SALIRZ:
         RET
     UPDATEZETA1_ ENDP
+    
     UPDATEZETA2_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
@@ -2051,62 +1952,14 @@ INCLUDE MACP2.inc
         CMP ROTACIONDEPIEZA, 1
         JE POSICIONPIEZA1
         CMP ROTACIONDEPIEZA, 2
-        JE POSICIONPIEZA2
+        JE POSICIONPIEZA0
         CMP ROTACIONDEPIEZA, 3
-        JE POSICIONPIEZA3
+        JE POSICIONPIEZA1
         
         POSICIONPIEZA0:
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY1    ;! ----------  ;!|//!    ████
-            INC TEMP2                           ;!|//!      ██
-            getAREADEJUEGO auxpX1, TEMP2        ;!|         ██
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
-            INC TEMP2                           ;!|
-            getAREADEJUEGO auxpX4, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-            MOV CX, Xtemp
-            MOV auxpX1, CX
-            MOV CX, Ytemp
-            MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 1
-            MOV auxpX2, CX
-            MOV CX, Ytemp            
-            MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 1
-            MOV auxpX3, CX
-            MOV CX, Ytemp
-            ADD CX, 1
-            MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 1
-            MOV auxpX4, CX
-            MOV CX, Ytemp
-            ADD CX, 2
-            MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
-             JMP SALIRZ
-        POSICIONPIEZA1:
-            ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!        ██
-            INC TEMP2                           ;!|//!    ██████
+            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ████
+            INC TEMP2                           ;!|//!  ████
             getAREADEJUEGO auxpX2, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
@@ -2125,7 +1978,7 @@ INCLUDE MACP2.inc
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
             MOV CX, Xtemp
-            ADD CX, 2
+            ADD CX, 1
             MOV auxpX1, CX
             MOV CX, Ytemp
             MOV auxpY1, CX
@@ -2133,15 +1986,14 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX1,auxpY1,LIGHT_RED
 
             MOV CX, Xtemp
+            ADD CX, 2
             MOV auxpX2, CX
             MOV CX, Ytemp
-            ADD CX, 1
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
             PAINTPOS auxpX2,auxpY2,LIGHT_RED
 
             MOV CX, Xtemp
-            ADD CX, 1
             MOV auxpX3, CX
             MOV CX, Ytemp
             ADD CX, 1
@@ -2150,7 +2002,7 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX3,auxpY3,LIGHT_RED
 
             MOV CX, Xtemp
-            ADD CX, 2
+            ADD CX, 1
             MOV auxpX4, CX
             MOV CX, Ytemp
             ADD CX, 1
@@ -2158,12 +2010,12 @@ INCLUDE MACP2.inc
             setAREADEJUEGO auxpX4, auxpY4, 2
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
-        POSICIONPIEZA2:
+        POSICIONPIEZA1:
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
-            INC TEMP2                           ;!|//!    ██
-            getAREADEJUEGO auxpX3, TEMP2        ;!|//!    ██
-            CMP TEMP, 0                         ;!|//!    ████
+            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ██
+            INC TEMP2                           ;!|//!    ████
+            getAREADEJUEGO auxpX2, TEMP2        ;!|//!      ██
+            CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
             MOV TEMP2, auxpY4    ;! ----------  ;!|
@@ -2189,9 +2041,10 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX2,auxpY2,LIGHT_RED
 
             MOV CX, Xtemp
+            ADD CX, 1
             MOV auxpX3, CX
             MOV CX, Ytemp
-            ADD CX, 2
+            ADD CX, 1
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
             PAINTPOS auxpX3,auxpY3,LIGHT_RED
@@ -2205,59 +2058,7 @@ INCLUDE MACP2.inc
             setAREADEJUEGO auxpX4, auxpY4, 2
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
-        POSICIONPIEZA3:
-            ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ██████
-            INC TEMP2                           ;!|//!    ██
-            getAREADEJUEGO auxpX2, TEMP2        ;!
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
-            INC TEMP2                           ;!|
-            getAREADEJUEGO auxpX3, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
-            INC TEMP2                           ;!|
-            getAREADEJUEGO auxpX4, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-            MOV CX, Xtemp
-            MOV auxpX1, CX
-            MOV CX, Ytemp
-            MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 1
-            MOV auxpX2, CX
-            MOV CX, Ytemp
-            MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 2
-            MOV auxpX3, CX
-            MOV CX, Ytemp
-            MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
-
-            MOV CX, Xtemp
-            MOV auxpX4, CX
-            MOV CX, Ytemp
-            ADD CX, 1
-            MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
-             JMP SALIRZ
-        JMP SALIRZ
+        
         SEQUEDAKIETO:
             print EXITO
             readtext
@@ -2266,6 +2067,7 @@ INCLUDE MACP2.inc
         SALIRZ:
         RET
     UPDATEZETA2_ ENDP
+    
     ELIMINARFILAS_ PROC FAR
         MOV SI, 0
         FORI:
