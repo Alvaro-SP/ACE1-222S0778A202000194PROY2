@@ -1958,9 +1958,9 @@ INCLUDE MACP2.inc
         
         POSICIONPIEZA0:
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ████
-            INC TEMP2                           ;!|//!  ████
-            getAREADEJUEGO auxpX2, TEMP2        ;!|
+            MOV TEMP2, auxpY1    ;! ----------  ;!|//!    ████
+            INC TEMP2                           ;!|//!      ████
+            getAREADEJUEGO auxpX1, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
@@ -1978,7 +1978,6 @@ INCLUDE MACP2.inc
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
             MOV CX, Xtemp
-            ADD CX, 1
             MOV auxpX1, CX
             MOV CX, Ytemp
             MOV auxpY1, CX
@@ -1986,7 +1985,7 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX1,auxpY1,LIGHT_RED
 
             MOV CX, Xtemp
-            ADD CX, 2
+            ADD CX, 1
             MOV auxpX2, CX
             MOV CX, Ytemp
             MOV auxpY2, CX
@@ -1994,6 +1993,7 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX2,auxpY2,LIGHT_RED
 
             MOV CX, Xtemp
+            ADD CX, 1
             MOV auxpX3, CX
             MOV CX, Ytemp
             ADD CX, 1
@@ -2002,7 +2002,7 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX3,auxpY3,LIGHT_RED
 
             MOV CX, Xtemp
-            ADD CX, 1
+            ADD CX, 2
             MOV auxpX4, CX
             MOV CX, Ytemp
             ADD CX, 1
@@ -2012,9 +2012,9 @@ INCLUDE MACP2.inc
              JMP SALIRZ
         POSICIONPIEZA1:
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ██
+            MOV TEMP2, auxpY3    ;! ----------  ;!|//!      ██
             INC TEMP2                           ;!|//!    ████
-            getAREADEJUEGO auxpX2, TEMP2        ;!|//!      ██
+            getAREADEJUEGO auxpX3, TEMP2        ;!|//!    ██
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
@@ -2026,6 +2026,7 @@ INCLUDE MACP2.inc
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
             MOV CX, Xtemp
+            ADD CX, 1
             MOV auxpX1, CX
             MOV CX, Ytemp
             MOV auxpY1, CX
@@ -2050,7 +2051,6 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX3,auxpY3,LIGHT_RED
 
             MOV CX, Xtemp
-            ADD CX, 1
             MOV auxpX4, CX
             MOV CX, Ytemp
             ADD CX, 2
