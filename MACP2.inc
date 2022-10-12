@@ -667,7 +667,7 @@ CORRERFILA MACRO POS
 ENDM
 LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2
     LOCAL movleftlb,VALIDARMOVERRIGHT,SIMOVRIGHT1,SIMOVRIGHT,sigoscan,VALIDARMOVERLEFT,SIMOVLEFT1,SIMOVLEFT,,,,
-    PUSHA
+
     ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
     CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
     JNE movleftlb
@@ -697,16 +697,16 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2
         JE VALIDARMOVERLEFT
         VALIDARMOVERLEFT:
             MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX1
+            mov TEMP2, auxpX1env
             INC TEMP2
-            getAREADEJUEGO TEMP2, auxpY1
+            getAREADEJUEGO TEMP2, auxpX2env
             CMP TEMP, 0
             JE SIMOVLEFT1
             JNE movleftlb
             SIMOVLEFT1:
-                mov TEMP2, auxpX2
+                mov TEMP2, auxpX1env2
                 INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY2
+                getAREADEJUEGO TEMP2, auxpX2env2
                 CMP TEMP, 0
                 JE SIMOVLEFT
                 JNE movleftlb
@@ -716,7 +716,72 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2
         ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
     
     sigoscan:
-    POPA
+ENDM
+LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxpX2env3
+    LOCAL SIMOVRIGHT0,SIMOVLEFT0, movleftlb,VALIDARMOVERRIGHT,SIMOVRIGHT1,SIMOVRIGHT,sigoscan,VALIDARMOVERLEFT,SIMOVLEFT1,SIMOVLEFT,,,,
+
+    ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
+    CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
+    JNE movleftlb
+    JE VALIDARMOVERRIGHT
+    VALIDARMOVERRIGHT:
+        MOV FLAGMOVERIGHT,0
+        mov TEMP2, auxpX1env
+        INC TEMP2
+        getAREADEJUEGO TEMP2, auxpX2env
+        CMP TEMP, 0
+        JE SIMOVRIGHT1
+        JNE movleftlb
+        SIMOVRIGHT1:
+            mov TEMP2, auxpX1env2
+            INC TEMP2
+            getAREADEJUEGO TEMP2, auxpX2env2
+            CMP TEMP, 0
+            JE SIMOVRIGHT0
+            JNE movleftlb
+            SIMOVRIGHT0:
+                mov TEMP2, auxpX1env3
+                INC TEMP2
+                getAREADEJUEGO TEMP2, auxpX2env3
+                CMP TEMP, 0
+                JE SIMOVRIGHT
+                JNE movleftlb
+        SIMOVRIGHT:
+            INC Xtemp
+            jmp sigoscan
+
+    movleftlb:      ; ! PRESIONO IZQUIERDA
+        CMP FLAGMOVELEFT,1
+        JNE sigoscan
+        JE VALIDARMOVERLEFT
+        VALIDARMOVERLEFT:
+            MOV FLAGMOVELEFT,0
+            mov TEMP2, auxpX1env
+            INC TEMP2
+            getAREADEJUEGO TEMP2, auxpX2env
+            CMP TEMP, 0
+            JE SIMOVLEFT1
+            JNE movleftlb
+            SIMOVLEFT1:
+                mov TEMP2, auxpX1env2
+                INC TEMP2
+                getAREADEJUEGO TEMP2, auxpX2env2
+                CMP TEMP, 0
+                JE SIMOVLEFT0
+                JNE movleftlb
+                SIMOVLEFT0:
+                    mov TEMP2, auxpX1env3
+                    INC TEMP2
+                    getAREADEJUEGO TEMP2, auxpX2env3
+                    CMP TEMP, 0
+                    JE SIMOVLEFT
+                    JNE movleftlb
+            SIMOVLEFT:
+                DEC Xtemp
+                jmp sigoscan
+        ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+    
+    sigoscan:
 ENDM
 
 PINTARPIEZASIGUIENTE MACRO PIEZA
