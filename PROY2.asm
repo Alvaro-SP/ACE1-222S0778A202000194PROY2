@@ -787,7 +787,7 @@ INCLUDE MACP2.inc
                 getAREADEJUEGO TEMP2, auxpY3
                 CMP TEMP, 0
                 JE SIMOVRIGHT
-                JNE movleftlb
+                JNE sigoscan
             SIMOVRIGHT:
                 INC Xtemp
                 jmp sigoscan
@@ -804,7 +804,7 @@ INCLUDE MACP2.inc
             getAREADEJUEGO TEMP2, auxpY4
             CMP TEMP, 0
             JE SIMOVLEFT1
-            JNE movleftlb
+            JNE sigoscan
             SIMOVLEFT1:
                 mov CX, auxpX4
                 MOV TEMP2, CX
