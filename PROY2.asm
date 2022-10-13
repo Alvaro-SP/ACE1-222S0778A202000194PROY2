@@ -1420,7 +1420,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY1, CX
             setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
+            PAINTPOS auxpX1,auxpY1,YELLOW
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1428,7 +1428,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
+            PAINTPOS auxpX2,auxpY2,YELLOW
 
             MOV CX, Xtemp
             MOV auxpX3, CX
@@ -1436,7 +1436,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
+            PAINTPOS auxpX3,auxpY3,YELLOW
 
             MOV CX, Xtemp
             MOV auxpX4, CX
@@ -1444,7 +1444,7 @@ INCLUDE MACP2.inc
             ADD CX, 2
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
+            PAINTPOS auxpX4,auxpY4,YELLOW
              JMP SALIRZ
         POSICIONPIEZA1:
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
@@ -1478,7 +1478,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY1, CX
             setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
+            PAINTPOS auxpX1,auxpY1,YELLOW
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1486,7 +1486,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
+            PAINTPOS auxpX2,auxpY2,YELLOW
 
             MOV CX, Xtemp
             ADD CX, 2
@@ -1494,7 +1494,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
+            PAINTPOS auxpX3,auxpY3,YELLOW
 
             MOV CX, Xtemp
             ADD CX, 2
@@ -1503,7 +1503,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
+            PAINTPOS auxpX4,auxpY4,YELLOW
              JMP SALIRZ
         POSICIONPIEZA2:
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
@@ -1531,7 +1531,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY1, CX
             setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
+            PAINTPOS auxpX1,auxpY1,YELLOW
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1540,7 +1540,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
+            PAINTPOS auxpX2,auxpY2,YELLOW
 
             MOV CX, Xtemp
             MOV auxpX3, CX
@@ -1548,7 +1548,7 @@ INCLUDE MACP2.inc
             ADD CX, 2
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
+            PAINTPOS auxpX3,auxpY3,YELLOW
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1557,7 +1557,7 @@ INCLUDE MACP2.inc
             ADD CX, 2
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
+            PAINTPOS auxpX4,auxpY4,YELLOW
              JMP SALIRZ
         POSICIONPIEZA3:
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
@@ -1591,7 +1591,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY1, CX
             setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
+            PAINTPOS auxpX1,auxpY1,YELLOW
 
             MOV CX, Xtemp
             MOV auxpX2, CX
@@ -1599,7 +1599,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
+            PAINTPOS auxpX2,auxpY2,YELLOW
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1608,7 +1608,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
+            PAINTPOS auxpX3,auxpY3,YELLOW
 
             MOV CX, Xtemp
             ADD CX, 2
@@ -1617,7 +1617,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
+            PAINTPOS auxpX4,auxpY4,YELLOW
              JMP SALIRZ
         JMP SALIRZ
         SEQUEDAKIETO:
@@ -1679,7 +1679,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY1, CX
             setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
+            PAINTPOS auxpX1,auxpY1,LIGHT_GRAY
 
             MOV CX, Xtemp
             ADD CX, 2
@@ -1687,7 +1687,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
+            PAINTPOS auxpX2,auxpY2,LIGHT_GRAY
 
             MOV CX, Xtemp
             MOV auxpX3, CX
@@ -1695,7 +1695,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
+            PAINTPOS auxpX3,auxpY3,LIGHT_GRAY
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1704,7 +1704,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
+            PAINTPOS auxpX4,auxpY4,LIGHT_GRAY
              JMP SALIRZ
         POSICIONPIEZA1:
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
@@ -1731,7 +1731,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY1, CX
             setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
+            PAINTPOS auxpX1,auxpY1,LIGHT_GRAY
 
             MOV CX, Xtemp
             MOV auxpX2, CX
@@ -1739,7 +1739,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
+            PAINTPOS auxpX2,auxpY2,LIGHT_GRAY
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1748,7 +1748,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
+            PAINTPOS auxpX3,auxpY3,LIGHT_GRAY
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1757,7 +1757,7 @@ INCLUDE MACP2.inc
             ADD CX, 2
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
+            PAINTPOS auxpX4,auxpY4,LIGHT_GRAY
              JMP SALIRZ
         
         SEQUEDAKIETO:
@@ -1818,7 +1818,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY1, CX
             setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
+            PAINTPOS auxpX1,auxpY1,BROWN
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1826,7 +1826,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
+            PAINTPOS auxpX2,auxpY2,BROWN
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1835,7 +1835,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
+            PAINTPOS auxpX3,auxpY3,BROWN
 
             MOV CX, Xtemp
             ADD CX, 2
@@ -1844,7 +1844,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
+            PAINTPOS auxpX4,auxpY4,BROWN
              JMP SALIRZ
         POSICIONPIEZA1:
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
@@ -1871,7 +1871,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             MOV auxpY1, CX
             setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
+            PAINTPOS auxpX1,auxpY1,BROWN
 
             MOV CX, Xtemp
             MOV auxpX2, CX
@@ -1879,7 +1879,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY2, CX
             setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
+            PAINTPOS auxpX2,auxpY2,BROWN
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1888,7 +1888,7 @@ INCLUDE MACP2.inc
             ADD CX, 1
             MOV auxpY3, CX
             setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
+            PAINTPOS auxpX3,auxpY3,BROWN
 
             MOV CX, Xtemp
             MOV auxpX4, CX
@@ -1896,7 +1896,7 @@ INCLUDE MACP2.inc
             ADD CX, 2
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
+            PAINTPOS auxpX4,auxpY4,BROWN
              JMP SALIRZ
         
         SEQUEDAKIETO:
