@@ -895,14 +895,15 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
             
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV CX, auxpY2    
+            MOV CX, auxpY2
             MOV TEMP2, CX        ;! ----------  ;!|//!      ██
             INC TEMP2                           ;!|//!    ████
             getAREADEJUEGO auxpX2, TEMP2        ;!|//!      ██
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -980,7 +981,8 @@ INCLUDE MACP2.inc
             JE VALIDARMOVERRIGHT
             VALIDARMOVERRIGHT:
                 MOV FLAGMOVERIGHT,0
-                mov TEMP2, auxpX4
+                mov CX, auxpX4
+                MOV TEMP2, CX
                 INC TEMP2
                 getAREADEJUEGO TEMP2, auxpY4
                 CMP TEMP, 0
@@ -996,7 +998,8 @@ INCLUDE MACP2.inc
                 JE VALIDARMOVERLEFT
                 VALIDARMOVERLEFT:
                     MOV FLAGMOVELEFT,0
-                    mov TEMP2, auxpX1
+                    mov CX, auxpX1
+                    MOV TEMP2, CX
                     INC TEMP2
                     getAREADEJUEGO TEMP2, auxpY1
                     CMP TEMP, 0
@@ -1008,25 +1011,29 @@ INCLUDE MACP2.inc
                 ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
             sigoscan:
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|
+            MOV CX, auxpY2    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|    ████████
             getAREADEJUEGO auxpX2, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
+            MOV CX, auxpY3    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX3, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY1    ;! ----------  ;!|
+            MOV CX, auxpY1    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX1, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1067,7 +1074,8 @@ INCLUDE MACP2.inc
         POSICIONPIEZA1:
             LEFTRIGHT_DECUATRO auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3,auxpX4, auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY4                   ;!|//!    ██
+            MOV CX, auxpY4                   ;!|//!    ██
+            MOV TEMP2, CX
             INC TEMP2                           ;!|//!    ██
             getAREADEJUEGO auxpX4, TEMP2        ;!|//!    ██
             CMP TEMP, 0                         ;!|//!    ██
@@ -1135,13 +1143,15 @@ INCLUDE MACP2.inc
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY1    ;! ----------  ;!|//!    ████
+            MOV CX, auxpY1   
+            MOV TEMP2, CX        ;! ----------  ;!|//!    ████
             INC TEMP2                           ;!|//!      ██
             getAREADEJUEGO auxpX1, TEMP2        ;!|         ██
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1186,19 +1196,22 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!        ██
-            INC TEMP2                           ;!|//!    ██████
+            MOV CX, auxpY2    ;! ----------  ;!|//!        ██
+            MOV TEMP2, CX                       ;!|//!    ██████
+            INC TEMP2    
             getAREADEJUEGO auxpX2, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
+            MOV CX, auxpY3    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX3, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1243,13 +1256,15 @@ INCLUDE MACP2.inc
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX1,auxpY1,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
+            MOV CX, auxpY3    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|//!    ██
             getAREADEJUEGO auxpX3, TEMP2        ;!|//!    ██
             CMP TEMP, 0                         ;!|//!    ████
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1293,19 +1308,22 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4, auxpX1,auxpY1,auxpX4,auxpY4
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ██████
-            INC TEMP2                           ;!|//!    ██
+            MOV CX, auxpY2    ;! ----------  ;!|//!    ██████
+            MOV TEMP2, CX                        ;!|//!    ██
+            INC TEMP2    
             getAREADEJUEGO auxpX2, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
+            MOV CX, auxpY3    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX3, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1374,13 +1392,15 @@ INCLUDE MACP2.inc
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!      ████
+            MOV CX, auxpY2
+            MOV TEMP2, CX      ;! ----------  ;!|//!      ████
             INC TEMP2                           ;!|//!      ██
             getAREADEJUEGO auxpX2, TEMP2        ;!|         ██
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1423,19 +1443,22 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4, auxpX1,auxpY1,auxpX4,auxpY4
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|
+            MOV CX, auxpY2    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|//!    ██████
             getAREADEJUEGO auxpX2, TEMP2        ;!|//!        ██
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY1    ;! ----------  ;!|
+            MOV CX, auxpY1    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX1, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1479,13 +1502,15 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX1,auxpY1,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
+            MOV CX, auxpY3    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|//!    ██
             getAREADEJUEGO auxpX3, TEMP2        ;!|//!    ██
             CMP TEMP, 0                         ;!|//!  ████
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1531,19 +1556,22 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|
+            MOV CX, auxpY2    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!| //!    ██
             getAREADEJUEGO auxpX2, TEMP2        ;!  //!    ██████
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
+            MOV CX, auxpY3    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX3, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1615,19 +1643,22 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DEDOS auxpX2,auxpY2,auxpX4,auxpY4, auxpX1,auxpY1,auxpX3,auxpY3
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ████
+            MOV CX, auxpY2
+            MOV TEMP2, CX        ;! ----------  ;!|//!    ████
             INC TEMP2                           ;!|//!  ████
             getAREADEJUEGO auxpX2, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
+            MOV CX, auxpY3    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX3, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1672,13 +1703,15 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
             
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ██
+            MOV CX, auxpY2
+            MOV TEMP2, CX        ;! ----------  ;!|//!    ██
             INC TEMP2                           ;!|//!    ████
             getAREADEJUEGO auxpX2, TEMP2        ;!|//!      ██
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4       ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1751,19 +1784,22 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DEDOS auxpX2,auxpY2,auxpX4,auxpY4, auxpX1,auxpY1,auxpX3,auxpY3
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY1    ;! ----------  ;!|//!    ████
+            MOV CX, auxpY1
+            MOV TEMP2, CX        ;! ----------  ;!|//!    ████
             INC TEMP2                           ;!|//!      ████
             getAREADEJUEGO auxpX1, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY3    ;! ----------  ;!|
+            MOV CX, auxpY3    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX3, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
@@ -1807,13 +1843,15 @@ INCLUDE MACP2.inc
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV TEMP2, auxpY3    ;! ----------  ;!|//!      ██
+            MOV CX, auxpY3 
+            MOV TEMP2, CX        ;! ----------  ;!|//!      ██
             INC TEMP2                           ;!|//!    ████
             getAREADEJUEGO auxpX3, TEMP2        ;!|//!    ██
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
-            MOV TEMP2, auxpY4    ;! ----------  ;!|
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
             INC TEMP2                           ;!|
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
