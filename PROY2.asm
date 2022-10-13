@@ -1288,7 +1288,7 @@ INCLUDE MACP2.inc
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ██████
             INC TEMP2                           ;!|//!    ██
-            getAREADEJUEGO auxpX2, TEMP2        ;!
+            getAREADEJUEGO auxpX2, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
