@@ -595,6 +595,172 @@ INCLUDE MACP2.inc
         RET
     INICIODELJUEGO_ ENDP
     ;?☻ ============= CONTROL DE MATRICES FIGURAS ========== ☻
+    
+    UPDAPALITO_ PROC FAR
+        ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
+        ;* VARIAR COLUMNA DE 0 A 5 = X
+        LIMPIARFRAMEANTERIOR
+        ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
+        JE SEQUEDAKIETO
+        
+        ;! ██████████████ ROTACIONES ██████████████
+        CMP ROTACIONDEPIEZA, 0
+        JE POSICIONPIEZA0
+        CMP ROTACIONDEPIEZA, 1
+        JE POSICIONPIEZA1
+        CMP ROTACIONDEPIEZA, 2
+        JE POSICIONPIEZA0
+        CMP ROTACIONDEPIEZA, 3
+        JE POSICIONPIEZA1
+        
+        POSICIONPIEZA0:
+            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
+            CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
+            JNE movleftlb
+            JE VALIDARMOVERRIGHT
+            VALIDARMOVERRIGHT:
+                MOV FLAGMOVERIGHT,0
+                mov CX, auxpX4
+                MOV TEMP2, CX
+                INC TEMP2
+                getAREADEJUEGO TEMP2, auxpY4
+                CMP TEMP, 0
+                JE SIMOVRIGHT
+                JNE movleftlb
+                SIMOVRIGHT:
+                    INC Xtemp
+                    jmp sigoscan
+
+            movleftlb:      ; ! PRESIONO IZQUIERDA
+                CMP FLAGMOVELEFT,1
+                JNE sigoscan
+                JE VALIDARMOVERLEFT
+                VALIDARMOVERLEFT:
+                    MOV FLAGMOVELEFT,0
+                    mov CX, auxpX1
+                    MOV TEMP2, CX
+                    INC TEMP2
+                    getAREADEJUEGO TEMP2, auxpY1
+                    CMP TEMP, 0
+                    JE SIMOVLEFT
+                    JNE movleftlb
+                    SIMOVLEFT:
+                        DEC Xtemp
+                        jmp sigoscan
+                ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+            sigoscan:
+            ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
+            MOV CX, auxpY2    ;! ----------  ;!|
+            MOV TEMP2, CX
+            INC TEMP2                           ;!|    ████████
+            getAREADEJUEGO auxpX2, TEMP2        ;!|
+            CMP TEMP, 0                         ;!|
+            JNE SEQUEDAKIETO                    ;!|
+
+            MOV CX, auxpY4    ;! ----------  ;!|
+            MOV TEMP2, CX
+            INC TEMP2                           ;!|
+            getAREADEJUEGO auxpX4, TEMP2        ;!|
+            CMP TEMP, 0                         ;!|
+            JNE SEQUEDAKIETO                    ;!|
+
+            MOV CX, auxpY3    ;! ----------  ;!|
+            MOV TEMP2, CX
+            INC TEMP2                           ;!|
+            getAREADEJUEGO auxpX3, TEMP2        ;!|
+            CMP TEMP, 0                         ;!|
+            JNE SEQUEDAKIETO                    ;!|
+
+            MOV CX, auxpY1    ;! ----------  ;!|
+            MOV TEMP2, CX
+            INC TEMP2                           ;!|
+            getAREADEJUEGO auxpX1, TEMP2        ;!|
+            CMP TEMP, 0                         ;!|
+            JNE SEQUEDAKIETO                    ;!|
+            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+            MOV CX, Xtemp
+            MOV auxpX1, CX
+            MOV CX, Ytemp
+            MOV auxpY1, CX
+            setAREADEJUEGO auxpX1, auxpY1, 2
+            PAINTPOS auxpX1,auxpY1,LIGHT_GREEN
+
+            MOV CX, Xtemp
+            ADD CX, 1
+            MOV auxpX2, CX
+            MOV CX, Ytemp
+            MOV auxpY2, CX
+            setAREADEJUEGO auxpX2, auxpY2, 2
+            PAINTPOS auxpX2,auxpY2,LIGHT_GREEN
+
+            MOV CX, Xtemp
+            ADD CX, 2
+            MOV auxpX3, CX
+            MOV CX, Ytemp
+            MOV auxpY3, CX
+            setAREADEJUEGO auxpX3, auxpY3, 2
+            PAINTPOS auxpX3,auxpY3,LIGHT_GREEN
+
+            MOV CX, Xtemp
+            ADD CX, 3
+            MOV auxpX4, CX
+            MOV CX, Ytemp
+            MOV auxpY4, CX
+            setAREADEJUEGO auxpX4, auxpY4, 2
+            PAINTPOS auxpX4,auxpY4,LIGHT_GREEN
+             JMP SALIRZ
+        POSICIONPIEZA1:
+            LEFTRIGHT_DECUATRO auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3,auxpX4, auxpY4
+            ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
+            MOV CX, auxpY4                   ;!|//!    ██
+            MOV TEMP2, CX
+            INC TEMP2                           ;!|//!    ██
+            getAREADEJUEGO auxpX4, TEMP2        ;!|//!    ██
+            CMP TEMP, 0                         ;!|//!    ██
+            JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+            MOV CX, Xtemp
+            MOV auxpX1, CX
+            MOV CX, Ytemp
+            MOV auxpY1, CX
+            setAREADEJUEGO auxpX1, auxpY1, 2
+            PAINTPOS auxpX1,auxpY1,LIGHT_GREEN
+
+            MOV CX, Xtemp
+            MOV auxpX2, CX
+            MOV CX, Ytemp
+            ADD CX, 1
+            MOV auxpY2, CX
+            setAREADEJUEGO auxpX2, auxpY2, 2
+            PAINTPOS auxpX2,auxpY2,LIGHT_GREEN
+
+            MOV CX, Xtemp
+            MOV auxpX3, CX
+            MOV CX, Ytemp
+            ADD CX, 2
+            MOV auxpY3, CX
+            setAREADEJUEGO auxpX3, auxpY3, 2
+            PAINTPOS auxpX3,auxpY3,LIGHT_GREEN
+
+            MOV CX, Xtemp
+            MOV auxpX4, CX
+            MOV CX, Ytemp
+            ADD CX, 3
+            MOV auxpY4, CX
+            setAREADEJUEGO auxpX4, auxpY4, 2
+            PAINTPOS auxpX4,auxpY4,LIGHT_GREEN
+             JMP SALIRZ
+        JMP SALIRZ
+        SEQUEDAKIETO:
+            print EXITO
+            readtext
+            RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
+            MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
+        SALIRZ:
+        RET
+    UPDAPALITO_ ENDP
     UPDATECUADRO_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
@@ -675,7 +841,7 @@ INCLUDE MACP2.inc
         MOV CX, Ytemp
         MOV auxpY1, CX
         setAREADEJUEGO auxpX1, auxpY1, 2
-        PAINTPOS auxpX1,auxpY1,LIGHT_GREEN
+        PAINTPOS auxpX1,auxpY1,LIGHT_CYAN
 
         MOV CX, Xtemp
         MOV auxpX2, CX
@@ -683,7 +849,7 @@ INCLUDE MACP2.inc
         ADD CX, 1
         MOV auxpY2, CX
         setAREADEJUEGO auxpX2, auxpY2, 2
-        PAINTPOS auxpX2,auxpY2,LIGHT_GREEN
+        PAINTPOS auxpX2,auxpY2,LIGHT_CYAN
 
         MOV CX, Xtemp
         ADD CX, 1
@@ -691,7 +857,7 @@ INCLUDE MACP2.inc
         MOV CX, Ytemp
         MOV auxpY3, CX
         setAREADEJUEGO auxpX3, auxpY3, 2
-        PAINTPOS auxpX3,auxpY3,LIGHT_GREEN
+        PAINTPOS auxpX3,auxpY3,LIGHT_CYAN
 
         MOV CX, Xtemp
         ADD CX, 1
@@ -700,7 +866,7 @@ INCLUDE MACP2.inc
         ADD CX, 1
         MOV auxpY4, CX
         setAREADEJUEGO auxpX4, auxpY4, 2
-        PAINTPOS auxpX4,auxpY4,LIGHT_GREEN
+        PAINTPOS auxpX4,auxpY4,LIGHT_CYAN
 
         JMP SALIRZ
         SEQUEDAKIETO:
@@ -711,7 +877,6 @@ INCLUDE MACP2.inc
         SALIRZ:
         RET
     UPDATECUADRO_ ENDP
-    
     UPDATETE_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
@@ -964,171 +1129,6 @@ INCLUDE MACP2.inc
         SALIRZ:
         RET
     UPDATETE_ ENDP
-    UPDAPALITO_ PROC FAR
-        ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
-        ;* VARIAR COLUMNA DE 0 A 5 = X
-        LIMPIARFRAMEANTERIOR
-        ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
-        JE SEQUEDAKIETO
-        
-        ;! ██████████████ ROTACIONES ██████████████
-        CMP ROTACIONDEPIEZA, 0
-        JE POSICIONPIEZA0
-        CMP ROTACIONDEPIEZA, 1
-        JE POSICIONPIEZA1
-        CMP ROTACIONDEPIEZA, 2
-        JE POSICIONPIEZA0
-        CMP ROTACIONDEPIEZA, 3
-        JE POSICIONPIEZA1
-        
-        POSICIONPIEZA0:
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
-            CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
-            JNE movleftlb
-            JE VALIDARMOVERRIGHT
-            VALIDARMOVERRIGHT:
-                MOV FLAGMOVERIGHT,0
-                mov CX, auxpX4
-                MOV TEMP2, CX
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY4
-                CMP TEMP, 0
-                JE SIMOVRIGHT
-                JNE movleftlb
-                SIMOVRIGHT:
-                    INC Xtemp
-                    jmp sigoscan
-
-            movleftlb:      ; ! PRESIONO IZQUIERDA
-                CMP FLAGMOVELEFT,1
-                JNE sigoscan
-                JE VALIDARMOVERLEFT
-                VALIDARMOVERLEFT:
-                    MOV FLAGMOVELEFT,0
-                    mov CX, auxpX1
-                    MOV TEMP2, CX
-                    INC TEMP2
-                    getAREADEJUEGO TEMP2, auxpY1
-                    CMP TEMP, 0
-                    JE SIMOVLEFT
-                    JNE movleftlb
-                    SIMOVLEFT:
-                        DEC Xtemp
-                        jmp sigoscan
-                ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-            sigoscan:
-            ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV CX, auxpY2    ;! ----------  ;!|
-            MOV TEMP2, CX
-            INC TEMP2                           ;!|    ████████
-            getAREADEJUEGO auxpX2, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-
-            MOV CX, auxpY4    ;! ----------  ;!|
-            MOV TEMP2, CX
-            INC TEMP2                           ;!|
-            getAREADEJUEGO auxpX4, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-
-            MOV CX, auxpY3    ;! ----------  ;!|
-            MOV TEMP2, CX
-            INC TEMP2                           ;!|
-            getAREADEJUEGO auxpX3, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-
-            MOV CX, auxpY1    ;! ----------  ;!|
-            MOV TEMP2, CX
-            INC TEMP2                           ;!|
-            getAREADEJUEGO auxpX1, TEMP2        ;!|
-            CMP TEMP, 0                         ;!|
-            JNE SEQUEDAKIETO                    ;!|
-            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-            MOV CX, Xtemp
-            MOV auxpX1, CX
-            MOV CX, Ytemp
-            MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 1
-            MOV auxpX2, CX
-            MOV CX, Ytemp
-            MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 2
-            MOV auxpX3, CX
-            MOV CX, Ytemp
-            MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
-
-            MOV CX, Xtemp
-            ADD CX, 3
-            MOV auxpX4, CX
-            MOV CX, Ytemp
-            MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
-             JMP SALIRZ
-        POSICIONPIEZA1:
-            LEFTRIGHT_DECUATRO auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3,auxpX4, auxpY4
-            ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV CX, auxpY4                   ;!|//!    ██
-            MOV TEMP2, CX
-            INC TEMP2                           ;!|//!    ██
-            getAREADEJUEGO auxpX4, TEMP2        ;!|//!    ██
-            CMP TEMP, 0                         ;!|//!    ██
-            JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
-            MOV CX, Xtemp
-            MOV auxpX1, CX
-            MOV CX, Ytemp
-            MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
-            PAINTPOS auxpX1,auxpY1,LIGHT_RED
-
-            MOV CX, Xtemp
-            MOV auxpX2, CX
-            MOV CX, Ytemp
-            ADD CX, 1
-            MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
-            PAINTPOS auxpX2,auxpY2,LIGHT_RED
-
-            MOV CX, Xtemp
-            MOV auxpX3, CX
-            MOV CX, Ytemp
-            ADD CX, 2
-            MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
-            PAINTPOS auxpX3,auxpY3,LIGHT_RED
-
-            MOV CX, Xtemp
-            MOV auxpX4, CX
-            MOV CX, Ytemp
-            ADD CX, 3
-            MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
-            PAINTPOS auxpX4,auxpY4,LIGHT_RED
-             JMP SALIRZ
-        JMP SALIRZ
-        SEQUEDAKIETO:
-            print EXITO
-            readtext
-            RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
-            MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
-        SALIRZ:
-        RET
-    UPDAPALITO_ ENDP
     UPDATEELE1_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
@@ -1768,7 +1768,6 @@ INCLUDE MACP2.inc
         SALIRZ:
         RET
     UPDATEZETA1_ ENDP
-    
     UPDATEZETA2_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
