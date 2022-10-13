@@ -1928,6 +1928,12 @@ INCLUDE MACP2.inc
         JNE movleftlb
         JE VALIDARMOVERRIGHT
         VALIDARMOVERRIGHT:
+
+            POSX_IS 7
+            CMP TEMP2, 1
+            JE sigoscan
+
+
             MOV FLAGMOVERIGHT,0
             MOV CX, auxpX1
             mov TEMP2, CX
