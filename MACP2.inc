@@ -571,31 +571,37 @@ RANDOMPIECE MACRO
     div  cx       ;DX tiene la divicion en mi caso - de 0 a 5
     add  dl, '1'  ; DL TIENE EL VALOR ENTRE 0 Y 5
     CMP DL, '1'
+    JNE DOS
     JE UNO
     UNO:
         MOV TEMP, 1
         JMP SALIR
     CMP DL, '2'
+    JNE TRES
     JE DOS
     DOS:
         MOV TEMP, 2
         JMP SALIR
     CMP DL, '3'
+    JNE CUATRO
     JE TRES
     TRES:
         MOV TEMP, 3
         JMP SALIR
     CMP DL, '4'
+    JNE CINCO
     JE CUATRO
     CUATRO:
         MOV TEMP, 4
         JMP SALIR
     CMP DL, '5'
+    JNE SEIS
     JE CINCO
     CINCO:
         MOV TEMP, 5
         JMP SALIR
     CMP DL, '6'
+    JNE SIETE
     JE SEIS
     SEIS:
         MOV TEMP, 6
