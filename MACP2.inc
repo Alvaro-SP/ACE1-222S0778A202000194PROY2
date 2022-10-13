@@ -697,6 +697,7 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1envA,auxpX
             JNE sigoscan
         SIMOVRIGHT:
             INC Xtemp
+            INC POSXHANDLE
             jmp sigoscan
 
     movleftlb:      ; ! PRESIONO IZQUIERDA
@@ -722,6 +723,7 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1envA,auxpX
                 JNE movleftlb
             SIMOVLEFT:
                 DEC Xtemp
+                DEC POSXHANDLE
                 jmp sigoscan
         ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
     
@@ -769,6 +771,7 @@ LEFTRIGHT_DECUATRO MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,au
                     JNE sigoscan
         SIMOVRIGHT:
             INC Xtemp
+            INC POSXHANDLE
             jmp sigoscan
 
     movleftlb:      ; ! PRESIONO IZQUIERDA
@@ -810,6 +813,7 @@ LEFTRIGHT_DECUATRO MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,au
                         JNE sigoscan
             SIMOVLEFT:
                 DEC Xtemp
+                DEC POSXHANDLE
                 jmp sigoscan
         ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
     
@@ -849,6 +853,7 @@ LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxp
                 JNE sigoscan
         SIMOVRIGHT:
             INC Xtemp
+            INC POSXHANDLE
             jmp sigoscan
 
     movleftlb:      ; ! PRESIONO IZQUIERDA
@@ -882,6 +887,7 @@ LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxp
                     JNE sigoscan
             SIMOVLEFT:
                 DEC Xtemp
+                DEC POSXHANDLE
                 jmp sigoscan
         ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
     sigoscan:
