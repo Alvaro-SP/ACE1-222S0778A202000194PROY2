@@ -1604,6 +1604,9 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA1
         
         POSICIONPIEZA0:
+            ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
+            LEFTRIGHT_DEDOS auxpX2,auxpY2,auxpX4,auxpY4, auxpX1,auxpY1,auxpX3,auxpY3
+
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ████
             INC TEMP2                           ;!|//!  ████
@@ -1658,6 +1661,9 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA1:
+            ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
+            LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
+            
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY2    ;! ----------  ;!|//!    ██
             INC TEMP2                           ;!|//!    ████
@@ -1734,6 +1740,9 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA1
         
         POSICIONPIEZA0:
+            ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
+            LEFTRIGHT_DEDOS auxpX2,auxpY2,auxpX4,auxpY4, auxpX1,auxpY1,auxpX3,auxpY3
+
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY1    ;! ----------  ;!|//!    ████
             INC TEMP2                           ;!|//!      ████
@@ -1788,6 +1797,9 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA1:
+            ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
+            LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
+            
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY3    ;! ----------  ;!|//!      ██
             INC TEMP2                           ;!|//!    ████
