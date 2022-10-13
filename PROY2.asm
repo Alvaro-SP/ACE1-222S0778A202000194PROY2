@@ -522,6 +522,7 @@ INCLUDE MACP2.inc
             MOV NEXTPIECE, SI
             PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
+
         whilee:
             MOV FLAGMOVELEFT,0
             MOV FLAGMOVERIGHT,0
@@ -877,11 +878,8 @@ INCLUDE MACP2.inc
         MOV auxpY4, CX
         setAREADEJUEGO auxpX4, auxpY4, 2
         PAINTPOS auxpX4,auxpY4,LIGHT_CYAN
-
         JMP SALIRZ
         SEQUEDAKIETO:
-            print EXITO
-            readtext
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
@@ -1958,16 +1956,8 @@ INCLUDE MACP2.inc
             INC TEMP2
             getAREADEJUEGO TEMP2, auxpY1
             CMP TEMP, 0
-            JE SIMOVLEFT1
+            JE SIMOVLEFT
             JNE sigoscan
-            SIMOVLEFT1:
-                mov CX, auxpX4
-                MOV TEMP2, CX
-                INC TEMP2
-                getAREADEJUEGO TEMP2, auxpY4
-                CMP TEMP, 0
-                JE SIMOVLEFT
-                JNE sigoscan
             SIMOVLEFT:
                 DEC Xtemp
                 DEC POSXHANDLE
@@ -1978,18 +1968,9 @@ INCLUDE MACP2.inc
 
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-        MOV CX, auxpY2                      ;!|//!      ████
-        MOV TEMP2, CX                       ;!|//!      ████
-        INC TEMP2                           ;!|
-        getAREADEJUEGO auxpX2, TEMP2        ;!|
-        CMP TEMP, 0                         ;!|
-        JNE SEQUEDAKIETO                    ;!|
-        MOV CX, auxpY4                      ;!|
-        MOV TEMP2, CX
-        INC TEMP2                           ;!|
-        getAREADEJUEGO auxpX4, TEMP2        ;!|
-        CMP TEMP, 0                         ;!|
-        JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+        ESCANEODECOLUMNA
+        CMP TEMP2, 1
+        JE SEQUEDAKIETO
         
 
         MOV CX, Xtemp
@@ -1997,32 +1978,7 @@ INCLUDE MACP2.inc
         MOV CX, Ytemp
         MOV auxpY1, CX
         setAREADEJUEGO auxpX1, auxpY1, 2
-        PAINTPOS auxpX1,auxpY1,LIGHT_CYAN
-
-        MOV CX, Xtemp
-        MOV auxpX2, CX
-        MOV CX, Ytemp
-        ADD CX, 1
-        MOV auxpY2, CX
-        setAREADEJUEGO auxpX2, auxpY2, 2
-        PAINTPOS auxpX2,auxpY2,LIGHT_CYAN
-
-        MOV CX, Xtemp
-        ADD CX, 1
-        MOV auxpX3, CX
-        MOV CX, Ytemp
-        MOV auxpY3, CX
-        setAREADEJUEGO auxpX3, auxpY3, 2
-        PAINTPOS auxpX3,auxpY3,LIGHT_CYAN
-
-        MOV CX, Xtemp
-        ADD CX, 1
-        MOV auxpX4, CX
-        MOV CX, Ytemp
-        ADD CX, 1
-        MOV auxpY4, CX
-        setAREADEJUEGO auxpX4, auxpY4, 2
-        PAINTPOS auxpX4,auxpY4,LIGHT_CYAN
+        PAINTPOS auxpX1,auxpY1,WHITE
 
         JMP SALIRZ
         SEQUEDAKIETO:
@@ -2034,6 +1990,7 @@ INCLUDE MACP2.inc
         RET
     UPDATEESPECIAL_ ENDP
     
+
     ELIMINARFILAS_ PROC FAR
         MOV SI, 0
         FORI:
@@ -2104,6 +2061,34 @@ INCLUDE MACP2.inc
     CORRERFILA_ ENDP
     
     
+    ESCANEODECOLUMNA_ PROC FAR
+        ;* POSXHANDLE ES CONSTANTE AKI   === auxpX1
+        ;? RECORRO DESDE auxpY1 hasta 15
+        MOV DI, auxpY1
+        MOV TEMP2,0
+        FORJ:
+            CMP DI, 15
+            JE VALIDAR
+            INC DI
+            getAREADEJUEGO auxpX1, DI
+            CMP TEMP,0
+            JE AUMENTVACIO ;* si hay cero no sumo
+            JMP FORJ
+            AUMENTVACIO:
+                INC TEMP2
+            JMP FORJ
+        VALIDAR:
+            CMP TEMP2, 0 ;* SI ES 0 SE QUEDA KIETO
+            JE SIESTALLENO
+            JNE NOESTALLENO
+            NOESTALLENO:
+                MOV TEMP2,0
+                JMP SALIR
+            SIESTALLENO:
+                MOV TEMP2,1
+        SALIR:
+        RET
+    ESCANEODECOLUMNA_ ENDP
     ; UPDATEZETA2_ PROC FAR
     ;     RET
     ; UPDATEZETA2_ ENDP
