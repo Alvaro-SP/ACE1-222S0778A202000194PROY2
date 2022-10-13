@@ -125,7 +125,8 @@ INCLUDE MACP2.inc
         listestadistic          dw 2000 dup('$')
         indexbbsort             DW 0000
         RESULTADOPRINT          dw 00h, '$'
-
+        izq   DB "LEFT $"
+        der   DB "RIGHT $"
 
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
@@ -522,6 +523,8 @@ INCLUDE MACP2.inc
             PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
         whilee:
+            MOV FLAGMOVELEFT,0
+            MOV FLAGMOVERIGHT,0
             mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA
             int 21h
             cmp al, 0  ;* SI NO SE PRESIONA SIGUEWHILE
@@ -533,19 +536,22 @@ INCLUDE MACP2.inc
                 je pauseGame
                 cmp al, 32  ;* SPACE GIRAR PIEZA
                 je ROTATEPIECE
-                cmp al, 32  ;* MOVER IZQUIERDA
+                cmp ah, 4Bh  ;* MOVER IZQUIERDA
                 je moveLeft
-                cmp al, 32  ;* MOVER DERECHA
+                cmp ah, 4Dh  ;* MOVER DERECHA
                 je moveRight
+                JMP siguewhile
             moveLeft:
+                print izq
                 CMP POSXHANDLE, 0
-                JNE siguewhile  ;* si esta x=0 no puede moverse
+                JE siguewhile  ;* si esta x=0 no puede moverse
                 MOV FLAGMOVELEFT, 1
                 jmp siguewhile
 
             moveRight:
+                print der
                 CMP POSXHANDLE, 7
-                JNE siguewhile  ;* si esta x=7 no puede moverse
+                JE siguewhile  ;* si esta x=7 no puede moverse
                 MOV FLAGMOVERIGHT, 1
                 jmp siguewhile
             pauseGame:
@@ -630,6 +636,7 @@ INCLUDE MACP2.inc
                 JNE movleftlb
                 SIMOVRIGHT:
                     INC Xtemp
+                    INC POSXHANDLE
                     jmp sigoscan
 
             movleftlb:      ; ! PRESIONO IZQUIERDA
@@ -647,6 +654,7 @@ INCLUDE MACP2.inc
                     JNE movleftlb
                     SIMOVLEFT:
                         DEC Xtemp
+                        DEC POSXHANDLE
                         jmp sigoscan
                 ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
             sigoscan:
@@ -790,6 +798,7 @@ INCLUDE MACP2.inc
                 JNE sigoscan
             SIMOVRIGHT:
                 INC Xtemp
+                INC POSXHANDLE
                 jmp sigoscan
 
         movleftlb:      ; ! PRESIONO IZQUIERDA
@@ -812,9 +821,10 @@ INCLUDE MACP2.inc
                 getAREADEJUEGO TEMP2, auxpY4
                 CMP TEMP, 0
                 JE SIMOVLEFT
-                JNE movleftlb
+                JNE sigoscan
             SIMOVLEFT:
                 DEC Xtemp
+                DEC POSXHANDLE
                 jmp sigoscan
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
         
@@ -1907,6 +1917,116 @@ INCLUDE MACP2.inc
         SALIRZ:
         RET
     UPDATEZETA2_ ENDP
+    UPDATEESPECIAL_ PROC NEAR
+        ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
+        ;* VARIAR COLUMNA DE 0 A 7 = X
+        LIMPIARFRAMEANTERIORESPECIAL
+        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
+        JE SEQUEDAKIETO
+        ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
+        CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
+        JNE movleftlb
+        JE VALIDARMOVERRIGHT
+        VALIDARMOVERRIGHT:
+            MOV FLAGMOVERIGHT,0
+            MOV CX, auxpX1
+            mov TEMP2, CX
+            INC TEMP2
+            getAREADEJUEGO TEMP2, auxpY1
+            CMP TEMP, 0
+            JE SIMOVRIGHT
+            JNE sigoscan
+            SIMOVRIGHT:
+                INC Xtemp
+                INC POSXHANDLE
+                jmp sigoscan
+
+        movleftlb:      ; ! PRESIONO IZQUIERDA
+            CMP FLAGMOVELEFT,1
+            JNE sigoscan
+            JE VALIDARMOVERLEFT
+        VALIDARMOVERLEFT:
+            MOV FLAGMOVELEFT,0
+            mov CX, auxpX1
+            MOV TEMP2, CX
+            INC TEMP2
+            getAREADEJUEGO TEMP2, auxpY1
+            CMP TEMP, 0
+            JE SIMOVLEFT1
+            JNE sigoscan
+            SIMOVLEFT1:
+                mov CX, auxpX4
+                MOV TEMP2, CX
+                INC TEMP2
+                getAREADEJUEGO TEMP2, auxpY4
+                CMP TEMP, 0
+                JE SIMOVLEFT
+                JNE sigoscan
+            SIMOVLEFT:
+                DEC Xtemp
+                DEC POSXHANDLE
+                jmp sigoscan
+            ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+        
+        sigoscan:
+
+        ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+        ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
+        MOV CX, auxpY2                      ;!|//!      ████
+        MOV TEMP2, CX                       ;!|//!      ████
+        INC TEMP2                           ;!|
+        getAREADEJUEGO auxpX2, TEMP2        ;!|
+        CMP TEMP, 0                         ;!|
+        JNE SEQUEDAKIETO                    ;!|
+        MOV CX, auxpY4                      ;!|
+        MOV TEMP2, CX
+        INC TEMP2                           ;!|
+        getAREADEJUEGO auxpX4, TEMP2        ;!|
+        CMP TEMP, 0                         ;!|
+        JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+        
+
+        MOV CX, Xtemp
+        MOV auxpX1, CX
+        MOV CX, Ytemp
+        MOV auxpY1, CX
+        setAREADEJUEGO auxpX1, auxpY1, 2
+        PAINTPOS auxpX1,auxpY1,LIGHT_CYAN
+
+        MOV CX, Xtemp
+        MOV auxpX2, CX
+        MOV CX, Ytemp
+        ADD CX, 1
+        MOV auxpY2, CX
+        setAREADEJUEGO auxpX2, auxpY2, 2
+        PAINTPOS auxpX2,auxpY2,LIGHT_CYAN
+
+        MOV CX, Xtemp
+        ADD CX, 1
+        MOV auxpX3, CX
+        MOV CX, Ytemp
+        MOV auxpY3, CX
+        setAREADEJUEGO auxpX3, auxpY3, 2
+        PAINTPOS auxpX3,auxpY3,LIGHT_CYAN
+
+        MOV CX, Xtemp
+        ADD CX, 1
+        MOV auxpX4, CX
+        MOV CX, Ytemp
+        ADD CX, 1
+        MOV auxpY4, CX
+        setAREADEJUEGO auxpX4, auxpY4, 2
+        PAINTPOS auxpX4,auxpY4,LIGHT_CYAN
+
+        JMP SALIRZ
+        SEQUEDAKIETO:
+            print EXITO
+            readtext
+            RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
+            MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
+        SALIRZ:
+        RET
+    UPDATEESPECIAL_ ENDP
     
     ELIMINARFILAS_ PROC FAR
         MOV SI, 0

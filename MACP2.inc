@@ -507,6 +507,11 @@ LIMPIARFRAMEANTERIOR MACRO
     PAINTPOS auxpX3,auxpY3,BLUE
     PAINTPOS auxpX4,auxpY4,BLUE
 ENDM
+LIMPIARFRAMEANTERIORESPECIAL MACRO
+    setAREADEJUEGO auxpX1,auxpY1,0 ;* LIMPIO ANTERIOR
+    PAINTPOS auxpX1,auxpY1,BLUE ;* LIMPIO ANTERIOR
+
+ENDM
 RESETAUXSBLOQUES MACRO
     MOV auxpX1,0
     MOV auxpX2,0
@@ -712,7 +717,7 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1envA,auxpX
             getAREADEJUEGO TEMP2, auxpX2envA
             CMP TEMP, 0
             JE SIMOVLEFT1
-            JNE movleftlb
+            JNE sigoscan
             SIMOVLEFT1:
                 mov CX, auxpX1env2A
                 MOV TEMP2, CX
@@ -720,7 +725,7 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1envA,auxpX
                 getAREADEJUEGO TEMP2, auxpX2env2A
                 CMP TEMP, 0
                 JE SIMOVLEFT
-                JNE movleftlb
+                JNE sigoscan
             SIMOVLEFT:
                 DEC Xtemp
                 DEC POSXHANDLE
