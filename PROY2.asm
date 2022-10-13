@@ -175,10 +175,10 @@ INCLUDE MACP2.inc
         POSTOSET            DW 0
         POSXHANDLE          DW 0  ;* POSICION HORIZONTAL DE LA PIEZA
         TIPODEPIEZA         DW 0 ;* HANDLER DEL TIPO DE PIEZA
-        NEXTPIECE         DW 0
+        NEXTPIECE           DW 0
         ROTACIONDEPIEZA     DW 0 ;* HANDLER DE LA ROTACION DE LA PIEZA
-        FLAGMOVERIGHT   DW 0
-        FLAGMOVELEFT   DW 0
+        FLAGMOVERIGHT       DW 0
+        FLAGMOVELEFT        DW 0
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -2209,7 +2209,7 @@ INCLUDE MACP2.inc
         DRAW_RECTANGLE  486, 162, 638, 466, BLUE
         PINTARCUADRO 684,162
         PINTARPALITO 720, 72
-        PINTARTE 720,216
+        PINTARTE 710,216
         PINTAR1ELE 666, 288
         PINTAR2ELE 756, 360
         PINTAR1ZETA 680, 450
