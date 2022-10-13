@@ -1930,15 +1930,6 @@ INCLUDE MACP2.inc
     ;     RET
     ; UPDATEZETA2_ ENDP
     
-    
-    
-    
-    
-    
-    
-    
-    
-
 
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
     setAREADEJUEGO_ PROC NEAR
