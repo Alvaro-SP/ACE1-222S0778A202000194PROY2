@@ -898,7 +898,19 @@ LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxp
     sigoscan:
 ENDM
 
-
+POSX_IS MACRO tope
+    LOCAL T1, T2, SALIDA
+    PUSHA
+    MOV DI, tope
+    CMP POSXHANDLE, DI ;llega al tope TEMP2==1
+    JE T1
+    MOV TEMP2, 0
+    JMP SALIDA
+    T1:
+        MOV TEMP2, 1
+    SALIDA:
+    POPA
+ENDM
 PINTARPIEZASIGUIENTE MACRO PIEZA
     LOCAL P1,P2,P3,P4,P5,P6,P7,SALIDA
     DRAW_RECTANGLE  355, 414, 440, 522, BLUE
