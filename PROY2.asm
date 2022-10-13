@@ -607,14 +607,16 @@ INCLUDE MACP2.inc
         JE VALIDARMOVERRIGHT
         VALIDARMOVERRIGHT:
             MOV FLAGMOVERIGHT,0
-            mov TEMP2, auxpX3
+            MOV CX, auxpX3
+            mov TEMP2, CX
             INC TEMP2
             getAREADEJUEGO TEMP2, auxpY3
             CMP TEMP, 0
             JE SIMOVRIGHT1
             JNE movleftlb
             SIMOVRIGHT1:
-                mov TEMP2, auxpX4
+                MOV CX, auxpX4
+                mov TEMP2, CX
                 INC TEMP2
                 getAREADEJUEGO TEMP2, auxpY3
                 CMP TEMP, 0
@@ -630,14 +632,16 @@ INCLUDE MACP2.inc
             JE VALIDARMOVERLEFT
         VALIDARMOVERLEFT:
             MOV FLAGMOVELEFT,0
-            mov TEMP2, auxpX4
+            mov CX, auxpX4
+            MOV TEMP2, CX
             INC TEMP2
             getAREADEJUEGO TEMP2, auxpY4
             CMP TEMP, 0
             JE SIMOVLEFT1
             JNE movleftlb
             SIMOVLEFT1:
-                mov TEMP2, auxpX4
+                mov CX, auxpX4
+                MOV TEMP2, CX
                 INC TEMP2
                 getAREADEJUEGO TEMP2, auxpY4
                 CMP TEMP, 0
@@ -652,12 +656,14 @@ INCLUDE MACP2.inc
 
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-        MOV TEMP2, auxpY2                   ;!|//!      ████
-        INC TEMP2                           ;!|//!      ████
+        MOV CX, auxpY2                      ;!|//!      ████
+        MOV TEMP2, CX                       ;!|//!      ████
+        INC TEMP2                           ;!|
         getAREADEJUEGO auxpX2, TEMP2        ;!|
         CMP TEMP, 0                         ;!|
         JNE SEQUEDAKIETO                    ;!|
-        MOV TEMP2, auxpY4                   ;!|
+        MOV CX, auxpY4                      ;!|
+        MOV TEMP2, CX
         INC TEMP2                           ;!|
         getAREADEJUEGO auxpX4, TEMP2        ;!|
         CMP TEMP, 0                         ;!|
