@@ -1799,7 +1799,6 @@ INCLUDE MACP2.inc
         POSICIONPIEZA1:
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
-            
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV TEMP2, auxpY3    ;! ----------  ;!|//!      ██
             INC TEMP2                           ;!|//!    ████
