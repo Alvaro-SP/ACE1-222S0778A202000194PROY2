@@ -695,7 +695,7 @@ INCLUDE MACP2.inc
             MOV auxpX1, CX
             MOV CX, Ytemp
             MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
+            setAREADEJUEGO auxpX1, auxpY1, 1
             PAINTPOS auxpX1,auxpY1,LIGHT_GREEN
 
             MOV CX, Xtemp
@@ -703,7 +703,7 @@ INCLUDE MACP2.inc
             MOV auxpX2, CX
             MOV CX, Ytemp
             MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
+            setAREADEJUEGO auxpX2, auxpY2, 1
             PAINTPOS auxpX2,auxpY2,LIGHT_GREEN
 
             MOV CX, Xtemp
@@ -711,7 +711,7 @@ INCLUDE MACP2.inc
             MOV auxpX3, CX
             MOV CX, Ytemp
             MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
+            setAREADEJUEGO auxpX3, auxpY3, 1
             PAINTPOS auxpX3,auxpY3,LIGHT_GREEN
 
             MOV CX, Xtemp
@@ -719,7 +719,7 @@ INCLUDE MACP2.inc
             MOV auxpX4, CX
             MOV CX, Ytemp
             MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
+            setAREADEJUEGO auxpX4, auxpY4, 1
             PAINTPOS auxpX4,auxpY4,LIGHT_GREEN
              JMP SALIRZ
         POSICIONPIEZA1:
@@ -736,7 +736,7 @@ INCLUDE MACP2.inc
             MOV auxpX1, CX
             MOV CX, Ytemp
             MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
+            setAREADEJUEGO auxpX1, auxpY1, 1
             PAINTPOS auxpX1,auxpY1,LIGHT_GREEN
 
             MOV CX, Xtemp
@@ -744,7 +744,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             ADD CX, 1
             MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
+            setAREADEJUEGO auxpX2, auxpY2, 1
             PAINTPOS auxpX2,auxpY2,LIGHT_GREEN
 
             MOV CX, Xtemp
@@ -752,7 +752,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             ADD CX, 2
             MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
+            setAREADEJUEGO auxpX3, auxpY3, 1
             PAINTPOS auxpX3,auxpY3,LIGHT_GREEN
 
             MOV CX, Xtemp
@@ -760,7 +760,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             ADD CX, 3
             MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
+            setAREADEJUEGO auxpX4, auxpY4, 1
             PAINTPOS auxpX4,auxpY4,LIGHT_GREEN
              JMP SALIRZ
         JMP SALIRZ
@@ -937,7 +937,7 @@ INCLUDE MACP2.inc
             MOV auxpX1, CX
             MOV CX, Ytemp
             MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
+            setAREADEJUEGO auxpX1, auxpY1, 3
             PAINTPOS auxpX1,auxpY1,LIGHT_RED
 
             MOV CX, Xtemp
@@ -945,7 +945,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             ADD CX, 1
             MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
+            setAREADEJUEGO auxpX2, auxpY2, 3
             PAINTPOS auxpX2,auxpY2,LIGHT_RED
 
             MOV CX, Xtemp
@@ -954,7 +954,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             ADD CX, 1
             MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
+            setAREADEJUEGO auxpX3, auxpY3, 3
             PAINTPOS auxpX3,auxpY3,LIGHT_RED
 
             MOV CX, Xtemp
@@ -963,7 +963,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             ADD CX, 1
             MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
+            setAREADEJUEGO auxpX4, auxpY4, 3
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA1:
@@ -988,7 +988,7 @@ INCLUDE MACP2.inc
             MOV auxpX1, CX
             MOV CX, Ytemp
             MOV auxpY1, CX
-            setAREADEJUEGO auxpX1, auxpY1, 2
+            setAREADEJUEGO auxpX1, auxpY1, 3
             PAINTPOS auxpX1,auxpY1,LIGHT_RED
 
             MOV CX, Xtemp
@@ -996,7 +996,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             ADD CX, 1
             MOV auxpY2, CX
-            setAREADEJUEGO auxpX2, auxpY2, 2
+            setAREADEJUEGO auxpX2, auxpY2, 3
             PAINTPOS auxpX2,auxpY2,LIGHT_RED
 
             MOV CX, Xtemp
@@ -1004,7 +1004,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             ADD CX, 2
             MOV auxpY3, CX
-            setAREADEJUEGO auxpX3, auxpY3, 2
+            setAREADEJUEGO auxpX3, auxpY3, 3
             PAINTPOS auxpX3,auxpY3,LIGHT_RED
 
             MOV CX, Xtemp
@@ -1013,7 +1013,7 @@ INCLUDE MACP2.inc
             MOV CX, Ytemp
             ADD CX, 1
             MOV auxpY4, CX
-            setAREADEJUEGO auxpX4, auxpY4, 2
+            setAREADEJUEGO auxpX4, auxpY4, 3
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA2:
