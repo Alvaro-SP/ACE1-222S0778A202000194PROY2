@@ -509,7 +509,7 @@ INCLUDE MACP2.inc
         PAINTPOS 0,9,LIGHT_GREEN
         RANDOMPIECE
         MOV SI, TEMP
-        MOV NEXTPIECE, 2
+        MOV NEXTPIECE, SI
         
         GENFIGURA:
             MOV DI, 0
@@ -520,7 +520,7 @@ INCLUDE MACP2.inc
             MOV TIPODEPIEZA, SI
             RANDOMPIECE ; * Genero la pieza siguiente para despues
             MOV SI, TEMP
-            MOV NEXTPIECE, 2
+            MOV NEXTPIECE, SI
             PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
 
