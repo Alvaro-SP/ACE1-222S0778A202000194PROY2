@@ -2058,8 +2058,8 @@ INCLUDE MACP2.inc
     VALIDARFILALLENA_ ENDP
     CORRERFILA_ PROC FAR
         MOV SI, 14  ; ! FILAS
-        MOV DI, 0   ;! COLUMNAS
         FORI:
+            MOV DI, 0   ;! COLUMNAS
             CMP SI, -1
             JE SALIR
 
@@ -2073,9 +2073,8 @@ INCLUDE MACP2.inc
                     getAREADEJUEGO SI, DI
                     setAREADEJUEGO TEMP2, DI, TEMP ; !set dato en la fila posterior
                     PINTARUNIT  TEMP2,DI,TEMP
-                           
                     SALTAR2:
-                        inc si
+                        inc DI
                         JMP FORJ
                 SALIR2:
             SALTAR:
