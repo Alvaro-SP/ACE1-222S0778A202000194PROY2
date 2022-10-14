@@ -160,7 +160,7 @@ INCLUDE MACP2.inc
         Stringpuntos    DB 4 dup ('$')
         Stringnivel     DB "1$"
         ;! VELOCIDAD DEL JUEGO
-        speed DW 1300
+        speed DW 1100
         timeaux DW 0
 
         auxpX1      DW 0       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
@@ -608,7 +608,7 @@ INCLUDE MACP2.inc
     UPDAPALITO_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        LIMPIARFRAMEANTERIOR
+        
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         CMP auxpY4, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
@@ -690,7 +690,7 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
+            LIMPIARFRAMEANTERIOR
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -731,7 +731,7 @@ INCLUDE MACP2.inc
             getAREADEJUEGO auxpX4, TEMP2        ;!|//!    ██
             CMP TEMP, 0                         ;!|//!    ██
             JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
+            LIMPIARFRAMEANTERIOR
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -2018,7 +2018,6 @@ INCLUDE MACP2.inc
         SALIRZ:
         RET
     UPDATEESPECIAL_ ENDP
-    
 
     ELIMINARFILAS_ PROC FAR
         MOV SI, 0
@@ -2098,7 +2097,7 @@ INCLUDE MACP2.inc
         MOV DI, auxpY1
         MOV TEMP2,0
         FORJ:
-            CMP DI, 15
+            CMP DI, 16
             JE VALIDAR
             INC DI
             getAREADEJUEGO auxpX1, DI
