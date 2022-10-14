@@ -2047,9 +2047,12 @@ INCLUDE MACP2.inc
         VALIDAR:
             CMP TEMP2, 8
             JE SIESTALLENO
-            JNE SALIR
+            JNE NOSTALLENO
             SIESTALLENO:
                 MOV TEMP,1
+                JMP SALIR
+            NOSTALLENO:
+                MOV TEMP, 0
         SALIR:
         RET
     VALIDARFILALLENA_ ENDP
