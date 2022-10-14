@@ -2068,9 +2068,9 @@ INCLUDE MACP2.inc
                     MOV TEMP2, SI
                     INC TEMP2
 
-                    getAREADEJUEGO SI, DI
-                    setAREADEJUEGO TEMP2, DI, TEMP ; !set dato en la fila posterior
-                    PINTARUNIT  TEMP2,DI,TEMP
+                    getAREADEJUEGO DI, SI
+                    setAREADEJUEGO DI, TEMP2, TEMP ; !set dato en la fila posterior
+                    PINTARUNIT  DI,TEMP2, TEMP
                     SALTAR2:
                         inc DI
                         JMP FORJ
