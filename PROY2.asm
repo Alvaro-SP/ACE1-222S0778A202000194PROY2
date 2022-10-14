@@ -1227,7 +1227,7 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV CX, auxpY2    ;! ----------  ;!|//!        ██
+            MOV CX, auxpY2    ;! ----------  ;!|//!       ██
             MOV TEMP2, CX                       ;!|//!    ██████
             INC TEMP2    
             getAREADEJUEGO auxpX2, TEMP2        ;!|
@@ -1427,10 +1427,10 @@ INCLUDE MACP2.inc
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
-            MOV CX, auxpY2
+            MOV CX, auxpY1
             MOV TEMP2, CX      ;! ----------  ;!|//!      ████
             INC TEMP2                           ;!|//!      ██
-            getAREADEJUEGO auxpX2, TEMP2        ;!|         ██
+            getAREADEJUEGO auxpX1, TEMP2        ;!|         ██
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
 
