@@ -586,39 +586,45 @@ RANDOMPIECE MACRO
     UNO:
         MOV TEMP, 1
         JMP SALIR
+    DOS:
     CMP DL, '2'
     JNE TRES
-    JE DOS
-    DOS:
+    JE DOSA
+    DOSA:
         MOV TEMP, 2
         JMP SALIR
+    TRES:
     CMP DL, '3'
     JNE CUATRO
-    JE TRES
-    TRES:
+    JE TRESA
+    TRESA:
         MOV TEMP, 3
         JMP SALIR
+    CUATRO:
     CMP DL, '4'
     JNE CINCO
-    JE CUATRO
-    CUATRO:
+    JE CUATROA
+    CUATRAO:
         MOV TEMP, 4
         JMP SALIR
+    CINCO:
     CMP DL, '5'
     JNE SEIS
-    JE CINCO
-    CINCO:
+    JE CINCOA
+    CINCOA:
         MOV TEMP, 5
         JMP SALIR
+    SEIS:
     CMP DL, '6'
     JNE SIETE
-    JE SEIS
-    SEIS:
+    JE SEISA
+    SEISA:
         MOV TEMP, 6
         JMP SALIR
-    CMP DL, '7'
-    JE SIETE
     SIETE:
+    CMP DL, '7'
+    JE SIETEA
+    SIETEA:
         MOV TEMP, 7
         JMP SALIR
     SALIR:

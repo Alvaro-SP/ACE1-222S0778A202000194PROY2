@@ -505,8 +505,8 @@ INCLUDE MACP2.inc
         PINTARPANTALLADEJUEGO
         MOV DI, 0
         esperaenter
-        setAREADEJUEGO 0,9,2
-        PAINTPOS 0,9,LIGHT_GREEN
+        ; setAREADEJUEGO 0,9,2.
+        ; PAINTPOS 0,9,LIGHT_GREEN
         RANDOMPIECE
         MOV SI, TEMP
         MOV NEXTPIECE, SI
