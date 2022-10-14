@@ -610,7 +610,7 @@ INCLUDE MACP2.inc
         ;* VARIAR COLUMNA DE 0 A 5 = X
         LIMPIARFRAMEANTERIOR
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
+        CMP auxpY4, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
         ;! ██████████████ ROTACIONES ██████████████
@@ -890,10 +890,6 @@ INCLUDE MACP2.inc
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
         
-        ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
-        JE SEQUEDAKIETO
-        
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
         JE POSICIONPIEZA0
@@ -905,6 +901,9 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
 
@@ -967,6 +966,9 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA1:
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY3, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
@@ -1017,6 +1019,9 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA2:
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4,  auxpX1,auxpY1,auxpX4,auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
@@ -1077,6 +1082,9 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA3:
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
             
@@ -1147,7 +1155,7 @@ INCLUDE MACP2.inc
         ;* VARIAR COLUMNA DE 0 A 5 = X
         
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
+        CMP auxpY4, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
         ;! ██████████████ ROTACIONES ██████████████
@@ -1400,10 +1408,10 @@ INCLUDE MACP2.inc
     UPDATEELE2_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
+        CMP auxpY4, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
+        
         
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
@@ -1468,6 +1476,7 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,YELLOW
              JMP SALIRZ
         POSICIONPIEZA1:
+            
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4, auxpX1,auxpY1,auxpX4,auxpY4
 
@@ -1658,7 +1667,7 @@ INCLUDE MACP2.inc
         ;* VARIAR COLUMNA DE 0 A 5 = X
         
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
+        CMP auxpY4, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
         ;! ██████████████ ROTACIONES ██████████████
@@ -1800,7 +1809,7 @@ INCLUDE MACP2.inc
         ;* VARIAR COLUMNA DE 0 A 5 = X
         
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
+        CMP auxpY4, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         
         ;! ██████████████ ROTACIONES ██████████████
@@ -1940,7 +1949,7 @@ INCLUDE MACP2.inc
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 7 = X
         
-        CMP auxpY2, 15  ;* sI LLEGO AL FONDO
+        CMP auxpY1, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
         CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
