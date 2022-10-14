@@ -595,7 +595,7 @@ INCLUDE MACP2.inc
                 je nextLevel
                 jmp whilee
             nextLevel:
-                SUB speed, 500
+                SUB speed, 0
                 jmp whilee
             GUARDAYMENU:
                 JMP SALIR
