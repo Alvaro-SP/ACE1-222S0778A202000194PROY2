@@ -892,7 +892,7 @@ INCLUDE MACP2.inc
     UPDATETE_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        LIMPIARFRAMEANTERIOR
+        
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
@@ -933,6 +933,7 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+            LIMPIARFRAMEANTERIOR
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -984,6 +985,7 @@ INCLUDE MACP2.inc
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+            LIMPIARFRAMEANTERIOR
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1043,6 +1045,8 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            LIMPIARFRAMEANTERIOR
+
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -1095,6 +1099,8 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            LIMPIARFRAMEANTERIOR
+
             MOV CX, Xtemp
             ADD CX, 1
             MOV auxpX1, CX
@@ -1144,7 +1150,7 @@ INCLUDE MACP2.inc
     UPDATEELE1_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        LIMPIARFRAMEANTERIOR
+        
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
@@ -1177,6 +1183,8 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+            LIMPIARFRAMEANTERIOR
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1238,6 +1246,8 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            LIMPIARFRAMEANTERIOR
+
             MOV CX, Xtemp
             ADD CX, 2
             MOV auxpX1, CX
@@ -1290,6 +1300,8 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+            LIMPIARFRAMEANTERIOR
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1350,6 +1362,8 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            LIMPIARFRAMEANTERIOR
+
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -1393,7 +1407,7 @@ INCLUDE MACP2.inc
     UPDATEELE2_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        LIMPIARFRAMEANTERIOR
+        
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
@@ -1426,6 +1440,8 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+            LIMPIARFRAMEANTERIOR
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1485,6 +1501,8 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            LIMPIARFRAMEANTERIOR
+
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -1536,6 +1554,8 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+            LIMPIARFRAMEANTERIOR
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1598,6 +1618,8 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            LIMPIARFRAMEANTERIOR
+
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -1643,7 +1665,7 @@ INCLUDE MACP2.inc
     UPDATEZETA1_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        LIMPIARFRAMEANTERIOR
+        
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
@@ -1684,6 +1706,8 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+            LIMPIARFRAMEANTERIOR
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1738,6 +1762,8 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            LIMPIARFRAMEANTERIOR
+
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -1783,7 +1809,7 @@ INCLUDE MACP2.inc
     UPDATEZETA2_ PROC FAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        LIMPIARFRAMEANTERIOR
+        
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
@@ -1824,6 +1850,8 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+
+            LIMPIARFRAMEANTERIOR
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1877,6 +1905,8 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            LIMPIARFRAMEANTERIOR
+
             MOV CX, Xtemp
             ADD CX, 1
             MOV auxpX1, CX
@@ -1922,7 +1952,7 @@ INCLUDE MACP2.inc
     UPDATEESPECIAL_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 7 = X
-        LIMPIARFRAMEANTERIORESPECIAL
+        
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
@@ -1976,6 +2006,7 @@ INCLUDE MACP2.inc
         CMP TEMP2, 1
         JE SEQUEDAKIETO
         
+        LIMPIARFRAMEANTERIORESPECIAL
 
         MOV CX, Xtemp
         MOV auxpX1, CX
