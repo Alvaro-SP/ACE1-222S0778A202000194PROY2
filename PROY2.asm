@@ -160,7 +160,7 @@ INCLUDE MACP2.inc
         Stringpuntos    DB 4 dup ('$')
         Stringnivel     DB "1$"
         ;! VELOCIDAD DEL JUEGO
-        speed DW 1500
+        speed DW 1300
         timeaux DW 0
 
         auxpX1      DW 0       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
@@ -589,7 +589,7 @@ INCLUDE MACP2.inc
                 
                 inc timeaux
                 mov dx, timeaux
-                cmp dx, 5
+                cmp dx, 50
                 je nextLevel
                 cmp dx, 15
                 je nextLevel
@@ -2004,8 +2004,6 @@ INCLUDE MACP2.inc
 
         JMP SALIRZ
         SEQUEDAKIETO:
-            print EXITO
-            readtext
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
