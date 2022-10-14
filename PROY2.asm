@@ -509,9 +509,10 @@ INCLUDE MACP2.inc
         PAINTPOS 0,9,LIGHT_GREEN
         RANDOMPIECE
         MOV SI, TEMP
-        MOV NEXTPIECE, SI
+        MOV NEXTPIECE, 2
         
         GENFIGURA:
+            MOV DI, 0
             ELIMINARFILAS ;! SCAN SI HAY FILAS RELLENITAS XD
             MOV ROTACIONDEPIEZA, 0
             MOV BANDERATIESO,0  ; * SET flag de figura quieta
@@ -519,11 +520,12 @@ INCLUDE MACP2.inc
             MOV TIPODEPIEZA, SI
             RANDOMPIECE ; * Genero la pieza siguiente para despues
             MOV SI, TEMP
-            MOV NEXTPIECE, SI
+            MOV NEXTPIECE, 2
             PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
 
         whilee:
+            
             MOV FLAGMOVELEFT,0
             MOV FLAGMOVERIGHT,0
             mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA
@@ -543,14 +545,12 @@ INCLUDE MACP2.inc
                 je moveRight
                 JMP siguewhile
             moveLeft:
-                print izq
                 CMP POSXHANDLE, 0
                 JE siguewhile  ;* si esta x=0 no puede moverse
                 MOV FLAGMOVELEFT, 1
                 jmp siguewhile
 
             moveRight:
-                print der
                 CMP POSXHANDLE, 7
                 JE siguewhile  ;* si esta x=7 no puede moverse
                 MOV FLAGMOVERIGHT, 1
@@ -583,8 +583,10 @@ INCLUDE MACP2.inc
                 UPDATEPIEZA  ;!UPDATE OF THE PIECE.
                 CMP BANDERATIESO, 1  ;* SI ES 1 SIGUIENTE FIGURA
                 JE GENFIGURA
-                INC DI
                 Delay speed
+                
+                INC DI
+                
                 inc timeaux
                 mov dx, timeaux
                 cmp dx, 5
@@ -773,7 +775,7 @@ INCLUDE MACP2.inc
     UPDATECUADRO_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        LIMPIARFRAMEANTERIOR
+        
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
@@ -846,7 +848,7 @@ INCLUDE MACP2.inc
         CMP TEMP, 0                         ;!|
         JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
         
-
+        LIMPIARFRAMEANTERIOR
         MOV CX, Xtemp
         MOV auxpX1, CX
         MOV CX, Ytemp
@@ -878,8 +880,10 @@ INCLUDE MACP2.inc
         MOV auxpY4, CX
         setAREADEJUEGO auxpX4, auxpY4, 2
         PAINTPOS auxpX4,auxpY4,LIGHT_CYAN
+        print izq
         JMP SALIRZ
         SEQUEDAKIETO:
+            
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
