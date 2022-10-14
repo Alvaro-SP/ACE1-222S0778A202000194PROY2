@@ -497,6 +497,15 @@ UPDATEZETA2 MACRO X,Y
     CALL UPDATEZETA2_
     POPA
 ENDM
+UPDATEESPECIAL MACRO X,Y
+    PUSHA
+    MOV AX, X
+    MOV Xtemp,AX
+    MOV AX, Y
+    MOV Ytemp, AX
+    CALL UPDATEESPECIAL_
+    POPA
+ENDM
 LIMPIARFRAMEANTERIOR MACRO
     setAREADEJUEGO auxpX1,auxpY1,0 ;* LIMPIO ANTERIOR
     setAREADEJUEGO auxpX2,auxpY2,0
@@ -523,7 +532,7 @@ RESETAUXSBLOQUES MACRO
     MOV auxpY4,0
 ENDM
 RANDOMPOSITION MACRO
-    LOCAL CERO, UNO, DOS, TRES, CUATRO, CINCO,SEIS, SIETE, SALIR
+    LOCAL CERO, UNO, DOS, TRES, CUATRO, CINCO,SEIS, SIETE,UNOA, DOSA, TRESA, CUATROA, CINCOA,SEISA, SIETEA, SALIR
     PUSHA
     MOV AH, 00h  ; interrupcion para jalar el tiempo en el sistema
     INT 1AH      ; CX:DX  toma numeros del reloj desde medianoche
@@ -538,32 +547,34 @@ RANDOMPOSITION MACRO
     CERO:
         MOV POSXHANDLE, 0
         JMP SALIR
-    CMP DL, '1'
-    JE UNO
-    JNE DOS
     UNO:
+    CMP DL, '1'
+    JE UNOA
+    JNE DOS
+    UNOA:
         MOV POSXHANDLE, 1
         JMP SALIR
-    CMP DL, '2'
-    JE DOS
-    JNE TRES
     DOS:
+    CMP DL, '2'
+    JE DOSA
+    JNE TRES
+    DOSA:
         MOV POSXHANDLE, 2
         JMP SALIR
-    CMP DL, '3'
-    JE TRES
-    JNE CUATRO
     TRES:
+    CMP DL, '3'
+    JE TRESA
+    JNE CUATRO
+    TRESA:
         MOV POSXHANDLE, 3
         JMP SALIR
-    CMP DL, '4'
-    JE CUATRO
-    JNE CINCO
     CUATRO:
+    CMP DL, '4'
+    JE CUATROA
+    JNE CINCO
+    CUATROA:
         MOV POSXHANDLE, 4
         JMP SALIR
-    CMP DL, '5'
-    JE CINCO
     CINCO:
         MOV POSXHANDLE, 5
         JMP SALIR
@@ -571,7 +582,7 @@ RANDOMPOSITION MACRO
     POPA
 ENDM
 RANDOMPIECE MACRO
-    LOCAL CERO, UNO, DOS, TRES, CUATRO, CINCO,SEIS, SIETE, SALIR
+    LOCAL CERO, UNO, DOS, TRES, CUATRO, CINCO,SEIS, SIETE,UNOA, DOSA, TRESA, CUATROA, CINCOA,SEISA, SIETEA, SALIR
     PUSHA
     MOV AH, 00h  ; interrupcion para jalar el tiempo en el sistema
     INT 1AH      ; CX:DX  toma numeros del reloj desde medianoche
@@ -579,11 +590,18 @@ RANDOMPIECE MACRO
     xor  dx, dx
     mov  cx, 7
     div  cx       ;DX tiene la divicion en mi caso - de 0 a 5
-    add  dl, '1'  ; DL TIENE EL VALOR ENTRE 0 Y 5
+    add  dl, '0'  ; DL TIENE EL VALOR ENTRE 0 Y 5
+    CMP DL, '0'
+    JE CERO
+    JNE UNO
+    CERO:
+        MOV TEMP, 0
+        JMP SALIR
+    UNO:
     CMP DL, '1'
     JNE DOS
-    JE UNO
-    UNO:
+    JE UNOA
+    UNOA:
         MOV TEMP, 1
         JMP SALIR
     DOS:
@@ -604,7 +622,7 @@ RANDOMPIECE MACRO
     CMP DL, '4'
     JNE CINCO
     JE CUATROA
-    CUATRAO:
+    CUATROA:
         MOV TEMP, 4
         JMP SALIR
     CINCO:
@@ -631,7 +649,9 @@ RANDOMPIECE MACRO
     POPA
 ENDM
 UPDATEPIEZA MACRO
-    LOCAL GENP1,GENP2,GENP3,GENP4,GENP5,GENP6,GENP7,SALIDA
+    LOCAL GENP0,GENP1,GENP2,GENP3,GENP4,GENP5,GENP6,GENP7,SALIDA
+    CMP TIPODEPIEZA, 0
+    JE GENP0
     CMP TIPODEPIEZA, 1
     JE GENP1
     CMP TIPODEPIEZA, 2
@@ -646,6 +666,9 @@ UPDATEPIEZA MACRO
     JE GENP6
     CMP TIPODEPIEZA, 7
     JE GENP7
+    GENP0:
+        UPDATEESPECIAL POSXHANDLE, DI
+        JMP SALIDA
     GENP1:
         UPDAPALITO POSXHANDLE, DI
         JMP SALIDA
@@ -668,7 +691,6 @@ UPDATEPIEZA MACRO
         UPDATEZETA2 POSXHANDLE, DI
         JMP SALIDA
     SALIDA:
-        
 ENDM
 
 ELIMINARFILAS MACRO

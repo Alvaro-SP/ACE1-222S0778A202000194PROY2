@@ -765,8 +765,6 @@ INCLUDE MACP2.inc
              JMP SALIRZ
         JMP SALIRZ
         SEQUEDAKIETO:
-            print EXITO
-            readtext
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
@@ -883,7 +881,6 @@ INCLUDE MACP2.inc
         print izq
         JMP SALIRZ
         SEQUEDAKIETO:
-            
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
@@ -1140,8 +1137,6 @@ INCLUDE MACP2.inc
 
         JMP SALIRZ
         SEQUEDAKIETO:
-            print EXITO
-            readtext
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
@@ -1397,8 +1392,6 @@ INCLUDE MACP2.inc
              JMP SALIRZ
         JMP SALIRZ
         SEQUEDAKIETO:
-            print EXITO
-            readtext
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
@@ -1655,8 +1648,6 @@ INCLUDE MACP2.inc
              JMP SALIRZ
         JMP SALIRZ
         SEQUEDAKIETO:
-            print EXITO
-            readtext
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
@@ -1799,8 +1790,6 @@ INCLUDE MACP2.inc
              JMP SALIRZ
         
         SEQUEDAKIETO:
-            print EXITO
-            readtext
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
@@ -1942,8 +1931,6 @@ INCLUDE MACP2.inc
              JMP SALIRZ
         
         SEQUEDAKIETO:
-            print EXITO
-            readtext
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
             MOV BANDERATIESO,1          ;! LA MATRIZ PLASMADOS
         SALIRZ:
