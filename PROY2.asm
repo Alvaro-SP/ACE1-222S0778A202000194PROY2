@@ -163,14 +163,14 @@ INCLUDE MACP2.inc
         speed DW 1100
         timeaux DW 0
 
-        auxpX1      DW 0       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
-        auxpX2      DW 0
-        auxpX3      DW 0
-        auxpX4      DW 0
-        auxpY1      DW 0
-        auxpY2      DW 0
-        auxpY3      DW 0
-        auxpY4      DW 0
+        auxpX1      DW -1       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
+        auxpX2      DW -1
+        auxpX3      DW -1
+        auxpX4      DW -1
+        auxpY1      DW -1
+        auxpY2      DW -1
+        auxpY3      DW -1
+        auxpY4      DW -1
 
         BANDERATIESO        DW 0
         POSTOSET            DW 0
@@ -509,7 +509,6 @@ INCLUDE MACP2.inc
         RANDOMPIECE
         MOV SI, TEMP
         MOV NEXTPIECE, SI
-        
         GENFIGURA:
             ; ACTUALIZATODOOO
             MOV DI, 0
@@ -518,6 +517,7 @@ INCLUDE MACP2.inc
             MOV BANDERATIESO,0  ; * SET flag de figura quieta
             MOV SI, NEXTPIECE ;* paso a actual la pieza que era la siguiente
             MOV TIPODEPIEZA, SI
+            ;! GENERO LA PIEZA Y GUARDO LA SIGUIENTE
             RANDOMPIECE ; * Genero la pieza siguiente para despues
             MOV SI, TEMP
             MOV NEXTPIECE, SI
@@ -525,7 +525,6 @@ INCLUDE MACP2.inc
             RANDOMPOSITION ;* Genero la posicion random de inicio
 
         whilee:
-            
             MOV FLAGMOVELEFT,0
             MOV FLAGMOVERIGHT,0
             mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA
@@ -579,14 +578,11 @@ INCLUDE MACP2.inc
                     INC ROTACIONDEPIEZA
 
             siguewhile:
-                
                 UPDATEPIEZA  ;!UPDATE OF THE PIECE.
                 CMP BANDERATIESO, 1  ;* SI ES 1 SIGUIENTE FIGURA
                 JE GENFIGURA
                 Delay speed
-                
                 INC DI
-                
                 inc timeaux
                 mov dx, timeaux
                 cmp dx, 50
@@ -1428,8 +1424,8 @@ INCLUDE MACP2.inc
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY1
-            MOV TEMP2, CX      ;! ----------  ;!|//!      ████
-            INC TEMP2                           ;!|//!      ██
+            MOV TEMP2, CX      ;! ----------    ;!|       ████
+            INC TEMP2                           ;!|         ██
             getAREADEJUEGO auxpX1, TEMP2        ;!|         ██
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
@@ -2119,10 +2115,17 @@ INCLUDE MACP2.inc
         SALIR:
         RET
     ESCANEODECOLUMNA_ ENDP
-    ; UPDATEZETA2_ PROC FAR
-    ;     RET
-    ; UPDATEZETA2_ ENDP
     
+
+
+
+
+
+
+
+
+
+
 
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
     setAREADEJUEGO_ PROC NEAR
@@ -2327,7 +2330,7 @@ INCLUDE MACP2.inc
         DRAW_RECTANGLE 468,144,664, 144+18, CYAN    ;! MARCO ARRIBA
         DRAW_RECTANGLE 468,144,468+18, 500, CYAN    ;! MARCO IZQUIERDA
         DRAW_RECTANGLE 468,500-18,656, 500, CYAN    ;! MARCO ABAJO
-        DRAW_RECTANGLE 656-18,144,656, 500, CYAN    ;! MARCO DERECHA
+        DRAW_RECTANGLE 664-18,144,664, 500, CYAN    ;! MARCO DERECHA
         ;PINTAR TITULO
         DRAW_RECTANGLE 144+18,108+36,144+36, 108+36+18, WHITE
         DRAW_RECTANGLE 54,108,324, 108+18, WHITE
@@ -2527,7 +2530,9 @@ INCLUDE MACP2.inc
         PAINTSQUARE  Xaux1,Yaux1, BROWN
         RET
     PINTAR2ZETA_ ENDP
-
+    ; UPDATEZETA2_ PROC FAR
+    ;     RET
+    ; UPDATEZETA2_ ENDP
     PAINTSQUARE_ PROC NEAR          ;! -----------PINTAR UN CUADRO 18*18-----------
         MOV CX, Xtempauxaux
         MOV Xaux1, CX
@@ -2542,6 +2547,17 @@ INCLUDE MACP2.inc
         RET
     PAINTSQUARE_ ENDP
     
+
+
+
+
+
+
+
+
+
+
+
     ;*        ████████████████████████████████ ████████████████████████████████████
     ;*        █▄─▄▄─█─▄▄▄▄█─▄─▄─██▀▄─██▄─▄▄▀█▄─▄█─▄▄▄▄█─▄─▄─█▄─▄█─▄▄▄─██▀▄─██─▄▄▄▄█
     ;*        ██─▄█▀█▄▄▄▄─███─████─▀─███─██─██─██▄▄▄▄─███─████─██─███▀██─▀─██▄▄▄▄─█
@@ -2609,6 +2625,7 @@ INCLUDE MACP2.inc
         ;*    }
         RET
     HEAPSORT_ ENDP
+    
     HEAPIFY_ PROC NEAR
         ;*    void heapify(int* arr, int n, int i)
         ;*    {
