@@ -336,6 +336,7 @@ INCLUDE MACP2.inc
         MOV NEXTPIECE, SI
         GENFIGURA:
             PINTARBLOQUESTIESOS
+            readtext
             MOV DI, 0
             ELIMINARFILAS ;! SCAN SI HAY FILAS RELLENITAS XD
             MOV ROTACIONDEPIEZA, 0
