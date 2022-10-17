@@ -143,7 +143,7 @@ INCLUDE MACP2.inc
         setPOSX              DW      ? ;* PARA COORDENADAS EN MATRICES
         setPOSY              DW      ?
         coloraux           DB      ? ;* coloar auxiliar cuadro
-        AREADEJUEGO         DW 256 DUP(00)
+        AREADEJUEGO         DW 256 DUP(0)
         PIEZASKIETAS         DW 256 DUP(0)
         INDEX           Dw ?
         INDEXtemp       Dw ?
@@ -333,7 +333,7 @@ INCLUDE MACP2.inc
         esperaenter
         RANDOMPIECE
         MOV SI, TEMP
-        MOV NEXTPIECE, SI
+        MOV NEXTPIECE, 2
         GENFIGURA:
             PINTARBLOQUESTIESOS
             readtext
@@ -346,7 +346,7 @@ INCLUDE MACP2.inc
             ;! GENERO LA PIEZA Y GUARDO LA SIGUIENTE
             RANDOMPIECE ; * Genero la pieza siguiente para despues
             MOV SI, TEMP
-            MOV NEXTPIECE, SI
+            MOV NEXTPIECE, 2
             PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
 
@@ -701,7 +701,6 @@ INCLUDE MACP2.inc
         MOV auxpY4, CX
         setAREADEJUEGO auxpX4, auxpY4, 2
         PAINTPOS auxpX4,auxpY4,LIGHT_CYAN
-        print izq
         JMP SALIRZ
         SEQUEDAKIETO:
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
@@ -1564,7 +1563,7 @@ INCLUDE MACP2.inc
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 6
             PAINTPOS auxpX4,auxpY4,LIGHT_GRAY
-             JMP SALIRZ
+            JMP SALIRZ
         POSICIONPIEZA1:
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
