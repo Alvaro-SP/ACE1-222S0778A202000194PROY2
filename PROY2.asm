@@ -2276,14 +2276,17 @@ INCLUDE MACP2.inc
         RET
     menu_     ENDP
     ;?☻ ===================== METODO IMPRIMIR ======================= ☻
+    ; PAINTTEXT_    PROC NEAR
+    ;     MOV AX,1301H
+    ;     MOV BX,BP
+    ;     MOV CL,[BX]
+    ;     MOV CH,00H
+    ;     ADD BP,1H
+    ;     MOV BX,SI
+    ;     INT 10H
+    ;     RET
+    ; PAINTTEXT_    ENDP
     PAINTTEXT_    PROC NEAR
-        MOV AX,1301H
-        MOV BX,BP
-        MOV CL,[BX]
-        MOV CH,00H
-        ADD BP,1H
-        MOV BX,SI
-        INT 10H
         RET
     PAINTTEXT_    ENDP
     ;?☻ ===================== PRESIONAR TECLAS ======================= ☻
