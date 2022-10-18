@@ -162,7 +162,7 @@ INCLUDE MACP2.inc
         ;! VELOCIDAD DEL JUEGO
         speed DW 1100
         timeaux DW 0
-        FLAGSABERSIROTO     DW      0
+        FLAG_SABER_SIROTO     DW      0
 
         auxpX1      DW -1       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
         auxpX2      DW -1
@@ -394,6 +394,7 @@ INCLUDE MACP2.inc
                 JE  siguewhile
                 jMP pauseGame2
             ROTATEPIECE:
+                MOV FLAG_SABER_SIROTO, 1
                 CMP ROTACIONDEPIEZA, 3
                 JE RESTARTROTACION
                 JNE INCROTACION
@@ -723,8 +724,10 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA00
             CMP auxpX1, -1
-            JE CONTINUA1
+            JE CONTINUA0
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
@@ -753,9 +756,11 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+            CONTINUA00:
             LIMPIARFRAMEANTERIOR
 
-            CONTINUA1:
+            CONTINUA0:
+            MOV FLAG_SABER_SIROTO,0
             MOV CX, Xtemp
             ADD CX, 1
             MOV auxpX1, CX
@@ -791,6 +796,8 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
             JMP SALIRZ
         POSICIONPIEZA1:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA11
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
             CMP auxpY3, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
@@ -809,8 +816,11 @@ INCLUDE MACP2.inc
             getAREADEJUEGO auxpX4, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+            CONTINUA11:
             LIMPIARFRAMEANTERIOR
 
+            CONTINUA1:
+            MOV FLAG_SABER_SIROTO,0
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -844,6 +854,8 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA2:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA22
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
@@ -871,8 +883,10 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
+            CONTINUA22:
             LIMPIARFRAMEANTERIOR
+            CONTINUA2:
+            MOV FLAG_SABER_SIROTO,0
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -907,6 +921,8 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
              JMP SALIRZ
         POSICIONPIEZA3:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA33
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
@@ -928,9 +944,10 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
-
+            CONTINUA33:
             LIMPIARFRAMEANTERIOR
-
+            CONTINUA3:
+            MOV FLAG_SABER_SIROTO,0
             MOV CX, Xtemp
             ADD CX, 1
             MOV auxpX1, CX
