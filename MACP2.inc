@@ -426,8 +426,10 @@ ENDM PAINTSQUARE
 setAREADEJUEGO MACRO X,y, col
     PUSHA
     MOV AX, X
+    SHL AX, 1
     MOV setPOSX,AX
     MOV AX, Y
+    SHL AX, 1
     MOV setPOSY, AX
     MOV AX, col
     MOV POSTOSET, AX
@@ -442,8 +444,10 @@ getAREADEJUEGO MACRO X,y
     CMP Y, -1
     JE NOSALE
     MOV AX, X
+    SHL AX, 1
     MOV setPOSX,AX
     MOV AX, Y
+    SHL AX, 1
     MOV setPOSY, AX
     CALL getAREADEJUEGO_
     JMP SALIDAD

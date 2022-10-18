@@ -2146,6 +2146,7 @@ INCLUDE MACP2.inc
     ;?☻ ===================== MATRIZ AREA DE JUEGO ======================= ☻
     setAREADEJUEGO_ PROC NEAR
         ;! POSICION AL = Y     AX = X
+
         MOV AX, 2
         MOV BX, setPOSX
         MUL BX
@@ -2275,20 +2276,15 @@ INCLUDE MACP2.inc
         RET
     menu_     ENDP
     ;?☻ ===================== METODO IMPRIMIR ======================= ☻
-    ; PAINTTEXT_    PROC NEAR
-    ;     MOV AX,1301H
-    ;     MOV BX,BP
-    ;     MOV CL,[BX]
-    ;     MOV CH,00H
-    ;     ADD BP,1H
-    ;     MOV BX,SI
-    ;     INT 10H
-    ;     RET
-    ; PAINTTEXT_    ENDP
     PAINTTEXT_    PROC NEAR
-        
+        MOV AX,1301H
+        MOV BX,BP
+        MOV CL,[BX]
+        MOV CH,00H
+        ADD BP,1H
+        MOV BX,SI
+        INT 10H
         RET
-
     PAINTTEXT_    ENDP
     ;?☻ ===================== PRESIONAR TECLAS ======================= ☻
     enterclick_    PROC    NEAR
@@ -2761,3 +2757,17 @@ end     MAIN
 ;*            heapify(arr, n, largest);
 ;*        }
 ;*    }
+
+
+
+; A:
+; MOV AH, 00h  ; interrupcion para jalar el tiempo en el sistema
+;             INT 1AH      ; CX:DX  toma numeros del reloj desde medianoche
+;             mov  ax, dx
+;             xor  dx, dx
+;             mov  cx, 6
+;             div  cx       ;DX tiene la divicion en mi caso - de 0 a 5
+;             add  dl, '0'  ; DL TIENE EL VALOR ENTRE 0 Y 5
+;             mov ah,2h
+;             int 21h    
+;             JMP A
