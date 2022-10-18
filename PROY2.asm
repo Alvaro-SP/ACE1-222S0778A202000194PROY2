@@ -162,6 +162,7 @@ INCLUDE MACP2.inc
         ;! VELOCIDAD DEL JUEGO
         speed DW 1100
         timeaux DW 0
+        FLAGSABERSIROTO     DW      0
 
         auxpX1      DW -1       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
         auxpX2      DW -1
@@ -333,10 +334,9 @@ INCLUDE MACP2.inc
         esperaenter
         RANDOMPIECE
         MOV SI, TEMP
-        MOV NEXTPIECE, 2
+        MOV NEXTPIECE, 3
         GENFIGURA:
             PINTARBLOQUESTIESOS
-            readtext
             MOV DI, 0
             ELIMINARFILAS ;! SCAN SI HAY FILAS RELLENITAS XD
             MOV ROTACIONDEPIEZA, 0
@@ -346,7 +346,7 @@ INCLUDE MACP2.inc
             ;! GENERO LA PIEZA Y GUARDO LA SIGUIENTE
             RANDOMPIECE ; * Genero la pieza siguiente para despues
             MOV SI, TEMP
-            MOV NEXTPIECE, 2
+            MOV NEXTPIECE, 3
             PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
 
@@ -403,7 +403,7 @@ INCLUDE MACP2.inc
                 INCROTACION:
                     INC ROTACIONDEPIEZA
 
-            siguewhile:
+            siguewhile: ; ? █▄▄▄█▄▄▄█▄▄▄█▄▄▄█ CREATE PIECE █▄▄▄█▄▄▄█▄▄▄█▄▄▄█
                 UPDATEPIEZA  ;!UPDATE OF THE PIECE.
                 CMP BANDERATIESO, 1  ;* SI ES 1 SIGUIENTE FIGURA
                 JE GENFIGURA
@@ -723,6 +723,8 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
+            CMP auxpX1, -1
+            JE CONTINUA1
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
@@ -753,6 +755,7 @@ INCLUDE MACP2.inc
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
             LIMPIARFRAMEANTERIOR
 
+            CONTINUA1:
             MOV CX, Xtemp
             ADD CX, 1
             MOV auxpX1, CX
@@ -786,7 +789,7 @@ INCLUDE MACP2.inc
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 3
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
-             JMP SALIRZ
+            JMP SALIRZ
         POSICIONPIEZA1:
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
             CMP auxpY3, 15  ;* sI LLEGO AL FONDO
@@ -1947,7 +1950,6 @@ INCLUDE MACP2.inc
             MOV DI, 0   ;! COLUMNAS
             CMP SI, 16
             JE SALIR
-
                 FORJ:
                     CMP DI, 8
                     JE SALIR2

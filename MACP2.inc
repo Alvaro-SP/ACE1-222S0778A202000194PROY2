@@ -747,6 +747,7 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1envA,auxpX
     JE VALIDARMOVERRIGHT
     VALIDARMOVERRIGHT:
         MOV FLAGMOVERIGHT,0
+        MOV FLAGMOVELEFT,0
         mov CX, auxpX1env
         MOV TEMP2, CX
         INC TEMP2
@@ -773,9 +774,10 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1envA,auxpX
         JE VALIDARMOVERLEFT
         VALIDARMOVERLEFT:
             MOV FLAGMOVELEFT,0
+            MOV FLAGMOVERIGHT,0
             mov CX, auxpX1envA
             MOV TEMP2, CX
-            INC TEMP2
+            DEC TEMP2
             getAREADEJUEGO TEMP2, auxpX2envA
             CMP TEMP, 0
             JE SIMOVLEFT1
@@ -783,7 +785,7 @@ LEFTRIGHT_DEDOS MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1envA,auxpX
             SIMOVLEFT1:
                 mov CX, auxpX1env2A
                 MOV TEMP2, CX
-                INC TEMP2
+                DEC TEMP2
                 getAREADEJUEGO TEMP2, auxpX2env2A
                 CMP TEMP, 0
                 JE SIMOVLEFT
@@ -849,7 +851,7 @@ LEFTRIGHT_DECUATRO MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,au
             MOV FLAGMOVELEFT,0
             mov CX, auxpX1env
             MOV TEMP2, CX
-            INC TEMP2
+            DEC TEMP2
             getAREADEJUEGO TEMP2, auxpX2env
             CMP TEMP, 0
             JE SIMOVLEFT1
@@ -857,7 +859,7 @@ LEFTRIGHT_DECUATRO MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,au
             SIMOVLEFT1:
                 mov CX, auxpX1env2
                 MOV TEMP2, CX
-                INC TEMP2
+                DEC TEMP2
                 getAREADEJUEGO TEMP2, auxpX2env2
                 CMP TEMP, 0
                 JE SIMOVLEFT0
@@ -865,7 +867,7 @@ LEFTRIGHT_DECUATRO MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,au
                 SIMOVLEFT0:
                     mov CX, auxpX1env3
                     MOV TEMP2, CX
-                    INC TEMP2
+                    DEC TEMP2
                     getAREADEJUEGO TEMP2, auxpX2env3
                     CMP TEMP, 0
                     JE SIMOVLEFTM1
@@ -873,7 +875,7 @@ LEFTRIGHT_DECUATRO MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,au
                     SIMOVLEFTM1:
                         mov CX, auxpX1env4
                         MOV TEMP2, CX
-                        INC TEMP2
+                        DEC TEMP2
                         getAREADEJUEGO TEMP2, auxpX2env4
                         CMP TEMP, 0
                         JE SIMOVLEFT
@@ -931,7 +933,7 @@ LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxp
             MOV FLAGMOVELEFT,0
             mov CX, auxpX1envA
             MOV TEMP2, CX
-            INC TEMP2
+            DEC TEMP2
             getAREADEJUEGO TEMP2, auxpX2envA
             CMP TEMP, 0
             JE SIMOVLEFT1
@@ -939,7 +941,7 @@ LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxp
             SIMOVLEFT1:
                 mov CX, auxpX1env2A
                 MOV TEMP2, CX
-                INC TEMP2
+                DEC TEMP2
                 getAREADEJUEGO TEMP2, auxpX2env2A
                 CMP TEMP, 0
                 JE SIMOVLEFT0
@@ -947,7 +949,7 @@ LEFTRIGHT_DETRES MACRO auxpX1env,auxpX2env,auxpX1env2,auxpX2env2,auxpX1env3,auxp
                 SIMOVLEFT0:
                     mov CX, auxpX1env3A
                     MOV TEMP2, CX
-                    INC TEMP2
+                    DEC TEMP2
                     getAREADEJUEGO TEMP2, auxpX2env3A
                     CMP TEMP, 0
                     JE SIMOVLEFT
