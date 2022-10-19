@@ -84,9 +84,9 @@ INCLUDE MACP2.inc
         msguserguardado DB 'USUARIO GUARDADO SATISFACTORIAMENTE!', "$"
         msgsesioniniciadasatisf DB 'SESION INICIADA SATISFACTORIAMENTE!', "$"
         msgFIGSIGUIENTE DB 'FIGURA SIGUIENTE', "$"
-        pause0 DB '------------------- PAUSA ---------------------', "$"
-        pause1 DB 'ESC = para guardar SCORE y salir al MENU', "$"
-        pause2 DB 'DEL = para continuar el JUEGO', "$"
+        pause0          DB '------------------- PAUSA ---------------------', "$"
+        pause1          DB 'ESC = para guardar SCORE y salir al MENU', "$"
+        pause2          DB 'DEL = para continuar el JUEGO', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
@@ -131,23 +131,23 @@ INCLUDE MACP2.inc
 
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
-        Xtemp                       DW      ?
-        Ytemp                       DW      ?
-        X2temp                      DW      ?
-        Y2temp                      DW      ?
-        Xaux1                       DW      ?    ;* posiciones de paint
-        Yaux1                       DW      ?
-        Xaux2                       DW      ?
-        Yaux2                       DW      ?
-        Xtempauxaux                 DW      ?
-        Ytempauxaux                 DW      ?
-        setPOSX                     DW      ? ;* PARA COORDENADAS EN MATRICES
-        setPOSY                     DW      ?
-        coloraux                    DB      ? ;* coloar auxiliar cuadro
-        AREADEJUEGO                 DW 256 DUP(0)
-        PIEZASKIETAS                DW 256 DUP(0)
-        INDEX                       Dw ?
-        INDEXtemp                   Dw ?
+        Xtemp               DW      ?
+        Ytemp               DW      ?
+        X2temp              DW      ?
+        Y2temp              DW      ?
+        Xaux1               DW      ?    ;* posiciones de paint
+        Yaux1               DW      ?
+        Xaux2               DW      ?
+        Yaux2               DW      ?
+        Xtempauxaux         DW      ?
+        Ytempauxaux         DW      ?
+        setPOSX             DW      ? ;* PARA COORDENADAS EN MATRICES
+        setPOSY             DW      ?
+        coloraux            DB      ? ;* coloar auxiliar cuadro
+        AREADEJUEGO         DW 256 DUP(0)
+        PIEZASKIETAS        DW 256 DUP(0)
+        INDEX               Dw ?
+        INDEXtemp           Dw ?
 
         MYuserPass          db 20 dup ('$') ; ! USUARIO Y CONTRASENA
         MYuserName          db 15 dup ('$')
@@ -161,7 +161,7 @@ INCLUDE MACP2.inc
         Stringpuntos         DB 4 dup ('$')
         Stringnivel          DB "1$"
         ;! VELOCIDAD DEL JUEGO
-        speed                DW      1100
+        speed                DW      1000
         timeaux              DW      0
         FLAG_SABER_SIROTO    DW      0
         SIPINTO              DW      0
@@ -337,11 +337,11 @@ INCLUDE MACP2.inc
         esperaenter
         RANDOMPIECE
         MOV SI, TEMP
-        MOV NEXTPIECE, SI
+        MOV NEXTPIECE, 4
         GENFIGURA:
             PINTARBLOQUESTIESOS
             MOV DI, 0
-            ELIMINARFILAS ;! SCAN SI HAY FILAS RELLENITAS XD
+            
             MOV ROTACIONDEPIEZA, 0
             MOV BANDERATIESO,0  ; * SET flag de figura quieta
             MOV SI, NEXTPIECE ;* paso a actual la pieza que era la siguiente
@@ -349,7 +349,7 @@ INCLUDE MACP2.inc
             ;! GENERO LA PIEZA Y GUARDO LA SIGUIENTE
             RANDOMPIECE ; * Genero la pieza siguiente para despues
             MOV SI, TEMP
-            MOV NEXTPIECE, SI
+            MOV NEXTPIECE, 4
             PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
 
@@ -408,6 +408,7 @@ INCLUDE MACP2.inc
                     INC ROTACIONDEPIEZA
 
             siguewhile: ; ? █▄▄▄█▄▄▄█▄▄▄█▄▄▄█ CREATE PIECE █▄▄▄█▄▄▄█▄▄▄█▄▄▄█
+                ELIMINARFILAS ;! SCAN SI HAY FILAS RELLENITAS XD
                 UPDATEPIEZA  ;!UPDATE OF THE PIECE.
                 CMP BANDERATIESO, 1  ;* SI ES 1 SIGUIENTE FIGURA
                 JE GENFIGURA
@@ -735,10 +736,10 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
-            CMP FLAG_SABER_SIROTO, 1
-            JE CONTINUA00
             CMP auxpX1, -1
             JE CONTINUA0
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA00
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
@@ -1248,6 +1249,7 @@ INCLUDE MACP2.inc
             CONTINUA33:
             LIMPIARFRAMEANTERIOR
             CONTINUA3:
+            MOV FLAG_SABER_SIROTO,0
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1463,6 +1465,7 @@ INCLUDE MACP2.inc
             CONTINUA22:
             LIMPIARFRAMEANTERIOR
             CONTINUA2:
+            MOV FLAG_SABER_SIROTO,0
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1533,6 +1536,8 @@ INCLUDE MACP2.inc
             CONTINUA33:
             LIMPIARFRAMEANTERIOR
             CONTINUA3:
+            MOV FLAG_SABER_SIROTO,0
+
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1977,12 +1982,12 @@ INCLUDE MACP2.inc
         FORI:
             CMP SI, 16
             JE SALIR
-            MOV TEMP,0
             VALIDARFILALLENA SI
             CMP TEMP,1
             JE CORRERFILALABEL
             JNE SALTAR
             CORRERFILALABEL:
+                MOV DESDEDONDE_CORRER, SI
                 CORRERFILA
             SALTAR:
                 inc si
@@ -2018,10 +2023,10 @@ INCLUDE MACP2.inc
         RET
     VALIDARFILALLENA_ ENDP
     CORRERFILA_ PROC NEAR
-        MOV SI, 14  ; ! FILAS
+        MOV SI, DESDEDONDE_CORRER  ; ! FILAS
         FORI:
             MOV DI, 0   ;! COLUMNAS
-            CMP SI, -1
+            CMP SI, 1
             JE SALIR
 
                 FORJ:
@@ -2029,16 +2034,18 @@ INCLUDE MACP2.inc
                     JE SALIR2
                     ;* TOMO VALOR de fila anterior y paso a fila actual
                     MOV TEMP2, SI
-                    INC TEMP2
+                    DEC TEMP2
 
-                    getAREADEJUEGO DI, SI
-                    setAREADEJUEGO DI, TEMP2, TEMP ; !set dato en la fila posterior
+
+                    getAREADEJUEGO DI, TEMP2
+                    setAREADEJUEGO DI, SI, TEMP ; !set dato en la fila posterior
                     PINTARUNIT  DI,TEMP2, TEMP
                     SALTAR2:
                         inc DI
                         JMP FORJ
                 SALIR2:
             SALTAR:
+                
                 dec si
                 JMP FORI
         SALIR:
