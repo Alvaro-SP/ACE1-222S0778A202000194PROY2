@@ -131,23 +131,23 @@ INCLUDE MACP2.inc
 
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
-        Xtemp               DW      ?
-        Ytemp               DW      ?
-        X2temp              DW      ?
-        Y2temp              DW      ?
-        Xaux1              DW      ?    ;* posiciones de paint
-        Yaux1              DW      ?
-        Xaux2              DW      ?
-        Yaux2              DW      ?
-        Xtempauxaux              DW      ?
-        Ytempauxaux              DW      ?
-        setPOSX              DW      ? ;* PARA COORDENADAS EN MATRICES
-        setPOSY              DW      ?
-        coloraux           DB      ? ;* coloar auxiliar cuadro
-        AREADEJUEGO         DW 256 DUP(0)
-        PIEZASKIETAS         DW 256 DUP(0)
-        INDEX           Dw ?
-        INDEXtemp       Dw ?
+        Xtemp                       DW      ?
+        Ytemp                       DW      ?
+        X2temp                      DW      ?
+        Y2temp                      DW      ?
+        Xaux1                       DW      ?    ;* posiciones de paint
+        Yaux1                       DW      ?
+        Xaux2                       DW      ?
+        Yaux2                       DW      ?
+        Xtempauxaux                 DW      ?
+        Ytempauxaux                 DW      ?
+        setPOSX                     DW      ? ;* PARA COORDENADAS EN MATRICES
+        setPOSY                     DW      ?
+        coloraux                    DB      ? ;* coloar auxiliar cuadro
+        AREADEJUEGO                 DW 256 DUP(0)
+        PIEZASKIETAS                DW 256 DUP(0)
+        INDEX                       Dw ?
+        INDEXtemp                   Dw ?
 
         MYuserPass          db 20 dup ('$') ; ! USUARIO Y CONTRASENA
         MYuserName          db 15 dup ('$')
@@ -155,25 +155,26 @@ INCLUDE MACP2.inc
         MYauxUserName2      db 15 dup ('$')
         MYauxPass           db 20 dup ('$')
 
-        CATEGORIA       DB "0$"
-        BLOQUEO         DB "0$"
+        CATEGORIA            DB "0$"
+        BLOQUEO              DB "0$"
 
-        Stringpuntos    DB 4 dup ('$')
-        Stringnivel     DB "1$"
+        Stringpuntos         DB 4 dup ('$')
+        Stringnivel          DB "1$"
         ;! VELOCIDAD DEL JUEGO
-        speed DW 1100
-        timeaux DW 0
-        FLAG_SABER_SIROTO     DW      0
-        SIPINTO     DW      0
+        speed                DW      1100
+        timeaux              DW      0
+        FLAG_SABER_SIROTO    DW      0
+        SIPINTO              DW      0
+        DESDEDONDE_CORRER    DW      0
 
-        auxpX1      DW -1       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
-        auxpX2      DW -1
-        auxpX3      DW -1
-        auxpX4      DW -1
-        auxpY1      DW -1
-        auxpY2      DW -1
-        auxpY3      DW -1
-        auxpY4      DW -1
+        auxpX1               DW -1       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
+        auxpX2               DW -1
+        auxpX3               DW -1
+        auxpX4               DW -1
+        auxpY1               DW -1
+        auxpY2               DW -1
+        auxpY3               DW -1
+        auxpY4               DW -1
 
         BANDERATIESO        DW 0
         POSTOSET            DW 0
@@ -1976,6 +1977,7 @@ INCLUDE MACP2.inc
         FORI:
             CMP SI, 16
             JE SALIR
+            MOV TEMP,0
             VALIDARFILALLENA SI
             CMP TEMP,1
             JE CORRERFILALABEL
@@ -1988,6 +1990,7 @@ INCLUDE MACP2.inc
         SALIR:
         RET
     ELIMINARFILAS_ ENDP
+
     VALIDARFILALLENA_ PROC NEAR
         MOV TEMP2, 0
         MOV DI, 0
