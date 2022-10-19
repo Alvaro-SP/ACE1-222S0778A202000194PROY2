@@ -732,7 +732,7 @@ INCLUDE MACP2.inc
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
-            LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
+            LEFTRIGHT_DEDOS5 auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY2
@@ -860,7 +860,7 @@ INCLUDE MACP2.inc
             CMP auxpY3, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
-            LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4,  auxpX1,auxpY1,auxpX4,auxpY4
+            LEFTRIGHT_DEDOS5 auxpX3,auxpY3,auxpX4,auxpY4,  auxpX1,auxpY1,auxpX4,auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY1    ;! ----------  ;!|
             MOV TEMP2, CX
@@ -1077,7 +1077,7 @@ INCLUDE MACP2.inc
             CMP auxpY3, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
-            LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
+            LEFTRIGHT_DEDOS5 auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY2    ;! ----------  ;!|//!       ██
@@ -1209,7 +1209,7 @@ INCLUDE MACP2.inc
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
-            LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4, auxpX1,auxpY1,auxpX4,auxpY4
+            LEFTRIGHT_DEDOS5 auxpX3,auxpY3,auxpX4,auxpY4, auxpX1,auxpY1,auxpX4,auxpY4
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY2    ;! ----------  ;!|//!    ██████
@@ -1300,6 +1300,7 @@ INCLUDE MACP2.inc
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4
+
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY1
             MOV TEMP2, CX      ;! ----------    ;!|       ████
@@ -1360,7 +1361,7 @@ INCLUDE MACP2.inc
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
-            LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4, auxpX1,auxpY1,auxpX4,auxpY4
+            LEFTRIGHT_DEDOS5 auxpX3,auxpY3,auxpX4,auxpY4, auxpX1,auxpY1,auxpX4,auxpY4
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY2    ;! ----------  ;!|
@@ -1493,7 +1494,7 @@ INCLUDE MACP2.inc
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
-            LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
+            LEFTRIGHT_DEDOS5 auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY2    ;! ----------  ;!|
@@ -1584,7 +1585,7 @@ INCLUDE MACP2.inc
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
-            LEFTRIGHT_DEDOS auxpX2,auxpY2,auxpX4,auxpY4, auxpX1,auxpY1,auxpX3,auxpY3
+            LEFTRIGHT_DEDOS5 auxpX2,auxpY2,auxpX4,auxpY4, auxpX1,auxpY1,auxpX3,auxpY3
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY2
@@ -1656,7 +1657,7 @@ INCLUDE MACP2.inc
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
-            
+
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY2
             MOV TEMP2, CX        ;! ----------  ;!|//!    ██
@@ -1742,7 +1743,7 @@ INCLUDE MACP2.inc
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
-            LEFTRIGHT_DEDOS auxpX2,auxpY2,auxpX4,auxpY4, auxpX1,auxpY1,auxpX3,auxpY3
+            LEFTRIGHT_DEDOS5 auxpX2,auxpY2,auxpX4,auxpY4, auxpX1,auxpY1,auxpX3,auxpY3
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY1
@@ -1814,6 +1815,7 @@ INCLUDE MACP2.inc
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
+
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY3 
             MOV TEMP2, CX        ;! ----------  ;!|//!      ██
@@ -1879,7 +1881,8 @@ INCLUDE MACP2.inc
     UPDATEESPECIAL_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 7 = X
-        
+        CMP auxpX1, -1
+        JE CONTINUA0
         CMP auxpY1, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
@@ -1934,7 +1937,7 @@ INCLUDE MACP2.inc
         JE SEQUEDAKIETO
         
         LIMPIARFRAMEANTERIORESPECIAL
-
+        CONTINUA0:
         MOV CX, Xtemp
         MOV auxpX1, CX
         MOV CX, Ytemp
