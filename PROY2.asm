@@ -1300,10 +1300,10 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
-            CMP FLAG_SABER_SIROTO, 1
-            JE CONTINUA00
             CMP auxpX1, -1
             JE CONTINUA0
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA00
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
             CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
