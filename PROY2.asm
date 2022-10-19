@@ -100,27 +100,27 @@ INCLUDE MACP2.inc
             error10      db "ALERTA ==NO SE ENCONTRO O INTENTA DESBLOQUEAR A ADMIN",10,'$'
             error11      db "ALERTA ==IMPOSIBLE INICIAR SESION, USUARIO BLOQUEADO",10,'$'
     ;* --------------------------  REPORTES -----------------------------
-        Filenamejug1  db  'Rep.xml'
-        handlerentrada dw ?
-        handler     dw ?
-        handler2     dw ?
-        USERSTET  DB "users.tet",0
-        REPSORTREP  DB "REPSORT.rep",0
-        punttet  DB "punt.tet",0
-        hour        db "00", "$"
-        min         db "00", "$"
-        sec         db "00", "$"
-        mes         db "00", "$"
-        dia         db "00", "$"
-        SI_SIMULADO             DW ?
-        SI_SIMULADO2             DW ?
-        tamfile             DW 0
-        TEMP             DW 0
+        Filenamejug1      db  'Rep.xml'
+        handlerentrada    dw ?
+        handler           dw ?
+        handler2          dw ?
+        USERSTET          DB "users.tet",0
+        REPSORTREP        DB "REPSORT.rep",0
+        punttet           DB "punt.tet",0
+        hour              db "00", "$"
+        min               db "00", "$"
+        sec               db "00", "$"
+        mes               db "00", "$"
+        dia               db "00", "$"
+        SI_SIMULADO       DW ?
+        SI_SIMULADO2      DW ?
+        tamfile           DW 0
+        TEMP              DW 0
         TEMP2             DW 0
         TEMP3             DW 0
-        TEMPDB             Db "0$"
-        nuevalinea       db 10,'$'
-        cooldowncont       dw 0
+        TEMPDB            Db "0$"
+        nuevalinea        db 10,'$'
+        cooldowncont      dw 0
     ;? ------------------------BUBBLESORT VARIABLES------------------------
         buferdedatos          db 1000 dup('$')
         listestadistic          dw 2000 dup('$')
