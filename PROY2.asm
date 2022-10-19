@@ -163,6 +163,7 @@ INCLUDE MACP2.inc
         speed DW 1100
         timeaux DW 0
         FLAG_SABER_SIROTO     DW      0
+        SIPINTO     DW      0
 
         auxpX1      DW -1       ; * AUXILIARES PARA POSICION ANTERIOR (FRAMES PERDIDOS)
         auxpX2      DW -1
@@ -334,7 +335,7 @@ INCLUDE MACP2.inc
         esperaenter
         RANDOMPIECE
         MOV SI, TEMP
-        MOV NEXTPIECE, 3
+        MOV NEXTPIECE, SI
         GENFIGURA:
             PINTARBLOQUESTIESOS
             MOV DI, 0
@@ -346,7 +347,7 @@ INCLUDE MACP2.inc
             ;! GENERO LA PIEZA Y GUARDO LA SIGUIENTE
             RANDOMPIECE ; * Genero la pieza siguiente para despues
             MOV SI, TEMP
-            MOV NEXTPIECE, 3
+            MOV NEXTPIECE, SI
             PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
 
@@ -1942,9 +1943,13 @@ INCLUDE MACP2.inc
         MOV auxpX1, CX
         MOV CX, Ytemp
         MOV auxpY1, CX
+        getAREADEJUEGO auxpX1, auxpY1
+        CMP TEMP, 0
+        JNE SALTONOESCERO
+        MOV SIPINTO,1
         setAREADEJUEGO auxpX1, auxpY1, 8
         PAINTPOS auxpX1,auxpY1,WHITE
-
+        SALTONOESCERO:
         JMP SALIRZ
         SEQUEDAKIETO:
             RESETAUXSBLOQUES ;! PARA QUE NO SE BORRE Y QUEDE ALLI EN 
