@@ -1950,7 +1950,9 @@ INCLUDE MACP2.inc
         RET
     UPDATEESPECIAL_ ENDP
     ;?☻ ▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀
-    
+
+
+
     ;?☻ ============= VALIDACIONES DEL JUEGO ========== ☻
     ELIMINARFILAS_ PROC NEAR
         MOV SI, 0
