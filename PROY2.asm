@@ -852,7 +852,7 @@ INCLUDE MACP2.inc
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4, 3
             PAINTPOS auxpX4,auxpY4,LIGHT_RED
-             JMP SALIRZ
+            JMP SALIRZ
         POSICIONPIEZA2:
             CMP FLAG_SABER_SIROTO, 1
             JE CONTINUA22
@@ -1652,7 +1652,7 @@ INCLUDE MACP2.inc
             CMP FLAG_SABER_SIROTO, 1
             JE CONTINUA11
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-            CMP auxpY3, 15  ;* sI LLEGO AL FONDO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX4,auxpY4
