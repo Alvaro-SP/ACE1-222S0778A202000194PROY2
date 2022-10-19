@@ -857,7 +857,7 @@ INCLUDE MACP2.inc
             CMP FLAG_SABER_SIROTO, 1
             JE CONTINUA22
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
+            CMP auxpY3, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4,  auxpX1,auxpY1,auxpX4,auxpY4
@@ -996,10 +996,6 @@ INCLUDE MACP2.inc
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
         
-        ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        CMP auxpY4, 15  ;* sI LLEGO AL FONDO
-        JE SEQUEDAKIETO
-        
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
         JE POSICIONPIEZA0
@@ -1011,6 +1007,13 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA00
+            CMP auxpX1, -1
+            JE CONTINUA0
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
@@ -1029,8 +1032,11 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            CONTINUA00:
             LIMPIARFRAMEANTERIOR
 
+            CONTINUA0:
+            MOV FLAG_SABER_SIROTO,0
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -1065,13 +1071,18 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_MAGENTA
              JMP SALIRZ
         POSICIONPIEZA1:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA11
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY3, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY2    ;! ----------  ;!|//!       ██
             MOV TEMP2, CX                       ;!|//!    ██████
-            INC TEMP2    
+            INC TEMP2
             getAREADEJUEGO auxpX2, TEMP2        ;!|
             CMP TEMP, 0                         ;!|
             JNE SEQUEDAKIETO                    ;!|
@@ -1091,8 +1102,11 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            CONTINUA11:
             LIMPIARFRAMEANTERIOR
 
+            CONTINUA1:
+            MOV FLAG_SABER_SIROTO,0
             MOV CX, Xtemp
             ADD CX, 2
             MOV auxpX1, CX
@@ -1128,6 +1142,11 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_MAGENTA
              JMP SALIRZ
         POSICIONPIEZA2:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA22
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY3, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX1,auxpY1,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
@@ -1146,7 +1165,10 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            CONTINUA22:
             LIMPIARFRAMEANTERIOR
+            CONTINUA2:
+            MOV FLAG_SABER_SIROTO,0
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1181,6 +1203,11 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_MAGENTA
              JMP SALIRZ
         POSICIONPIEZA3:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA33
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4, auxpX1,auxpY1,auxpX4,auxpY4
 
@@ -1207,7 +1234,9 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            CONTINUA33:
             LIMPIARFRAMEANTERIOR
+            CONTINUA3:
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1250,11 +1279,7 @@ INCLUDE MACP2.inc
     UPDATEELE2_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-        CMP auxpY4, 15  ;* sI LLEGO AL FONDO
-        JE SEQUEDAKIETO
-        
-        
+
         ;! ██████████████ ROTACIONES ██████████████
         CMP ROTACIONDEPIEZA, 0
         JE POSICIONPIEZA0
@@ -1266,6 +1291,13 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA3
         
         POSICIONPIEZA0:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA00
+            CMP auxpX1, -1
+            JE CONTINUA0
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX3,auxpY3,auxpX4,auxpY4,auxpX1,auxpY1,auxpX3,auxpY3,auxpX4,auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
@@ -1284,7 +1316,11 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            CONTINUA00:
             LIMPIARFRAMEANTERIOR
+
+            CONTINUA0:
+            MOV FLAG_SABER_SIROTO,0
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1318,7 +1354,11 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,YELLOW
              JMP SALIRZ
         POSICIONPIEZA1:
-            
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA11
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DEDOS auxpX3,auxpY3,auxpX4,auxpY4, auxpX1,auxpY1,auxpX4,auxpY4
 
@@ -1345,7 +1385,11 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            CONTINUA11:
             LIMPIARFRAMEANTERIOR
+
+            CONTINUA1:
+            MOV FLAG_SABER_SIROTO,0
 
             MOV CX, Xtemp
             MOV auxpX1, CX
@@ -1380,6 +1424,11 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,YELLOW
              JMP SALIRZ
         POSICIONPIEZA2:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA22
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY3, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DETRES auxpX2,auxpY2,auxpX1,auxpY1,auxpX4,auxpY4,auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3
 
@@ -1399,7 +1448,9 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            CONTINUA22:
             LIMPIARFRAMEANTERIOR
+            CONTINUA2:
 
             MOV CX, Xtemp
             ADD CX, 1
@@ -1436,6 +1487,11 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,YELLOW
              JMP SALIRZ
         POSICIONPIEZA3:
+            CMP FLAG_SABER_SIROTO, 1
+            JE CONTINUA33
+            ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
+            JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DEDOS auxpX1,auxpY1,auxpX4,auxpY4, auxpX1,auxpY1,auxpX2,auxpY2
 
@@ -1462,7 +1518,9 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
 
+            CONTINUA33:
             LIMPIARFRAMEANTERIOR
+            CONTINUA3:
 
             MOV CX, Xtemp
             MOV auxpX1, CX
