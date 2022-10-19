@@ -598,7 +598,8 @@ INCLUDE MACP2.inc
     UPDATECUADRO_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
         ;* VARIAR COLUMNA DE 0 A 5 = X
-        
+        CMP auxpX1, -1
+        JE CONTINUA0
         CMP auxpY2, 15  ;* sI LLEGO AL FONDO
         JE SEQUEDAKIETO
         ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
@@ -672,6 +673,7 @@ INCLUDE MACP2.inc
         JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
         
         LIMPIARFRAMEANTERIOR
+        CONTINUA0:
         MOV CX, Xtemp
         MOV auxpX1, CX
         MOV CX, Ytemp
@@ -858,7 +860,7 @@ INCLUDE MACP2.inc
             CMP FLAG_SABER_SIROTO, 1
             JE CONTINUA22
             ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
-            CMP auxpY3, 15  ;* sI LLEGO AL FONDO
+            CMP auxpY4, 15  ;* sI LLEGO AL FONDO
             JE SEQUEDAKIETO
             ;* VALIDO SI HAY QUE MOVER A LOS LADOS.
             LEFTRIGHT_DEDOS5 auxpX3,auxpY3,auxpX4,auxpY4,  auxpX1,auxpY1,auxpX4,auxpY4
@@ -1070,7 +1072,7 @@ INCLUDE MACP2.inc
             MOV auxpY4, CX
             setAREADEJUEGO auxpX4, auxpY4,4
             PAINTPOS auxpX4,auxpY4,LIGHT_MAGENTA
-             JMP SALIRZ
+            JMP SALIRZ
         POSICIONPIEZA1:
             CMP FLAG_SABER_SIROTO, 1
             JE CONTINUA11
@@ -1304,7 +1306,7 @@ INCLUDE MACP2.inc
 
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY1
-            MOV TEMP2, CX      ;! ----------    ;!|       ████
+            MOV TEMP2, CX      ;! ----------    ;!|         ████
             INC TEMP2                           ;!|         ██
             getAREADEJUEGO auxpX1, TEMP2        ;!|         ██
             CMP TEMP, 0                         ;!|
