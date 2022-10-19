@@ -87,6 +87,10 @@ INCLUDE MACP2.inc
         pause0          DB '------------------- PAUSA ---------------------', "$"
         pause1          DB 'ESC = para guardar SCORE y salir al MENU', "$"
         pause2          DB 'DEL = para continuar el JUEGO', "$"
+        msgUSUARIO          DB 'USUARIO : ', "$"
+        msgNIVEL          DB 'NIVEL : ', "$"
+        msgPUNTEO          DB 'PUNTEO : ', "$"
+        msgPUNTEO          DB 'TIEMPO : ', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
@@ -2478,6 +2482,9 @@ INCLUDE MACP2.inc
         RET
     DRAW_RECTANGLE_ ENDP
     PINTARPANTALLADEJUEGO_ PROC NEAR
+        PAINTTEXT msgFIGSIGUIENTE , 182AH , 0FF26H
+        PAINTTEXT msgFIGSIGUIENTE , 182AH , 0FF26H
+        PAINTTEXT msgFIGSIGUIENTE , 182AH , 0FF26H
         PAINTTEXT msgFIGSIGUIENTE , 182AH , 0FF26H
         DRAW_RECTANGLE 468,144,664, 144+18, CYAN    ;! MARCO ARRIBA
         DRAW_RECTANGLE 468,144,468+18, 500, CYAN    ;! MARCO IZQUIERDA
