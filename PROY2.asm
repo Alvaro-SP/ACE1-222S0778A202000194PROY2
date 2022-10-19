@@ -449,6 +449,8 @@ INCLUDE MACP2.inc
         JE POSICIONPIEZA1
         
         POSICIONPIEZA0:
+            CMP auxpX1, -1
+            JE CONTINUA0
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ VALIDAR LEFT RIGHT ▬▬▬▬▬▬▬▬▬▬▬▬
             CMP FLAGMOVERIGHT,1;! PRESIONO DERECHA
             JNE movleftlb
@@ -516,6 +518,7 @@ INCLUDE MACP2.inc
             JNE SEQUEDAKIETO                    ;!|
             ;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
             LIMPIARFRAMEANTERIOR
+            CONTINUA0:
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
@@ -548,6 +551,8 @@ INCLUDE MACP2.inc
             PAINTPOS auxpX4,auxpY4,LIGHT_GREEN
              JMP SALIRZ
         POSICIONPIEZA1:
+            CMP auxpX1, -1
+            JE CONTINUA1
             LEFTRIGHT_DECUATRO auxpX1,auxpY1,auxpX2,auxpY2,auxpX3,auxpY3,auxpX4, auxpY4
             ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
             MOV CX, auxpY4                   ;!|//!    ██
@@ -557,6 +562,7 @@ INCLUDE MACP2.inc
             CMP TEMP, 0                         ;!|//!    ██
             JNE SEQUEDAKIETO;! ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
             LIMPIARFRAMEANTERIOR
+            CONTINUA1:
             MOV CX, Xtemp
             MOV auxpX1, CX
             MOV CX, Ytemp
