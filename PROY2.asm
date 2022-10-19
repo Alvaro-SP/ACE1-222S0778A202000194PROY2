@@ -83,6 +83,7 @@ INCLUDE MACP2.inc
         msgUSERTOUNLOCK DB 'DIGITE EL USUARIO A DESBLOQUEAR', "$"
         msguserguardado DB 'USUARIO GUARDADO SATISFACTORIAMENTE!', "$"
         msgsesioniniciadasatisf DB 'SESION INICIADA SATISFACTORIAMENTE!', "$"
+        msgFIGSIGUIENTE DB 'FIGURA SIGUIENTE', "$"
         pause0 DB '------------------- PAUSA ---------------------', "$"
         pause1 DB 'ESC = para guardar SCORE y salir al MENU', "$"
         pause2 DB 'DEL = para continuar el JUEGO', "$"
@@ -1939,14 +1940,14 @@ INCLUDE MACP2.inc
         
         sigoscan:
 
+        
+        LIMPIARFRAMEANTERIORESPECIAL
+        CONTINUA0:
         ;! ESCANEO POSICIONES MAS ABAJO PARA VER SI SEQUEDA MODO TIESO
         ;! ▬▬▬▬▬▬▬▬▬▬▬ SCAN ABAJO ▬▬▬▬▬▬▬▬▬▬▬
         ESCANEODECOLUMNA
         CMP TEMP2, 1
         JE SEQUEDAKIETO
-        
-        LIMPIARFRAMEANTERIORESPECIAL
-        CONTINUA0:
         MOV CX, Xtemp
         MOV auxpX1, CX
         MOV CX, Ytemp
@@ -2468,6 +2469,7 @@ INCLUDE MACP2.inc
         RET
     DRAW_RECTANGLE_ ENDP
     PINTARPANTALLADEJUEGO_ PROC NEAR
+        PAINTTEXT msgFIGSIGUIENTE , 182AH , 0FF26H
         DRAW_RECTANGLE 468,144,664, 144+18, CYAN    ;! MARCO ARRIBA
         DRAW_RECTANGLE 468,144,468+18, 500, CYAN    ;! MARCO IZQUIERDA
         DRAW_RECTANGLE 468,500-18,656, 500, CYAN    ;! MARCO ABAJO
