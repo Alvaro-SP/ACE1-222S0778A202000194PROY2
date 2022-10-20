@@ -90,7 +90,7 @@ INCLUDE MACP2.inc
         msgUSUARIO          DB 'USUARIO : ', "$"
         msgNIVEL          DB 'NIVEL : ', "$"
         msgPUNTEO          DB 'PUNTEO : ', "$"
-        msgPUNTEO          DB 'TIEMPO : ', "$"
+        msgTIEMPO          DB 'TIEMPO : ', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
@@ -123,6 +123,8 @@ INCLUDE MACP2.inc
         TEMP2             DW 0
         TEMP3             DW 0
         TEMPDB            Db "0$"
+        dospuntos            Db ":$"
+        TEMPDB2           DB  4 dup ('$')
         nuevalinea        db 10,'$'
         cooldowncont      dw 0
     ;? ------------------------BUBBLESORT VARIABLES------------------------
@@ -188,6 +190,7 @@ INCLUDE MACP2.inc
         ROTACIONDEPIEZA     DW 0 ;* HANDLER DE LA ROTACION DE LA PIEZA
         FLAGMOVERIGHT       DW 0
         FLAGMOVELEFT        DW 0
+        TEMPAUXI        DW 0
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -337,8 +340,14 @@ INCLUDE MACP2.inc
     ;?☻ ===================== MAIN JUEGO ======================= ☻
     INICIODELJUEGO_ PROC NEAR
         PINTARPANTALLADEJUEGO
+        
+        a:
+        MOSTRARTIEMPO
+        JMP a
+
         MOV DI, 0
         esperaenter
+        INICIOTIEMPO ;* SETEO EL TIEMPO DE INICIO EL CUAL CORRERA MIN, SEC, CENTISEC
         RANDOMPIECE
         MOV SI, TEMP
         MOV NEXTPIECE, 4
@@ -2483,9 +2492,10 @@ INCLUDE MACP2.inc
     DRAW_RECTANGLE_ ENDP
     PINTARPANTALLADEJUEGO_ PROC NEAR
         PAINTTEXT msgFIGSIGUIENTE , 182AH , 0FF26H
-        PAINTTEXT msgFIGSIGUIENTE , 182AH , 0FF26H
-        PAINTTEXT msgFIGSIGUIENTE , 182AH , 0FF26H
-        PAINTTEXT msgFIGSIGUIENTE , 182AH , 0FF26H
+        PAINTTEXT msgUSUARIO, 0F08H , LIGHT_GREEN
+        PAINTTEXT msgNIVEL  , 1108H , LIGHT_GREEN
+        PAINTTEXT msgPUNTEO , 1308H , LIGHT_GREEN
+        PAINTTEXT msgTIEMPO , 1508H , LIGHT_GREEN
         DRAW_RECTANGLE 468,144,664, 144+18, CYAN    ;! MARCO ARRIBA
         DRAW_RECTANGLE 468,144,468+18, 500, CYAN    ;! MARCO IZQUIERDA
         DRAW_RECTANGLE 468,500-18,656, 500, CYAN    ;! MARCO ABAJO

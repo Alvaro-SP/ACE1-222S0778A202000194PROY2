@@ -1636,3 +1636,39 @@ CONTARESPECIALES macro
 ENDM
 
 
+INICIOTIEMPO MACRO
+    LOCAL A, salir
+    PUSHA   ; *Set System Clock Counter
+    MOV CX, 0
+    MOV DX, 0
+    MOV AH, 01h  ; interrupcion para jalar el tiempo en el sistema
+    INT 1AH      ; CX:DX  toma numeros del reloj desde medianoche
+    POPA
+ENDM
+MOSTRARTIEMPO MACRO
+    PUSHA
+
+    poscursor 21,18
+    MOV AH, 2Ch  ; interrupcion para jalar el tiempo en el sistema
+    INT 21H
+    cleanBuffer TEMPDB2
+    MOVZX SI, CL
+    MOV TEMPAUXI, SI
+    toString TEMPAUXI, TEMPDB2
+    print TEMPDB2
+    print dospuntos
+
+    cleanBuffer TEMPDB2
+    MOVZX SI, DH
+    MOV TEMPAUXI, SI
+    toString TEMPAUXI, TEMPDB2
+    print TEMPDB2
+    print dospuntos
+
+    cleanBuffer TEMPDB2
+    MOVZX SI, DL
+    MOV TEMPAUXI, SI
+    toString TEMPAUXI, TEMPDB2
+    print TEMPDB2
+    POPA
+ENDM
