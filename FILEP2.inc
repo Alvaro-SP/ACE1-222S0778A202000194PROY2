@@ -767,6 +767,11 @@ TOMARBLOQUEO MACRO usr
 ENDM
 
 ;! =========================TAKE DATA FROM THE PUNT.TET==============================
+getSCORES macro
+    openFile punttet, handler ;* Abro EL ARCHIVO DE USERS.tet
+    readFile handler, buferdedatos, 1000
+    cerrar handler
+endm
 SAVESCOREINFILE MACRO;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
     ; ?  NOMBRE_USER , SCORE &  ID
     ; ?  Alvaro , 20 &  0
@@ -795,6 +800,73 @@ SAVESCOREINFILE MACRO;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
     PAINTTEXT savedmessage2, 2125H , 0FF30H
     readtext
 ENDM
+
+TAKESCORE_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
+    LOCAL fin,limpiarycont,NOSEENCONTRO,REVISARNOMBRE,continuar,while,buscaand,sigoauxi,nextchariscategory,yahaynombre
+    PUSHA
+    getSCORES           ; ?  NOMBRE_USER , SCORE &  ID
+    mov dx, 0
+    MOV SI, 0
+    xor ax, ax;* flag for to say the status. 0 = getUser
+    xor bx, bx
+    xor cx, cx  ;* 1 = find the char of exit '\n' is my pivote
+    while:   ;!  NAME,PASS&0%0  \10
+        cmp si, tamfile
+        je NOSEENCONTRO
+        xor ah, ah
+        mov al, buferdedatos[si]
+        ;* COMPARAMOS CADA CARACTER DEL BUFFER
+        CMP al, 10 ; ? si es FIN DE LINEA SALTA
+        je limpiarycont
+        cmp al, ','  ; ? si es COMA YA TENGO EL USER EN MYAUX
+        je REVISARNOMBRE
+        CMP TEMP, 2  ; ? si 2 el temp porque ya encontro el user
+        JE buscaand
+        JNE sigoauxi
+        buscaand:
+            CMP al, "&" ;? si es & EL SIGUIENTE ES LA CATEGORY
+            JE nextchariscategory
+        sigoauxi:
+        mov MYauxUserName2[bx], al
+        inc bx
+        jmp continuar
+        continuar:
+            inc si
+            jmp while
+        nextchariscategory:
+            getLen MYuserPass   ;! COMPARO MI CONTRASENA
+            isequal MYuserPass, MYauxUserName2, TEMP
+            print MyuserPass
+            print saltolinea
+            print MYauxUserName2
+            JMP fin
+        limpiarycont:
+            xor bx, bx
+            cleanBuffer MYuserName
+            jmp continuar
+        yahaynombre:
+            mov TEMP, 2
+            JMP continuar
+    REVISARNOMBRE:
+        getLen MYuserName
+        isequal MYuserName, MYauxUserName2, TEMP
+        cleanBuffer MYauxUserName2
+        xor bx, bx
+        xor cx, cx
+        cmp TEMP, 1
+        je yahaynombre
+        jmp continuar
+    NOSEENCONTRO:
+        MOV TEMPDB, '2'
+    fin:
+        cleanBuffer buferdedatos
+        cleanBuffer MYauxUserName
+    POPA
+ENDM
+
+
+
+
 
 ; logup MACRO
     ; PUSHA
