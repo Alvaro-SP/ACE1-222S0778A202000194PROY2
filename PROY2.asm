@@ -161,11 +161,12 @@ INCLUDE MACP2.inc
         MYauxUserName2      db 15 dup ('$')
         MYauxPass           db 20 dup ('$')
 
-        CATEGORIA            DB "0$"
-        BLOQUEO              DB "0$"
-
-        Stringpuntos         DB 4 dup ('$')
-        Stringnivel          DB "1$"
+        CATEGORIA            DB      "0$"
+        BLOQUEO              DB      "0$"
+        SCORE                DW      0
+        Stringpuntos         DB      4 dup ('$')
+        NIVEL                DW      1
+        Stringnivel          DB      "1$"
         ;! VELOCIDAD DEL JUEGO
         speed                DW      1000
         timeaux              DW      0
@@ -428,11 +429,11 @@ INCLUDE MACP2.inc
                 mov dx, timeaux
                 cmp dx, 50
                 je nextLevel
-                cmp dx, 15
+                cmp dx, 100
                 je nextLevel
                 jmp whilee
             nextLevel:
-                SUB speed, 0
+                SUB speed, 300
                 jmp whilee
             GUARDAYMENU:
                 JMP SALIR
@@ -2493,6 +2494,18 @@ INCLUDE MACP2.inc
         PAINTTEXT msgNIVEL  , 1108H , LIGHT_GREEN
         PAINTTEXT msgPUNTEO , 1308H , LIGHT_GREEN
         PAINTTEXT msgTIEMPO , 1508H , LIGHT_GREEN
+        ; * IMPRIMIR SCORE
+        poscursor 19,18
+        toString SCORE, Stringpuntos
+        print Stringpuntos
+        ; * IMPRIMIR NIVEL
+        poscursor 17,18
+        toString NIVEL, Stringnivel
+        print Stringnivel
+        ; * IMPRIMIR USUARIO
+        poscursor 15,18
+        print MYuserName
+        
         DRAW_RECTANGLE 468,144,664, 144+18, CYAN    ;! MARCO ARRIBA
         DRAW_RECTANGLE 468,144,468+18, 500, CYAN    ;! MARCO IZQUIERDA
         DRAW_RECTANGLE 468,500-18,656, 500, CYAN    ;! MARCO ABAJO
