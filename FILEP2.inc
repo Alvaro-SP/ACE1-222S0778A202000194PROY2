@@ -474,34 +474,6 @@ SAVEUSERINFILE MACRO user, pass ;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME 
     PAINTTEXT savedmessage , 2125H , 0FF30H
     readtext
 ENDM
-SAVESCOREINFILE MACRO user, score ;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
-    ; ?  NOMBRE_USER , SCORE &  ID
-    ; ?  Alvaro , 20 &  0
-    ; ?  Emanuel , 15 &  1
-    openFile punttet, handler ; open my file punt.tet
-    getLen user  ;* take the length of my user
-    seekEnd handler ;* update the cursor or the pointer in the file writing
-    writeFile handler, user, TEMP ;* write THE USER AND THE PASS.
-    
-    MOV TEMPDB, ','
-
-    toString SCORE, Stringpuntos
-    getLen Stringpuntos  ;* take the length of my    SCORE
-    writeFile handler, Stringpuntos, TEMP ;* WRITE SCORE
-    
-    MOV TEMPDB, '&'
-
-    writeFile handler, TEMPDB, 1
-    toString CONTADORUSERS, sTRINGCONTADORUSERS
-    getLen sTRINGCONTADORUSERS  ;* take the length of my Counter
-    writeFile handler, sTRINGCONTADORUSERS, TEMP
-    INC CONTADORUSERS
-
-    writeFile handler, nuevalinea, 1         ;?==>    JUANITO,ABC123@@@,0,0,0  \n
-    cerrar handler
-    PAINTTEXT savedmessage2, 2125H , 0FF30H
-    readtext
-ENDM
 
 ;* ------------------------TIPOS DE USERS--------------------------
 PROMOVER MACRO
@@ -792,6 +764,36 @@ TOMARBLOQUEO MACRO usr
         cleanBuffer buferdedatos
         cleanBuffer MYauxUserName
     POPA
+ENDM
+
+;! =========================TAKE DATA FROM THE PUNT.TET==============================
+SAVESCOREINFILE MACRO;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
+    ; ?  NOMBRE_USER , SCORE &  ID
+    ; ?  Alvaro , 20 &  0
+    ; ?  Emanuel , 15 &  1
+    openFile punttet, handler ; open my file punt.tet
+    getLen MyuserName  ;* take the length of my user
+    seekEnd handler ;* update the cursor or the pointer in the file writing
+    writeFile handler, MyuserName, TEMP ;* write THE USER AND THE PASS.
+    
+    MOV TEMPDB, ','
+
+    toString SCORE, Stringpuntos
+    getLen Stringpuntos  ;* take the length of my    SCORE
+    writeFile handler, Stringpuntos, TEMP ;* WRITE SCORE
+    
+    MOV TEMPDB, '&'
+
+    writeFile handler, TEMPDB, 1
+    toString CONTADORUSERS, sTRINGCONTADORUSERS
+    getLen sTRINGCONTADORUSERS  ;* take the length of my Counter
+    writeFile handler, sTRINGCONTADORUSERS, TEMP
+    INC CONTADORUSERS
+
+    writeFile handler, nuevalinea, 1         ;?==>    JUANITO,ABC123@@@,0,0,0  \n
+    cerrar handler
+    PAINTTEXT savedmessage2, 2125H , 0FF30H
+    readtext
 ENDM
 
 ; logup MACRO
