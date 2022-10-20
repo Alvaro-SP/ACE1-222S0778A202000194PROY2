@@ -425,14 +425,22 @@ INCLUDE MACP2.inc
                 JE GENFIGURA
                 Delay speed
                 INC DI
+                CMP NIVEL, 3
+                JE SOLOSIGO
                 inc timeaux
                 mov dx, timeaux
                 cmp dx, 50
                 je nextLevel
                 cmp dx, 100
                 je nextLevel
+                SOLOSIGO:
                 jmp whilee
             nextLevel:
+                INC NIVEL
+                ; * IMPRIMIR NIVEL
+                poscursor 17,18
+                toString NIVEL, Stringnivel
+                print Stringnivel
                 SUB speed, 300
                 jmp whilee
             GUARDAYMENU:
@@ -2505,7 +2513,13 @@ INCLUDE MACP2.inc
         ; * IMPRIMIR USUARIO
         poscursor 15,18
         print MYuserName
-        
+        ;* TEIMMPO
+        poscursor 21,18
+        print hour
+        print dospuntos
+        print hour
+        print dospuntos
+        print hour
         DRAW_RECTANGLE 468,144,664, 144+18, CYAN    ;! MARCO ARRIBA
         DRAW_RECTANGLE 468,144,468+18, 500, CYAN    ;! MARCO IZQUIERDA
         DRAW_RECTANGLE 468,500-18,656, 500, CYAN    ;! MARCO ABAJO
