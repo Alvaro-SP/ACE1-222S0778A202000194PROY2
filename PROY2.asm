@@ -340,10 +340,6 @@ INCLUDE MACP2.inc
     ;?☻ ===================== MAIN JUEGO ======================= ☻
     INICIODELJUEGO_ PROC NEAR
         PINTARPANTALLADEJUEGO
-        
-        a:
-        MOSTRARTIEMPO
-        JMP a
 
         MOV DI, 0
         esperaenter
@@ -367,6 +363,7 @@ INCLUDE MACP2.inc
             RANDOMPOSITION ;* Genero la posicion random de inicio
 
         whilee:
+            MOSTRARTIEMPO
             MOV FLAGMOVELEFT,0
             MOV FLAGMOVERIGHT,0
             mov ah, 0Bh; * REVISAR SI TECLA FUE PRESIONADA

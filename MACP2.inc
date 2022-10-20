@@ -246,10 +246,12 @@ delay MACRO fuera
     PUSHA
     MOV SI, fuera
     dos:
+    MOSTRARTIEMPO
         DEC SI
         JZ tres
         MOV DI, fuera
     uno:
+        
         DEC DI
         JNZ uno
         JMP dos
