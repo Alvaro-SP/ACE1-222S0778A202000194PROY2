@@ -2007,6 +2007,11 @@ INCLUDE MACP2.inc
             JE CORRERFILALABEL
             JNE SALTAR
             CORRERFILALABEL:
+                ; * IMPRIMIR SCORE
+                INC SCORE
+                poscursor 19,18
+                toString SCORE, Stringpuntos
+                print Stringpuntos
                 MOV DESDEDONDE_CORRER, SI
                 CORRERFILA
             SALTAR:
