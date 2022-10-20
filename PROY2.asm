@@ -85,6 +85,7 @@ INCLUDE MACP2.inc
         msgsesioniniciadasatisf DB 'SESION INICIADA SATISFACTORIAMENTE!', "$"
         msgFIGSIGUIENTE DB 'FIGURA SIGUIENTE', "$"
         pause0          DB '------------------- PAUSA ---------------------', "$"
+        BORRAR          DB '                                               ', "$"
         pause1          DB 'ESC = para guardar SCORE y salir al MENU', "$"
         pause2          DB 'DEL = para continuar el JUEGO', "$"
         msgUSUARIO          DB 'USUARIO : ', "$"
@@ -396,18 +397,22 @@ INCLUDE MACP2.inc
                 MOV FLAGMOVERIGHT, 1
                 jmp siguewhile
             pauseGame:
-                paint  0, 0, 800, 600, BLACK
-                PAINTTEXT pause0 , 0B17H , WHITE
-                PAINTTEXT pause1 , 2125H , 0FF30H
-                PAINTTEXT pause2 , 2325H , 0FF30H
+                PAINTTEXT pause0 , 0408H , WHITE
+                PAINTTEXT pause1 , 2108H , LIGHT_GREEN
+                PAINTTEXT pause2 , 2308H , LIGHT_GREEN
                 pauseGame2:
                 xor ax, ax  ;*ah = 0
                 int 16h
                 cmp al, 27  ;* ESC PARA GUARDAR PUNTOS Y MENU.
                 JE GUARDAYMENU
                 cmp ah, 83  ;* DEL PARA CONTINUAR
-                JE  siguewhile
+                JE  siguewhilePRE
                 jMP pauseGame2
+                siguewhilePRE:
+                    PAINTTEXT BORRAR , 0408H , WHITE
+                    PAINTTEXT BORRAR , 2108H , WHITE
+                    PAINTTEXT BORRAR , 2308H , WHITE
+                    JMP siguewhile
             ROTATEPIECE:
                 MOV FLAG_SABER_SIROTO, 1
                 CMP ROTACIONDEPIEZA, 3

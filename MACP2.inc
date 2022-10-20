@@ -1637,6 +1637,7 @@ CONTARESPECIALES macro
     SALIR:
 ENDM
 
+;*==================TIME AND POINTS ========================
 
 INICIOTIEMPO MACRO
     LOCAL A, salir
@@ -1694,4 +1695,43 @@ AUMENTAPUNTOS MACRO NIVEL
         JMP SALIR
     SALIR:
 ENDM
+
+;*==================TIME AND POINTS ========================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
