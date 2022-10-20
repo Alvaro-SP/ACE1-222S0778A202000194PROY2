@@ -457,6 +457,7 @@ INCLUDE MACP2.inc
                 SUB speed, 300
                 jmp whilee
             GUARDAYMENU:
+                SAVESCOREINFILE
                 JMP SALIR
 
         SALIR:
