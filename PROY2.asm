@@ -343,6 +343,8 @@ INCLUDE MACP2.inc
             RET
     main    ENDP
 
+
+
     ;?☻ ===================== MAIN JUEGO ======================= ☻
     INICIODELJUEGO_ PROC NEAR
         MOV NIVEL, 1
@@ -463,8 +465,11 @@ INCLUDE MACP2.inc
         SALIR:
         RET
     INICIODELJUEGO_ ENDP
-    
-    
+
+
+
+
+
     ;?☻ ▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀ CONTROL DE MATRICES FIGURAS ▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀ ☻
     UPDAPALITO_ PROC NEAR
         ;* SIEMPRE INICIARAN EN LA FILA 0 = Y
@@ -2006,6 +2011,11 @@ INCLUDE MACP2.inc
         RET
     UPDATEESPECIAL_ ENDP
     ;?☻ ▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀▀▄▀
+
+
+
+
+
 
 
 

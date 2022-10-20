@@ -407,7 +407,7 @@ BUSCARUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
         cleanBuffer buferdedatos
         cleanBuffer MYauxUserName
     POPA
-ENDM BUSCARUSER
+ENDM
 NOMBREUSADO MACRO
     LOCAL while, REVISARNOMBRE,CAMBIODESTATUS , cont,finalizooo
     getUSUARIOS
