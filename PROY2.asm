@@ -126,7 +126,7 @@ INCLUDE MACP2.inc
         TEMP2             DW 0
         TEMP3             DW 0
         TEMPDB            Db "0$"
-        dospuntos            Db ":$"
+        dospuntos         Db ":$"
         TEMPDB2           DB  4 dup ('$')
         nuevalinea        db 10,'$'
         cooldowncont      dw 0
@@ -153,8 +153,9 @@ INCLUDE MACP2.inc
         setPOSX             DW      ? ;* PARA COORDENADAS EN MATRICES
         setPOSY             DW      ?
         coloraux            DB      ? ;* coloar auxiliar cuadro
-        AREADEJUEGO         DW 256 DUP(0)
-        PIEZASKIETAS        DW 256 DUP(0)
+        AREADEJUEGO         DW 560 DUP(0)
+        SCORES_LIST         DW 500 dup('$') ;* GUARDA LOS PUNTAJES GENERALES
+        ID_LIST             DW 500 dup('$') ;* GUARDA ID PARA DESPUES TOMAR EL PUNTEO DEL USER
         INDEX               Dw ?
         INDEXtemp           Dw ?
 
