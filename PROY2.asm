@@ -71,6 +71,7 @@ INCLUDE MACP2.inc
         ADMINCREDUSER   DB "202000194AADM"
         ADMINCREDPASS   DB "491000202"
         savedmessage    DB   'USUARIO GUARDADO SATISFACTORIAMENTE :)', "$"
+        savedmessage2    DB   'PUNTOS GUARDADOS SATISFACTORIAMENTE :)', "$"
         msgyaesadmin    DB 'NO PUEDE PROMOVER YA ES UN ADMINISTRADOR', "$"
         msgpromovido    DB 'USUARIO PROMOVIDO AHORA ES UN PRO ;v', "$"
         msgdegradado    DB 'USUARIO DEGRADADO AHORA ES UN ESCLAVO ;v', "$"
@@ -162,7 +163,8 @@ INCLUDE MACP2.inc
         MYauxUserName       db 15 dup ('$')
         MYauxUserName2      db 15 dup ('$')
         MYauxPass           db 20 dup ('$')
-
+        sTRINGCONTADORUSERS           db 6 dup ('$')
+        CONTADORUSERS           DW 1
         CATEGORIA            DB      "0$"
         BLOQUEO              DB      "0$"
         SCORE                DW      0
@@ -342,6 +344,10 @@ INCLUDE MACP2.inc
 
     ;?☻ ===================== MAIN JUEGO ======================= ☻
     INICIODELJUEGO_ PROC NEAR
+        MOV NIVEL, 1
+        MOV SCORE, 0
+        MOV speed, 1000
+        MOV timeaux, 0
         PINTARPANTALLADEJUEGO
 
         MOV DI, 0
