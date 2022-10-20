@@ -116,6 +116,7 @@ INCLUDE MACP2.inc
         sec               db "00", "$"
         mes               db "00", "$"
         dia               db "00", "$"
+        CERON               db "0", "$"
         SI_SIMULADO       DW ?
         SI_SIMULADO2      DW ?
         tamfile           DW 0
@@ -2515,11 +2516,11 @@ INCLUDE MACP2.inc
         print MYuserName
         ;* TEIMMPO
         poscursor 21,18
-        print hour
+        print CERON
         print dospuntos
-        print hour
+        print CERON
         print dospuntos
-        print hour
+        print CERON
         DRAW_RECTANGLE 468,144,664, 144+18, CYAN    ;! MARCO ARRIBA
         DRAW_RECTANGLE 468,144,468+18, 500, CYAN    ;! MARCO IZQUIERDA
         DRAW_RECTANGLE 468,500-18,656, 500, CYAN    ;! MARCO ABAJO
