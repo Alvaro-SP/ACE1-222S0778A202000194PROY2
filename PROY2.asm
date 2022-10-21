@@ -207,6 +207,9 @@ INCLUDE MACP2.inc
         FLAGMOVERIGHT       DW 0
         FLAGMOVELEFT        DW 0
         TEMPAUXI        DW 0
+        NUMIZQ          dw 00h  ;! numero izquierdo ya parseado
+        NUMDER          dw 00h  ;! numero derecho ya parseado
+        
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H

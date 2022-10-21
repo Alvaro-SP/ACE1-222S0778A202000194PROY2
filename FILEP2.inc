@@ -924,7 +924,7 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             toNumber MYauxUserName2;TEMP4
             ;* POSICIONO Y AGREGO A TIMES_LIST
             PUSH DI
-            MOV DI, POS_SCORE
+            MOV DI, POS_TIME
             MOV TIMES_LIST[DI], TEMP4
             INC POS_TIME
             INC POS_TIME
@@ -935,8 +935,8 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             toNumber MYauxUserName2;TEMP4
             ;* POSICIONO Y AGREGO A ID_LIST
             PUSH DI
-            MOV DI, POS_SCORE
-            MOV SCORES_LIST[DI], TEMP4
+            MOV DI, POS_ID
+            MOV ID_LIST[DI], TEMP4
             INC POS_ID
             INC POS_ID
             POP DI
