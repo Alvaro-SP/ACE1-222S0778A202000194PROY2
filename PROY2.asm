@@ -90,6 +90,9 @@ INCLUDE MACP2.inc
         pause1          DB 'ESC = para guardar SCORE y salir al MENU', "$"
         pause2          DB 'DEL = para continuar el JUEGO', "$"
         msgUSUARIO          DB 'USUARIO : ', "$"
+        msgSENTIDO          DB 'SENTIDO : ', "$"
+        msgMETRICA          DB 'METRICA : ', "$"
+        msgVELOCIDAD          DB 'VELOCIDAD : ', "$"
         msgNIVEL          DB 'NIVEL : ', "$"
         msgPUNTEO          DB 'PUNTEO : ', "$"
         msgTIEMPO          DB 'TIEMPO : ', "$"
@@ -140,6 +143,9 @@ INCLUDE MACP2.inc
         RESULTADOPRINT          dw 00h, '$'
         izq   DB "LEFT $"
         der   DB "RIGHT $"
+        titlebb          DB '------------------- BUBBLE SORT ---------------------', "$"
+        titleqs          DB '------------------- QUICK SORT ---------------------', "$"
+        titlehs          DB '------------------- HEAP SORT ---------------------', "$"
         
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
@@ -2218,17 +2224,17 @@ INCLUDE MACP2.inc
         BubbleSortLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            BUBBLESORT
+            OPTIONS_BUBBLESORT
             JMP Inicio
         HeapSortLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            HEAPSORT
+            OPTIONS_HEAPSORT
             JMP Inicio
         QuickSortLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            QUICKSORT
+            OPTIONS_QUICKSORT
             JMP Inicio
         FIN:
         RET
@@ -2860,6 +2866,17 @@ INCLUDE MACP2.inc
     OPTIONS_HEAPSORT_ ENDP
     OPTIONS_QUICKSORT_ PROC NEAR
 
+        PAINTTEXT titlebb , 080bH , GREEN
+        PAINTTEXT msgUSUARIO , 0F10h , LIGHT_BLUE
+        PAINTTEXT msgSENTIDO , 1210H , LIGHT_BLUE
+        PAINTTEXT msgMETRICA , 1210H , LIGHT_BLUE
+        PAINTTEXT msgVELOCIDAD , 1210H , LIGHT_BLUE
+        ;* leo el NOMBRE DE USUARIO
+        poscursor 15, 38
+        getStr MYuserName
+        ;* leo la CONTRASENA
+        poscursor 18, 38
+        getStrPASS MYuserPass
         RET
     OPTIONS_QUICKSORT_ ENDP
 
