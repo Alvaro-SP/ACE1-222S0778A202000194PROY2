@@ -773,9 +773,9 @@ getSCORES macro
     cerrar handler
 endm
 SAVESCOREINFILE MACRO;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
-    ; ?  NOMBRE_USER , SCORE &  ID
-    ; ?  Alvaro , 20 &  0
-    ; ?  Emanuel , 15 &  1
+    ; ?  NOMBRE_USER , SCORE &  TIME % ID
+    ; ?  Alvaro , 20 &  80 % 1
+    ; ?  Emanuel, 15 &  69 % 2
     openFile punttet, handler ; open my file punt.tet
     getLen MyuserName  ;* take the length of my user
     seekEnd handler ;* update the cursor or the pointer in the file writing
