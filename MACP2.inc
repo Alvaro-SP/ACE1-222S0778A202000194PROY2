@@ -87,7 +87,7 @@ readtext MACRO                                            ;? ▬▬▬▬▬ LEE
     CALL readtext_
     POPA
 ENDM readtext
-print macro texto
+print MACRO texto
     PUSHA
     mov ah, 09
     mov dx, offset texto
@@ -95,7 +95,7 @@ print macro texto
     POPA
 ENDM print
 ;*  ----- convert an 'int' to 'string'-----
-toString macro num,buffer
+toString MACRO num,buffer
     LOCAL divide,getD,clr
     PUSHA
     xor si, si
@@ -121,6 +121,55 @@ toString macro num,buffer
         loop getD
         mov ah, 24h
         mov buffer[si],ah
+    POPA
+endm
+;-----Macro to convert ascii to number
+;return ax
+toNumber MACRO num ;*RETORNA TEMP4
+    LOCAL TRES, DOS, SALIDA
+    PUSHA
+    xor ax, ax
+    xor bx, bx
+    xor dx, dx
+    getLen num
+    cmp si, 3  ;* NO CREO QUE PASE DE 3 DIGITOS PERO POR SI ACASO
+    je TRES
+    cmp si, 2
+    je DOS
+    mov al, num[0]
+    sub al, 48
+    jmp SALIDA
+
+    TRES:
+        mov ax, 100
+        mov bl, num[0]
+        sub bl, 48
+        mul bx
+
+        mov dx, ax
+        xor ax, ax
+        mov ax, 10
+        mov bl, num[1]
+        sub bl, 48
+        mul bx
+        add ax, dx
+
+        mov bl, num[2]
+        sub bl, 48
+        add ax, bx
+        jmp SALIDA
+
+    DOS:
+        mov ax, 10
+        mov bl, num[0]
+        sub bl, 48
+        mul bx
+        mov bl, num[1]
+        sub bl, 48
+        add ax, bx
+
+    SALIDA:
+        MOV TEMP4, AX
     POPA
 endm
 ; POSICIONAR CURSOR
