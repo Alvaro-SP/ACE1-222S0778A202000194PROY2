@@ -158,6 +158,7 @@ INCLUDE MACP2.inc
         coloraux            DB      ? ;* coloar auxiliar cuadro
         AREADEJUEGO         DW 560 DUP(0)
         SCORES_LIST         DW 500 dup('$') ;* GUARDA LOS PUNTAJES GENERALES
+        TIMES_LIST         DW 500 dup('$') ;* GUARDA LOS PUNTAJES GENERALES
         ID_LIST             DW 500 dup('$') ;* GUARDA ID PARA DESPUES TOMAR EL PUNTEO DEL USER
         INDEX               Dw ?
         INDEXtemp           Dw ?
