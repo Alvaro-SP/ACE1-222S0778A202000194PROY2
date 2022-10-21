@@ -870,7 +870,7 @@ CARGA_SCORE_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     POPA
 ENDM
 CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
-    LOCAL fin,limpiarycont,NOSEENCONTRO,REVISARNOMBRE,continuar,while,buscaand,sigoauxi,nextchariscategory,yahaynombre
+    LOCAL fin,limpiarycont,continuar,while,buscaand,sigoauxi,nextchariscategory
     PUSHA
     getSCORES           ; ?  NOMBRE_USER , SCORE &  ID
     mov dx, 0
@@ -880,16 +880,14 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     xor cx, cx  ;* 1 = find the char of exit '\n' is my pivote
     while:   ;!  NAME,PASS&0%0  \10
         cmp si, tamfile
-        je NOSEENCONTRO
+        je fin
         xor ah, ah
         mov al, buferdedatos[si]
         ;* COMPARAMOS CADA CARACTER DEL BUFFER
         CMP al, 10 ; ? si es FIN DE LINEA SALTA
         je limpiarycont
         cmp al, ','  ; ? si es COMA YA TENGO EL USER EN MYAUX
-        je REVISARNOMBRE
-        CMP TEMP, 2  ; ? si 2 el temp porque ya encontro el user
-        JE buscaand
+        JE buscaand ;* salto 
         JNE sigoauxi
         buscaand:
             CMP al, "&" ;? si es & EL SIGUIENTE ES LA CATEGORY
@@ -904,26 +902,13 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
         nextchariscategory:
             ;! Aqui MyauxUserName2 tiene el SCORE
             toNumber MYauxUserName2
-            
+            ;* POSICIONO Y AGREGO A SCORES_LIST
+            ;* POSICIONO Y AGREGO A ID_LIST
             JMP fin
         limpiarycont:
             xor bx, bx
             cleanBuffer MYuserName
             jmp continuar
-        yahaynombre:
-            mov TEMP, 2
-            JMP continuar
-    REVISARNOMBRE:
-        getLen MYuserName
-        isequal MYuserName, MYauxUserName2, TEMP
-        cleanBuffer MYauxUserName2
-        xor bx, bx
-        xor cx, cx
-        cmp TEMP, 1
-        je yahaynombre
-        jmp continuar
-    NOSEENCONTRO:
-        MOV TEMPDB, '2'
     fin:
         cleanBuffer buferdedatos
         cleanBuffer MYauxUserName
@@ -965,7 +950,22 @@ ENDM
 ; ENDM
 
 
+;* Universidad San Carlos de Guatemala Facultad de Ingeniería
+;* Escuela de Ciencias y Sistemas
+;* Arquitectura de Computadores y Ensambladores 1 Sección A
 
+;* ALVARO EMMANUEL SOCOP PEREZ
+;* 202000194
+
+;* Tipo: Bubble Sort | Heap Sort | Quick Sort
+;* Sentido: ASCENDENTE | DESCENDENTE
+;* Fecha: 21/10/2022
+;* Hora: 23:00
+
+;* RANK    PLAYER      N       SCORE   TIME
+;* 1       ALVARO              55      454
+;* 2       EMMANUEL            554     987
+;* NUM /t/t MyuserName  /t/t/t/t SCORE  /t TIME
 
 
 
