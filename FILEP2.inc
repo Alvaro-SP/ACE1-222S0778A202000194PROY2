@@ -914,13 +914,13 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
         GUARDARtime:
             ;! Aqui MyauxUserName2 tiene el TIME
             toNumber MYauxUserName2
-            ;* POSICIONO Y AGREGO A SCORES_LIST
+            ;* POSICIONO Y AGREGO A TIMES_LIST
             xor bx, bx
             jmp continuar
-        GUARDARSCORE:
-            ;! Aqui MyauxUserName2 tiene el SCORE
+        GUARDARID:
+            ;! Aqui MyauxUserName2 tiene el ID
             toNumber MYauxUserName2
-            ;* POSICIONO Y AGREGO A SCORES_LIST
+            ;* POSICIONO Y AGREGO A ID_LIST
             xor bx, bx
             jmp continuar
         limpiarycont:
