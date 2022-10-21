@@ -872,7 +872,7 @@ ENDM
 CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     LOCAL fin,limpiarycont,continuar,while,buscaand,sigoauxi,nextchariscategory
     PUSHA
-    getSCORES           ; ?  NOMBRE_USER , SCORE &  ID
+    getSCORES          ; ?  NOMBRE_USER , SCORE &  TIME % ID
     mov dx, 0
     MOV SI, 0
     xor ax, ax;* flag for to say the status. 0 = getUser
@@ -884,27 +884,45 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
         xor ah, ah
         mov al, buferdedatos[si]
         ;* COMPARAMOS CADA CARACTER DEL BUFFER
-        CMP al, 10 ; ? si es FIN DE LINEA SALTA
-        je limpiarycont
-        cmp al, ','  ; ? si es COMA YA TENGO EL USER EN MYAUX
-        JE buscaand ;* salto 
+        
+        cmp al, ','  ; ? si es COMA BORRO
+        JE limpiarycont
+
+        CMP al, "&" ;? tendo SCORE
+        JE GUARDARSCORE ;* salto
+
+        CMP al, "%" ;? tendo TIEMPO
+        JE GUARDARtime
+
+        CMP al, 10 ; ? si es FIN DE LINEA TENGO ID
+        JE GUARDARID
         JNE sigoauxi
-        buscaand:
-            CMP al, "&" ;? si es & EL SIGUIENTE ES LA CATEGORY
-            JE nextchariscategory
+
         sigoauxi:
-        mov MYauxUserName2[bx], al
-        inc bx
-        jmp continuar
-        continuar:
-            inc si
-            jmp while
-        nextchariscategory:
+            mov MYauxUserName2[bx], al
+            inc bx
+            jmp continuar
+            continuar:
+                inc si
+                jmp while
+        GUARDARSCORE:
             ;! Aqui MyauxUserName2 tiene el SCORE
             toNumber MYauxUserName2
             ;* POSICIONO Y AGREGO A SCORES_LIST
-            ;* POSICIONO Y AGREGO A ID_LIST
-            JMP fin
+            xor bx, bx
+            jmp continuar
+        GUARDARtime:
+            ;! Aqui MyauxUserName2 tiene el TIME
+            toNumber MYauxUserName2
+            ;* POSICIONO Y AGREGO A SCORES_LIST
+            xor bx, bx
+            jmp continuar
+        GUARDARSCORE:
+            ;! Aqui MyauxUserName2 tiene el SCORE
+            toNumber MYauxUserName2
+            ;* POSICIONO Y AGREGO A SCORES_LIST
+            xor bx, bx
+            jmp continuar
         limpiarycont:
             xor bx, bx
             cleanBuffer MYuserName
