@@ -93,6 +93,9 @@ INCLUDE MACP2.inc
         msgSENTIDO          DB 'SENTIDO : ', "$"
         msgMETRICA          DB 'METRICA : ', "$"
         msgVELOCIDAD          DB 'VELOCIDAD : ', "$"
+        msgSENTIDOP        DB '(1 = ASC, 0 = DESC) ', "$"
+        msgMETRICAP        DB '(T = TIEMPO, P = PUNTEO) ', "$"
+        msgVELOCIDADP          DB 'Rango desde 0 ', "$"
         msgNIVEL          DB 'NIVEL : ', "$"
         msgPUNTEO          DB 'PUNTEO : ', "$"
         msgTIEMPO          DB 'TIEMPO : ', "$"
@@ -146,7 +149,10 @@ INCLUDE MACP2.inc
         titlebb          DB '------------------- BUBBLE SORT ---------------------', "$"
         titleqs          DB '------------------- QUICK SORT ---------------------', "$"
         titlehs          DB '------------------- HEAP SORT ---------------------', "$"
-        
+        strSENTIDO         DB      "0$"
+        strMETRICA         DB      "T$"
+        strVELOCIDAD       DB      4 dup ('$')
+        intVELODIDAD        DW      0
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
         Xtemp               DW      ?
@@ -2866,17 +2872,28 @@ INCLUDE MACP2.inc
     OPTIONS_HEAPSORT_ ENDP
     OPTIONS_QUICKSORT_ PROC NEAR
 
-        PAINTTEXT titlebb , 080bH , GREEN
-        PAINTTEXT msgUSUARIO , 0F10h , LIGHT_BLUE
-        PAINTTEXT msgSENTIDO , 1210H , LIGHT_BLUE
-        PAINTTEXT msgMETRICA , 1210H , LIGHT_BLUE
-        PAINTTEXT msgVELOCIDAD , 1210H , LIGHT_BLUE
-        ;* leo el NOMBRE DE USUARIO
-        poscursor 15, 38
-        getStr MYuserName
-        ;* leo la CONTRASENA
-        poscursor 18, 38
-        getStrPASS MYuserPass
+        PAINTTEXT titleqs , 080bH , GREEN
+        PAINTTEXT msgUSUARIO ,   1011h , LIGHT_GREEN
+        PAINTTEXT msgSENTIDO ,   1013H , LIGHT_GREEN
+        PAINTTEXT msgMETRICA ,   1015H , LIGHT_GREEN
+        PAINTTEXT msgVELOCIDAD , 1017H , LIGHT_GREEN
+
+        PAINTTEXT msgSENTIDOP ,   2013H , LIGHT_MAGENTA
+        PAINTTEXT msgMETRICAP ,   2015H , LIGHT_MAGENTA
+        PAINTTEXT msgVELOCIDADP , 2017H , LIGHT_MAGENTA
+        ;* leo el SENTIDO
+        poscursor 27, 19
+        getStr strSENTIDO
+        ;* leo la METRICA
+        poscursor 27, 19
+        getStr strMETRICA
+        ;* leo la VELOCIDAD
+        poscursor 27, 19
+        getStr strVELOCIDAD
+        toNumber strVELOCIDAD ;TEMP4
+        MOV SI, TEMP4
+        MOV intVELODIDAD, si
+
         RET
     OPTIONS_QUICKSORT_ ENDP
 
