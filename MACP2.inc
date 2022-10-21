@@ -1740,21 +1740,21 @@ MOSTRARTIEMPO MACRO
     INT 21H
     cleanBuffer TEMPDB2
     MOVZX SI, CL
-    MOV TEMPAUXI, SI
+    MOV TEMPAUXI, SI    ;* MINUTOS
     toString TEMPAUXI, TEMPDB2
     print TEMPDB2
     print dospuntos
 
     cleanBuffer TEMPDB2
     MOVZX SI, DH
-    MOV TEMPAUXI, SI
+    MOV TEMPAUXI, SI    ;* SEGUNDOS
     toString TEMPAUXI, TEMPDB2
     print TEMPDB2
     print dospuntos
 
     cleanBuffer TEMPDB2
     MOVZX SI, DL
-    MOV TEMPAUXI, SI
+    MOV TEMPAUXI, SI    ;*CENTISEGUNDOS
     toString TEMPAUXI, TEMPDB2
     print TEMPDB2
     POPA
@@ -1781,7 +1781,12 @@ AUMENTAPUNTOS MACRO NIVEL
 ENDM
 
 TIEMPO_GUARDAR MACRO
-
+    PUSHA
+    MOV AH, 2Ch  ; interrupcion para jalar el tiempo en el sistema
+    INT 21H
+    MOVZX SI, CL
+    POPA
+ENDM
 
 
 
