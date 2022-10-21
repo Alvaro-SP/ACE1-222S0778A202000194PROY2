@@ -1780,11 +1780,15 @@ AUMENTAPUNTOS MACRO NIVEL
     SALIR:
 ENDM
 
-TIEMPO_GUARDAR MACRO
+TIEMPO_GUARDAR MACRO ;* TOMO TODAL DE SEGUNDOS DE JUEGO
     PUSHA
     MOV AH, 2Ch  ; interrupcion para jalar el tiempo en el sistema
     INT 21H
-    MOVZX SI, CL
+    MOVZX SI, CL ; tomo minutos
+    MOVZX DI, DH ; tomo segundos
+    MULTI SI, 60 ; paso minutos a segundos
+    SUMA RESULTADOPREVIO, DI ; sumo ambos segundos
+    ;* EN RESULTADOPREVIO TENGO TODOS LOS SEGUNDOS
     POPA
 ENDM
 
