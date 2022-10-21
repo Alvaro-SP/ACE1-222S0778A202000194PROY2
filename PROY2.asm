@@ -125,6 +125,7 @@ INCLUDE MACP2.inc
         TEMP              DW 0
         TEMP2             DW 0
         TEMP3             DW 0
+        TEMP4             DW 0
         TEMPDB            Db "0$"
         dospuntos         Db ":$"
         TEMPDB2           DB  4 dup ('$')
