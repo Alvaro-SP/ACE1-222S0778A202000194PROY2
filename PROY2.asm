@@ -2850,8 +2850,9 @@ INCLUDE MACP2.inc
     ;*        ▀▄▄▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀▄▄▀▄▄▀▄▄▄▄▀▀▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀▄▄▄▀▄▄▄▄▄▀▄▄▀▄▄▀▄▄▄▄▄▀
 
 
-    BUBBLESORT_ PROC NEAR
-        MOV CX, indexbbsort
+    BUBBLESORTASC1_ PROC NEAR ;! ASCENDENTE BUBBLESORT SCORE
+
+        MOV CX, POS_SCORE
         DEC CX
         DEC CX
         DEC CX
@@ -2865,16 +2866,24 @@ INCLUDE MACP2.inc
                 INC DI
                 INC DI
                 CONDITION:          ;*if(list1[j]>list1[j+1]):
-                    MOV AX, listestadistic[DI]
-                    MOV BX, listestadistic[DI+2]
+                    MOV AX, SCORES_LIST[DI]
+                    MOV BX, SCORES_LIST[DI+2]
                     CMP AX,BX
                     Ja MAYORQUE  ;! JB para top ten
                     JMP JLOOP_
                     MAYORQUE:
-                        MOV AX, listestadistic[DI]
-                        MOV BX, listestadistic[DI+2]
-                        MOV listestadistic[DI], BX
-                        MOV listestadistic[DI+2], AX  ;*list1[j+1] = temp
+                        ;! SWAP DE LA LISTA
+                        MOV AX, SCORES_LIST[DI]
+                        MOV BX, SCORES_LIST[DI+2]
+                        MOV SCORES_LIST[DI], BX
+                        MOV SCORES_LIST[DI+2], AX  ;*list1[j+1] = temp
+
+                        ;! MISMOS MOVIMIENTOS PARA EL ID
+                        MOV AX, ID_LIST[DI]
+                        MOV BX, ID_LIST[DI+2]
+                        MOV ID_LIST[DI], BX
+                        MOV ID_LIST[DI+2], AX
+
                         JMP JLOOP_
         JLOOP_:
             CMP DI, CX
@@ -2887,30 +2896,19 @@ INCLUDE MACP2.inc
             JE SALIR
         SALIR:
         RET
-    BUBBLESORT_ ENDP
+    BUBBLESORTASC1_ ENDP
+    BUBBLESORTDESC1_ PROC NEAR   ;! DESCENDENTE BUBBLESORT SCORE
 
-    HEAPSORT_ PROC NEAR
-        ;*    /* sorts the given array of n size */
-        ;*    void heapsort(int* arr, int n)
-        ;*    {
-        ;*        // build the binary max heap
-        ;*        for (int i = n / 2 - 1; i >= 0; i--)
-        ;*        {
-        ;*            heapify(arr, n, i);
-        ;*        }
-        ;*        // sort the max heap
-        ;*        for (int i = n - 1; i >= 0; i--)
-        ;*        {
-        ;*            // swap the root node and the last leaf node
-        ;*            int temp = arr[i];
-        ;*            arr[i] = arr[0];
-        ;*            arr[0] = temp;
-        ;*            // again heapify the max heap from the root
-        ;*            heapify(arr, i, 0);
-        ;*        }
-        ;*    }
         RET
-    HEAPSORT_ ENDP
+    BUBBLESORTDESC1_ ENDP
+    BUBBLESORTASC2_ PROC NEAR   ;! ASCENDENTE BUBBLESORT TIEMPO
+
+        RET
+    BUBBLESORTASC2_ ENDP
+    BUBBLESORTDESC2_ PROC NEAR   ;! DESCENDENTE BUBBLESORT TIEMPO
+
+        RET
+    BUBBLESORTDESC2_ ENDP
     
     HEAPIFY_ PROC NEAR
         ;*    void heapify(int* arr, int n, int i)
@@ -2941,14 +2939,69 @@ INCLUDE MACP2.inc
         RET
     HEAPIFY_ ENDP
 
-
-    QUICKSORT_ PROC NEAR
+    HEAPSORTASC1_ PROC NEAR   ;! ASCENDENTE HEAPSORT SCORE
+        ;*    /* sorts the given array of n size */
+        ;*    void heapsort(int* arr, int n)
+        ;*    {
+        ;*        // build the binary max heap
+        ;*        for (int i = n / 2 - 1; i >= 0; i--)
+        ;*        {
+        ;*            heapify(arr, n, i);
+        ;*        }
+        ;*        // sort the max heap
+        ;*        for (int i = n - 1; i >= 0; i--)
+        ;*        {
+        ;*            // swap the root node and the last leaf node
+        ;*            int temp = arr[i];
+        ;*            arr[i] = arr[0];
+        ;*            arr[0] = temp;
+        ;*            // again heapify the max heap from the root
+        ;*            heapify(arr, i, 0);
+        ;*        }
+        ;*    }
         RET
-    QUICKSORT_ ENDP
+    HEAPSORTASC1_ ENDP
+    HEAPSORTDESC1_ PROC NEAR   ;! DESCENDENTE HEAPSORT SCORE
+
+        RET
+    HEAPSORTDESC1_ ENDP
+    HEAPSORTASC2_ PROC NEAR   ;! ASCENDENTE HEAPSORT TIEMPO
+
+        RET
+    HEAPSORTASC2_ ENDP
+    HEAPSORTDESC2_ PROC NEAR   ;! DESCENDENTE HEAPSORT TIEMPO
+
+        RET
+    HEAPSORTDESC2_ ENDP
+    
+    QUICKSORTASC1_ PROC NEAR   ;! ASCENDENTE QUICKSORT SCORE
+
+        RET
+    QUICKSORTASC1_ ENDP
+    QUICKSORTDESC1_ PROC NEAR   ;! DESCENDENTE QUICKSORT SCORE
+
+        RET
+    QUICKSORTDESC1_ ENDP
+    QUICKSORTASC2_ PROC NEAR   ;! ASCENDENTE QUICKSORT TIEMPO
+
+        RET
+    QUICKSORTASC2_ ENDP
+    QUICKSORTDESC2_ PROC NEAR   ;! DESCENDENTE QUICKSORT TIEMPO
+
+        RET
+    QUICKSORTDESC2_ ENDP
     ;!  █▀█ █▀▀ █▀█ █▀█ █▀█ ▀█▀ █▀
     ;!  █▀▄ ██▄ █▀▀ █▄█ █▀▄ ░█░ ▄█☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻ GENERACION DE REPORTES
     ;! TOP TEN
     TOP10GENERAL_ PROC NEAR
+        MOV SI, 1
+        CICLO10:
+            CMP SI, 11
+            JE EXIT
+
+
+            JMP CICLO10
+        EXIT:
         RET
     TOP10GENERAL_ ENDP
     TOP10USUARIO_ PROC NEAR
