@@ -2849,6 +2849,19 @@ INCLUDE MACP2.inc
     ;*        ██─▄█▀█▄▄▄▄─███─████─▀─███─██─██─██▄▄▄▄─███─████─██─███▀██─▀─██▄▄▄▄─█
     ;*        ▀▄▄▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀▄▄▀▄▄▀▄▄▄▄▀▀▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀▄▄▄▀▄▄▄▄▄▀▄▄▀▄▄▀▄▄▄▄▄▀
 
+    ;?☻ ===================== MENUS PARAMETROS ======================= ☻
+    OPTIONS_BUBBLESORT PROC NEAR
+
+        RET
+    OPTIONS_BUBBLESORT ENDP
+    OPTIONS_BUBBLESORT PROC NEAR
+
+        RET
+    OPTIONS_BUBBLESORT ENDP
+    OPTIONS_BUBBLESORT PROC NEAR
+
+        RET
+    OPTIONS_BUBBLESORT ENDP
 
     BUBBLESORTASC1_ PROC NEAR ;! ASCENDENTE BUBBLESORT SCORE
 
