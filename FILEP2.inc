@@ -834,8 +834,9 @@ TAKESCORE_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             inc si
             jmp while
         nextchariscategory:
-            ;! Aqui MyauxUserName2 tiene el numero
-            
+            ;! Aqui MyauxUserName2 tiene el SCORE
+            toNumber MYauxUserName2
+
             getLen MYuserPass   ;! COMPARO MI CONTRASENA
             isequal MYuserPass, MYauxUserName2, TEMP
             print MyuserPass
@@ -865,10 +866,6 @@ TAKESCORE_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
         cleanBuffer MYauxUserName
     POPA
 ENDM
-
-
-
-
 
 ; logup MACRO
     ; PUSHA
