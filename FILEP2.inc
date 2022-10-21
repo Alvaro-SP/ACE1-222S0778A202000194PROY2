@@ -782,23 +782,27 @@ SAVESCOREINFILE MACRO;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
     writeFile handler, MyuserName, TEMP ;* write THE USER AND THE PASS.
     
     MOV TEMPDB, ',' ;! SCORE
+    writeFile handler, TEMPDB, 1
 
     toString SCORE, Stringpuntos
     getLen Stringpuntos  ;* take the length of my    SCORE
     writeFile handler, Stringpuntos, TEMP ;* WRITE SCORE
     
-    MOV TEMPDB, '&'
-
+    MOV TEMPDB, '&' ;! TIME IN SECS
     writeFile handler, TEMPDB, 1
+
+    toString RESULTADOPREVIO, StringRESULTADOPREVIO
+    getLen StringRESULTADOPREVIO  ;* take the length of my    SCORE
+    writeFile handler, StringRESULTADOPREVIO, TEMP ;* WRITE SCORE
+    
+    MOV TEMPDB, '%' ;! COUNTER
+    writeFile handler, TEMPDB, 1
+
     toString CONTADORUSERS, sTRINGCONTADORUSERS
     getLen sTRINGCONTADORUSERS  ;* take the length of my Counter
     writeFile handler, sTRINGCONTADORUSERS, TEMP
     INC CONTADORUSERS
-
-    MOV TEMPDB, '%'
-    writeFile handler, TEMPDB, 1
-    writeFile handler, BLOQUEO, 1
-
+    
     writeFile handler, nuevalinea, 1         ;?==>    JUANITO,ABC123@@@,0,0,0  \n
     cerrar handler
     PAINTTEXT savedmessage2, 2125H , 0FF30H
