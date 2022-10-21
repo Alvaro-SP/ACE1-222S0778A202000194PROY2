@@ -2850,10 +2850,10 @@ INCLUDE MACP2.inc
     ;*        ▀▄▄▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀▄▄▀▄▄▀▄▄▄▄▀▀▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀▄▄▄▀▄▄▄▄▄▀▄▄▀▄▄▀▄▄▄▄▄▀
 
     ;?☻ ===================== MENUS PARAMETROS ======================= ☻
-    OPTIONS_BUBBLESORT PROC NEAR
+    OPTIONS_BUBBLESORT_ PROC NEAR
 
         RET
-    OPTIONS_BUBBLESORT ENDP
+    OPTIONS_BUBBLESORT_ ENDP
     OPTIONS_BUBBLESORT PROC NEAR
 
         RET
