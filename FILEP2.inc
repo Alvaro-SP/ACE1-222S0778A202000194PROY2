@@ -781,7 +781,7 @@ SAVESCOREINFILE MACRO;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
     seekEnd handler ;* update the cursor or the pointer in the file writing
     writeFile handler, MyuserName, TEMP ;* write THE USER AND THE PASS.
     
-    MOV TEMPDB, ','
+    MOV TEMPDB, ',' ;! SCORE
 
     toString SCORE, Stringpuntos
     getLen Stringpuntos  ;* take the length of my    SCORE
@@ -794,6 +794,10 @@ SAVESCOREINFILE MACRO;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
     getLen sTRINGCONTADORUSERS  ;* take the length of my Counter
     writeFile handler, sTRINGCONTADORUSERS, TEMP
     INC CONTADORUSERS
+
+    MOV TEMPDB, '%'
+    writeFile handler, TEMPDB, 1
+    writeFile handler, BLOQUEO, 1
 
     writeFile handler, nuevalinea, 1         ;?==>    JUANITO,ABC123@@@,0,0,0  \n
     cerrar handler
