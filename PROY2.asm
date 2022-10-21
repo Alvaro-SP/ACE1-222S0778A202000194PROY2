@@ -2874,7 +2874,6 @@ INCLUDE MACP2.inc
         RET
     OPTIONS_HEAPSORT_ ENDP
     OPTIONS_QUICKSORT_ PROC NEAR
-
         PAINTTEXT titleqs , 0816H , LIGHT_CYAN
         PAINTTEXT msgUSUARIO ,   1110h , LIGHT_GREEN
         PAINTTEXT msgSENTIDO ,   1310H , LIGHT_GREEN
@@ -2888,10 +2887,10 @@ INCLUDE MACP2.inc
         print MyuserName
         ;* leo el SENTIDO
         poscursor 19, 32
-        getStr strSENTIDO
+        getStr strSENTIDO ;(1 = ASC, 0 = DESC)
         ;* leo la METRICA
         poscursor 21, 32
-        getStr strMETRICA
+        getStr strMETRICA   ; (T = TIEMPO, P = PUNTEO)
         ;* leo la VELOCIDAD
         poscursor 23, 32
         getStr strVELOCIDAD
@@ -2899,6 +2898,30 @@ INCLUDE MACP2.inc
         MOV SI, TEMP4
         MOV intVELODIDAD, si
 
+        CMP strSENTIDO, '1'; 1 = ASC
+        JE ST1
+        JNE ST2
+        ST1:
+            CMP strMETRICA, 'T';T = TIEMPO
+            JE ASC_TIME
+            JNE ASC_SCORE
+        ST2:
+            CMP strMETRICA, 'T';T = TIEMPO
+            JE DESC_SCORE
+            JNE DESC_SCORE
+        ASC_TIME:
+            BUBBLESORTASC2
+            JMP SALIR
+        DESC_TIME:
+            BUBBLESORTDESC2
+            JMP SALIR
+        ASC_SCORE:
+            QUICKSORTASC1
+            JMP SALIR
+        DESC_SCORE:
+            QUICKSORTDESC1
+            JMP SALIR
+        SALIR:
         RET
     OPTIONS_QUICKSORT_ ENDP
 
