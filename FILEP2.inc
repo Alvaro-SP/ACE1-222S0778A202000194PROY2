@@ -809,66 +809,7 @@ SAVESCOREINFILE MACRO;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
     readtext
 ENDM
 
-LOAD_CURRENT_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
-    LOCAL fin,limpiarycont,NOSEENCONTRO,REVISARNOMBRE,continuar,while,buscaand,sigoauxi,nextchariscategory,yahaynombre
-    PUSHA
-    getSCORES           ; ?  NOMBRE_USER , SCORE &  ID
-    mov dx, 0
-    MOV SI, 0
-    xor ax, ax;* flag for to say the status. 0 = getUser
-    xor bx, bx
-    xor cx, cx  ;* 1 = find the char of exit '\n' is my pivote
-    while:   ;!  NAME,PASS&0%0  \10
-        cmp si, tamfile
-        je NOSEENCONTRO
-        xor ah, ah
-        mov al, buferdedatos[si]
-        ;* COMPARAMOS CADA CARACTER DEL BUFFER
-        CMP al, 10 ; ? si es FIN DE LINEA SALTA
-        je limpiarycont
-        cmp al, ','  ; ? si es COMA YA TENGO EL USER EN MYAUX
-        je REVISARNOMBRE
-        CMP TEMP, 2  ; ? si 2 el temp porque ya encontro el user
-        JE buscaand
-        JNE sigoauxi
-        buscaand:
-            CMP al, "&" ;? si es & EL SIGUIENTE ES LA CATEGORY
-            JE nextchariscategory
-        sigoauxi:
-        mov MYauxUserName2[bx], al
-        inc bx
-        jmp continuar
-        continuar:
-            inc si
-            jmp while
-        nextchariscategory:
-            ;! Aqui MyauxUserName2 tiene el SCORE
-            toNumber MYauxUserName2
-            
-            JMP fin
-        limpiarycont:
-            xor bx, bx
-            cleanBuffer MYuserName
-            jmp continuar
-        yahaynombre:
-            mov TEMP, 2
-            JMP continuar
-    REVISARNOMBRE:
-        getLen MYuserName
-        isequal MYuserName, MYauxUserName2, TEMP
-        cleanBuffer MYauxUserName2
-        xor bx, bx
-        xor cx, cx
-        cmp TEMP, 1
-        je yahaynombre
-        jmp continuar
-    NOSEENCONTRO:
-        MOV TEMPDB, '2'
-    fin:
-        cleanBuffer buferdedatos
-        cleanBuffer MYauxUserName
-    POPA
-ENDM
+
 LOAD_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
    LOCAL while, sigoauxi, continuar, GUARDARSCORE, GUARDARtime, GUARDARID, limpiarycont
     PUSHA
