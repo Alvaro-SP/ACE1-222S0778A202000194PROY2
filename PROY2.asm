@@ -2866,11 +2866,105 @@ INCLUDE MACP2.inc
 
     ;?☻ ===================== MENUS PARAMETROS ======================= ☻
     OPTIONS_BUBBLESORT_ PROC NEAR
+        PAINTTEXT titlebb , 0816H , LIGHT_CYAN
+        PAINTTEXT msgUSUARIO ,   1110h , LIGHT_GREEN
+        PAINTTEXT msgSENTIDO ,   1310H , LIGHT_GREEN
+        PAINTTEXT msgMETRICA ,   1510H , LIGHT_GREEN
+        PAINTTEXT msgVELOCIDAD , 1710H , LIGHT_GREEN
 
+        PAINTTEXT msgSENTIDOP ,   132BH , YELLOW
+        PAINTTEXT msgMETRICAP ,   152BH , YELLOW
+        PAINTTEXT msgVELOCIDADP , 172BH , YELLOW
+        poscursor 17, 32
+        print MyuserName
+        ;* leo el SENTIDO
+        poscursor 19, 32
+        getStr strSENTIDO ;(1 = ASC, 0 = DESC)
+        ;* leo la METRICA
+        poscursor 21, 32
+        getStr strMETRICA   ; (T = TIEMPO, P = PUNTEO)
+        ;* leo la VELOCIDAD
+        poscursor 23, 32
+        getStr strVELOCIDAD
+        toNumber strVELOCIDAD ;TEMP4
+        MOV SI, TEMP4
+        MOV intVELODIDAD, si
+
+        CMP strSENTIDO, '1'; 1 = ASC
+        JE ST1
+        JNE ST2
+        ST1:
+            CMP strMETRICA, 'T';T = TIEMPO
+            JE ASC_TIME
+            JNE ASC_SCORE
+        ST2:
+            CMP strMETRICA, 'T';T = TIEMPO
+            JE DESC_SCORE
+            JNE DESC_SCORE
+        ASC_TIME:
+            BUBBLESORTASC2
+            JMP SALIR
+        DESC_TIME:
+            BUBBLESORTDESC2
+            JMP SALIR
+        ASC_SCORE:
+            BUBBLESORTASC1
+            JMP SALIR
+        DESC_SCORE:
+            BUBBLESORTDESC1
+            JMP SALIR
+        SALIR:
         RET
     OPTIONS_BUBBLESORT_ ENDP
     OPTIONS_HEAPSORT_ PROC NEAR
+        PAINTTEXT titlehs , 0816H , LIGHT_CYAN
+        PAINTTEXT msgUSUARIO ,   1110h , LIGHT_GREEN
+        PAINTTEXT msgSENTIDO ,   1310H , LIGHT_GREEN
+        PAINTTEXT msgMETRICA ,   1510H , LIGHT_GREEN
+        PAINTTEXT msgVELOCIDAD , 1710H , LIGHT_GREEN
 
+        PAINTTEXT msgSENTIDOP ,   132BH , YELLOW
+        PAINTTEXT msgMETRICAP ,   152BH , YELLOW
+        PAINTTEXT msgVELOCIDADP , 172BH , YELLOW
+        poscursor 17, 32
+        print MyuserName
+        ;* leo el SENTIDO
+        poscursor 19, 32
+        getStr strSENTIDO ;(1 = ASC, 0 = DESC)
+        ;* leo la METRICA
+        poscursor 21, 32
+        getStr strMETRICA   ; (T = TIEMPO, P = PUNTEO)
+        ;* leo la VELOCIDAD
+        poscursor 23, 32
+        getStr strVELOCIDAD
+        toNumber strVELOCIDAD ;TEMP4
+        MOV SI, TEMP4
+        MOV intVELODIDAD, si
+
+        CMP strSENTIDO, '1'; 1 = ASC
+        JE ST1
+        JNE ST2
+        ST1:
+            CMP strMETRICA, 'T';T = TIEMPO
+            JE ASC_TIME
+            JNE ASC_SCORE
+        ST2:
+            CMP strMETRICA, 'T';T = TIEMPO
+            JE DESC_SCORE
+            JNE DESC_SCORE
+        ASC_TIME:
+            HEAPSORTASC1
+            JMP SALIR
+        DESC_TIME:
+            HEAPSORTDESC1
+            JMP SALIR
+        ASC_SCORE:
+            HEAPSORTASC1
+            JMP SALIR
+        DESC_SCORE:
+            HEAPSORTDESC1
+            JMP SALIR
+        SALIR:
         RET
     OPTIONS_HEAPSORT_ ENDP
     OPTIONS_QUICKSORT_ PROC NEAR
@@ -2977,7 +3071,7 @@ INCLUDE MACP2.inc
         RET
     BUBBLESORTDESC1_ ENDP
     BUBBLESORTASC2_ PROC NEAR   ;! ASCENDENTE BUBBLESORT TIEMPO
-
+        
         RET
     BUBBLESORTASC2_ ENDP
     BUBBLESORTDESC2_ PROC NEAR   ;! DESCENDENTE BUBBLESORT TIEMPO
