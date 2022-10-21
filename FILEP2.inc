@@ -878,6 +878,9 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     xor ax, ax;* flag for to say the status. 0 = getUser
     xor bx, bx
     xor cx, cx  ;* 1 = find the char of exit '\n' is my pivote
+    MOV POS_ID, 0
+    MOV POS_TIME, 0
+    MOV POS_SCORE, 0
     while:   ;!  NAME,PASS&0%0  \10
         cmp si, tamfile
         je fin
@@ -920,11 +923,23 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             ;! Aqui MyauxUserName2 tiene el TIME
             toNumber MYauxUserName2;TEMP4
             ;* POSICIONO Y AGREGO A TIMES_LIST
+            PUSH DI
+            MOV DI, POS_SCORE
+            MOV TIMES_LIST[DI], TEMP4
+            INC POS_TIME
+            INC POS_TIME
+            POP DI
             jmp limpiarycont
         GUARDARID:
             ;! Aqui MyauxUserName2 tiene el ID
             toNumber MYauxUserName2;TEMP4
             ;* POSICIONO Y AGREGO A ID_LIST
+            PUSH DI
+            MOV DI, POS_SCORE
+            MOV SCORES_LIST[DI], TEMP4
+            INC POS_ID
+            INC POS_ID
+            POP DI
             jmp limpiarycont
         limpiarycont:
             xor bx, bx
