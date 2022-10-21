@@ -809,7 +809,7 @@ SAVESCOREINFILE MACRO;! GUARDAR EN EL ARCHIVO EL NUEVO USUARIO (NAME AND PASS)
     readtext
 ENDM
 
-CARGA_SCORE_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
+LOAD_CURRENT_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     LOCAL fin,limpiarycont,NOSEENCONTRO,REVISARNOMBRE,continuar,while,buscaand,sigoauxi,nextchariscategory,yahaynombre
     PUSHA
     getSCORES           ; ?  NOMBRE_USER , SCORE &  ID
@@ -869,7 +869,7 @@ CARGA_SCORE_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
         cleanBuffer MYauxUserName
     POPA
 ENDM
-CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
+LOAD_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     LOCAL fin,limpiarycont,continuar,while,buscaand,sigoauxi,nextchariscategory
     PUSHA
     getSCORES          ; ?  NOMBRE_USER , SCORE &  TIME % ID
@@ -881,6 +881,9 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     MOV POS_ID, 0
     MOV POS_TIME, 0
     MOV POS_SCORE, 0
+    cleanBuffer SCORES_LIST
+    cleanBuffer TIMES_LIST
+    cleanBuffer ID_LIST
     while:   ;!  NAME,PASS&0%0  \10
         cmp si, tamfile
         je fin
@@ -951,7 +954,105 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
     POPA
 ENDM
 
+LOAD_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
+    LOCAL REVISARNOMBRE,while, sigoauxi, continuar, GUARDARSCORE, GUARDARtime, GUARDARID, limpiarycont
+    PUSHA
+    getSCORES          ; ?  NOMBRE_USER , SCORE &  TIME % ID
+    mov dx, 0
+    MOV SI, 0
+    xor ax, ax;* flag for to say the status. 0 = getUser
+    xor bx, bx
+    xor cx, cx  ;* 1 = find the char of exit '\n' is my pivote
+    MOV POS_ID, 0
+    MOV POS_TIME, 0
+    MOV POS_SCORE, 0
+    cleanBuffer SCORES_LIST
+    cleanBuffer TIMES_LIST
+    cleanBuffer ID_LIST
+    while:   ;!  NAME,PASS&0%0  \10
+        cmp si, tamfile
+        je fin
+        xor ah, ah
+        mov al, buferdedatos[si]
+        ;* COMPARAMOS CADA CARACTER DEL BUFFER
+        
+        cmp al, ','  ; ? si es COMA BORRO
+        JE REVISARNOMBRE
 
+        cmp TEMP, -1 ;! FILTRAR SOLO LOS QUE SON EL USUARIO ACTUAL
+        JNE continuar
+
+        CMP al, "&" ;? tendo SCORE
+        JE GUARDARSCORE ;* salto
+
+        CMP al, "%" ;? tendo TIEMPO
+        JE GUARDARtime
+
+        CMP al, 10 ; ? si es FIN DE LINEA TENGO ID
+        JE GUARDARID
+        JNE sigoauxi
+
+        sigoauxi:
+            mov MYauxUserName2[bx], al
+            inc bx
+            jmp continuar
+            continuar:
+                inc si
+                jmp while
+        GUARDARSCORE:
+            ;! Aqui MyauxUserName2 tiene el SCORE
+            toNumber MYauxUserName2 ;TEMP4
+            ;* POSICIONO Y AGREGO A SCORES_LIST
+            PUSH DI
+            MOV DI, POS_SCORE
+            MOV SCORES_LIST[DI], TEMP4
+            INC POS_SCORE
+            INC POS_SCORE
+            POP DI
+            jmp limpiarycont
+        GUARDARtime:
+            ;! Aqui MyauxUserName2 tiene el TIME
+            toNumber MYauxUserName2;TEMP4
+            ;* POSICIONO Y AGREGO A TIMES_LIST
+            PUSH DI
+            MOV DI, POS_TIME
+            MOV TIMES_LIST[DI], TEMP4
+            INC POS_TIME
+            INC POS_TIME
+            POP DI
+            jmp limpiarycont
+        GUARDARID:
+            ;! Aqui MyauxUserName2 tiene el ID
+            toNumber MYauxUserName2;TEMP4
+            ;* POSICIONO Y AGREGO A ID_LIST
+            PUSH DI
+            MOV DI, POS_ID
+            MOV ID_LIST[DI], TEMP4
+            INC POS_ID
+            INC POS_ID
+            POP DI
+            jmp limpiarycont
+        limpiarycont:
+            xor bx, bx
+            cleanBuffer MYuserName
+            jmp continuar
+        REVISARNOMBRE:
+            getLen MYuserName
+            isequal MYuserName, MYauxUserName2, TEMP
+            cleanBuffer MYauxUserName2
+            xor bx, bx
+            xor cx, cx
+            cmp TEMP, 1
+            je SIES
+            jmp continuar
+        SIES:
+            MOV TEMP,-1
+            JMP continuar
+    fin:
+        cleanBuffer buferdedatos
+        cleanBuffer MYauxUserName
+    POPA
+ENDM
 
 
 ; logup MACRO
