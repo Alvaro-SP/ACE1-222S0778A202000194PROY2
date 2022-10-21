@@ -2282,17 +2282,17 @@ INCLUDE MACP2.inc
         BubbleSortLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            BUBBLESORT
+            OPTIONS_BUBBLESORT
             JMP Inicio
         HeapSortLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            HEAPSORT
+            OPTIONS_HEAPSORT
             JMP Inicio
         QuickSortLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            QUICKSORT
+            OPTIONS_QUICKSORT
             JMP Inicio
         JUGARRRR:
             paint  0, 0, 800, 600, GREEN
