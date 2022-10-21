@@ -924,6 +924,7 @@ ENDM
 
 
 
+
 ; logup MACRO
     ; PUSHA
     
