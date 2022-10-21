@@ -119,8 +119,10 @@ INCLUDE MACP2.inc
         mes               db "00", "$"
         dia               db "00", "$"
         CERON               db "0", "$"
-        SI_SIMULADO       DW ?
-        SI_SIMULADO2      DW ?
+        SI_SIMULADO       DW 0
+        DI_SIMULADO       DW 0
+        SI_SIMULADO2      DW 0
+        DI_SIMULADO2      DW 0
         tamfile           DW 0
         TEMP              DW 0
         TEMP2             DW 0
@@ -171,7 +173,7 @@ INCLUDE MACP2.inc
         BLOQUEO              DB      "0$"
         SCORE                DW      0
         Stringpuntos         DB      4 dup ('$')
-        RESULTADOPREVIO      DW 0
+        RESULTADOPREVIO      DW     0
         StringRESULTADOPREVIO  DB      4 dup ('$')
         NIVEL                DW      1
         Stringnivel          DB      "1$"
