@@ -138,7 +138,7 @@ INCLUDE MACP2.inc
         RESULTADOPRINT          dw 00h, '$'
         izq   DB "LEFT $"
         der   DB "RIGHT $"
-        RESULTADOPREVIO   DW 0
+        
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
         Xtemp               DW      ?
@@ -171,6 +171,8 @@ INCLUDE MACP2.inc
         BLOQUEO              DB      "0$"
         SCORE                DW      0
         Stringpuntos         DB      4 dup ('$')
+        RESULTADOPREVIO      DW 0
+        StringRESULTADOPREVIO  DB      4 dup ('$')
         NIVEL                DW      1
         Stringnivel          DB      "1$"
         ;! VELOCIDAD DEL JUEGO
