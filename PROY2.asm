@@ -256,7 +256,10 @@ INCLUDE MACP2.inc
         ; PAINTPOS 1,1, LIGHT_MAGENTA
         ; PAINTPOS 1,2, LIGHT_MAGENTA
         ; PAINTPOS 5,10, LIGHT_MAGENTA
-        
+        paint  0, 0, 800, 600, GREEN
+        paint  0, 0, 800, 600, BLACK
+        OPTIONS_QUICKSORT
+        readtext
         ; UPDATECUADRO 0,14
         INICIODELJUEGO
         PRINCIPALMENULABEL:
