@@ -911,7 +911,9 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             ;* POSICIONO Y AGREGO A SCORES_LIST
             PUSH DI
             MOV DI, POS_SCORE
-            MOV SCORES_LIST[DI], 
+            MOV SCORES_LIST[DI], TEMP4
+            INC POS_SCORE
+            INC POS_SCORE
             POP DI
             jmp limpiarycont
         GUARDARtime:
