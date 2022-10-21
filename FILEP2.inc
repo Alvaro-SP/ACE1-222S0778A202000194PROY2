@@ -907,17 +907,21 @@ CARGA_SCORE_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
                 jmp while
         GUARDARSCORE:
             ;! Aqui MyauxUserName2 tiene el SCORE
-            toNumber MYauxUserName2
+            toNumber MYauxUserName2 ;TEMP4
             ;* POSICIONO Y AGREGO A SCORES_LIST
+            PUSH DI
+            MOV DI, POS_SCORE
+            MOV SCORES_LIST[DI], 
+            POP DI
             jmp limpiarycont
         GUARDARtime:
             ;! Aqui MyauxUserName2 tiene el TIME
-            toNumber MYauxUserName2
+            toNumber MYauxUserName2;TEMP4
             ;* POSICIONO Y AGREGO A TIMES_LIST
             jmp limpiarycont
         GUARDARID:
             ;! Aqui MyauxUserName2 tiene el ID
-            toNumber MYauxUserName2
+            toNumber MYauxUserName2;TEMP4
             ;* POSICIONO Y AGREGO A ID_LIST
             jmp limpiarycont
         limpiarycont:
