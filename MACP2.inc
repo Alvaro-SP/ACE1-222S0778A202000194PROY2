@@ -282,7 +282,42 @@ QUICKSORT MACRO index
     CALL QUICKSORT_
     POPA
 ENDM QUICKSORT
-
+SUMA MACRO NUMIZQTEMP ,NUMDERTEMP                                                ;? ▬▬▬ SUMA
+    PUSHA
+    MOV AX, NUMDERTEMP
+    MOV NUMDER, AX
+    MOV AX, NUMIZQTEMP
+    MOV NUMIZQ, AX
+    CALL SUMA_
+    POPA
+ENDM SUMA
+RESTA MACRO   NUMIZQTEMP ,NUMDERTEMP                                                ;? ▬▬▬ RESTA
+    PUSHA
+    MOV AX, NUMDERTEMP
+    MOV NUMDER, AX
+    MOV AX, NUMIZQTEMP
+    MOV NUMIZQ, AX
+    CALL RESTA_
+    POPA
+ENDM RESTA
+MULTI MACRO   NUMIZQTEMP ,NUMDERTEMP                                                ;? ▬▬▬ MULTI
+    PUSHA
+    MOV AX, NUMDERTEMP
+    MOV NUMDER, AX
+    MOV AX, NUMIZQTEMP
+    MOV NUMIZQ, AX
+    CALL MULTI_
+    POPA
+ENDM MULTI
+DIVI MACRO NUMIZQTEMP ,NUMDERTEMP                                                 ;? ▬▬▬ DIVI
+    PUSHA
+    MOV AX, NUMDERTEMP
+    MOV NUMDER, AX
+    MOV AX, NUMIZQTEMP
+    MOV NUMIZQ, AX
+    CALL DIVI_
+    POPA
+ENDM DIVI
 ;! ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 ;! ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀  EL JUEGO  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 INICIODELJUEGO MACRO
@@ -1745,8 +1780,7 @@ AUMENTAPUNTOS MACRO NIVEL
     SALIR:
 ENDM
 
-;*==================TIME AND POINTS ========================
-
+TIEMPO_GUARDAR MACRO
 
 
 

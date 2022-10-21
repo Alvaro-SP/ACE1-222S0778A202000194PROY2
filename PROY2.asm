@@ -138,7 +138,7 @@ INCLUDE MACP2.inc
         RESULTADOPRINT          dw 00h, '$'
         izq   DB "LEFT $"
         der   DB "RIGHT $"
-
+        RESULTADOPREVIO   DW 0
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
         Xtemp               DW      ?
@@ -2753,9 +2753,6 @@ INCLUDE MACP2.inc
         PAINTSQUARE  Xaux1,Yaux1, BROWN
         RET
     PINTAR2ZETA_ ENDP
-    ; UPDATEZETA2_ PROC FAR
-    ;     RET
-    ; UPDATEZETA2_ ENDP
     PAINTSQUARE_ PROC NEAR          ;! -----------PINTAR UN CUADRO 18*18-----------
         MOV CX, Xtempauxaux
         MOV Xaux1, CX
@@ -2771,7 +2768,60 @@ INCLUDE MACP2.inc
     PAINTSQUARE_ ENDP
     
 
+    ;! I CAN USE AX FOR THE LEFT NUMBER
+    ;! I GONNA USE BX FOR THE RIGHT NUMBER
+    ;?☻ ===================== SUMA ======================= ☻
+    SUMA_ PROC NEAR
+        MOV CX, NUMIZQ
+        MOV BX, NUMDER
+        MOV AX,CX   ;copy NUMIZQ to AX from CX
+        MOV DX,00h
+        ADD AX,BX   ;adding with NUMDER and guardo resultado en AX
+        ADC AX,DX   ;adding CF (carry) to AX guardo resultado en AX
+        MOV RESULTADOPREVIO, AX
+        ; printnum RESULTADOPRINT, RESULTADOPREVIO
+        ; print RESULTADOPRINT
+        RET
+    SUMA_ ENDP
+    ;?☻ ===================== RESTA ======================= ☻
+    RESTA_ PROC NEAR
+        MOV CX, NUMIZQ
+        MOV BX, NUMDER
+        MOV AX,CX ;copy NUMIZQ to AX from CX
+        SUB AX,BX ;subtracting NUMDER from NUMIZQ and 
+        JC SOBREFLU; storing the result in AX 
+        JNC SALIR
+        SOBREFLU:
+            NEG AX
+            MOV overflow,01h
 
+            MOV RESULTADOPREVIO, AX
+            RET
+        SALIR:
+        MOV RESULTADOPREVIO, AX
+        RET
+    RESTA_ ENDP
+    ;?☻ ===================== MULTIPLICACION ======================= ☻
+    MULTI_ PROC NEAR
+        MOV CX, NUMIZQ
+        MOV BX, NUMDER
+        MOV AX,CX           ;copy NUMIZQ to AX from CX
+        MOV DX,00H          ;moving 00h in DX
+        MUL BX              ;multiplying NUMIZQ by NUMDER and storing the result in AX
+        MOV RESULTADOPREVIO, AX
+        RET
+    MULTI_ ENDP
+    ;?☻ ===================== DIVISION ======================= ☻
+    DIVI_ PROC NEAR
+        MOV CX, NUMIZQ
+        MOV BX, NUMDER
+        MOV AX,CX           ;copy NUMIZQ to AX from CX
+        MOV DX,00H          ;moving 00h in DX 
+        ADD BX,DX
+        DIV BX              ;dividing NUMIZQ by NUMDER and storing the result in AX
+        MOV RESULTADOPREVIO, AX
+        RET
+    DIVI_ ENDP
 
 
 
