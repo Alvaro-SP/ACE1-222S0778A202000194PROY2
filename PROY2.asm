@@ -146,9 +146,9 @@ INCLUDE MACP2.inc
         RESULTADOPRINT          dw 00h, '$'
         izq   DB "LEFT $"
         der   DB "RIGHT $"
-        titlebb          DB '------------------- BUBBLE SORT ---------------------', "$"
-        titleqs          DB '------------------- QUICK SORT ---------------------', "$"
-        titlehs          DB '------------------- HEAP SORT ---------------------', "$"
+        titlebb          DB '-*-*-*-*-*-*-*-*-*-* BUBBLE SORT -*-*-*-*-*-*-*-*-*-*', "$"
+        titleqs          DB '-*-*-*-*-*-*-*-*-*-* QUICK SORT -*-*-*-*-*-*-*-*-*-* ', "$"
+        titlehs          DB '-*-*-*-*-*-*-*-*-*-* HEAP SORT -*-*-*-*-*-*-*-*-*-* ', "$"
         strSENTIDO         DB      "0$"
         strMETRICA         DB      "T$"
         strVELOCIDAD       DB      4 dup ('$')
@@ -2875,23 +2875,25 @@ INCLUDE MACP2.inc
     OPTIONS_HEAPSORT_ ENDP
     OPTIONS_QUICKSORT_ PROC NEAR
 
-        PAINTTEXT titleqs , 080bH , GREEN
-        PAINTTEXT msgUSUARIO ,   1011h , LIGHT_GREEN
-        PAINTTEXT msgSENTIDO ,   1013H , LIGHT_GREEN
-        PAINTTEXT msgMETRICA ,   1015H , LIGHT_GREEN
-        PAINTTEXT msgVELOCIDAD , 1017H , LIGHT_GREEN
+        PAINTTEXT titleqs , 0816H , LIGHT_CYAN
+        PAINTTEXT msgUSUARIO ,   1110h , LIGHT_GREEN
+        PAINTTEXT msgSENTIDO ,   1310H , LIGHT_GREEN
+        PAINTTEXT msgMETRICA ,   1510H , LIGHT_GREEN
+        PAINTTEXT msgVELOCIDAD , 1710H , LIGHT_GREEN
 
-        PAINTTEXT msgSENTIDOP ,   2013H , LIGHT_MAGENTA
-        PAINTTEXT msgMETRICAP ,   2015H , LIGHT_MAGENTA
-        PAINTTEXT msgVELOCIDADP , 2017H , LIGHT_MAGENTA
+        PAINTTEXT msgSENTIDOP ,   132BH , YELLOW
+        PAINTTEXT msgMETRICAP ,   152BH , YELLOW
+        PAINTTEXT msgVELOCIDADP , 172BH , YELLOW
+        poscursor 17, 32
+        print MyuserName
         ;* leo el SENTIDO
-        poscursor 27, 19
+        poscursor 19, 32
         getStr strSENTIDO
         ;* leo la METRICA
-        poscursor 27, 19
+        poscursor 21, 32
         getStr strMETRICA
         ;* leo la VELOCIDAD
-        poscursor 27, 19
+        poscursor 23, 32
         getStr strVELOCIDAD
         toNumber strVELOCIDAD ;TEMP4
         MOV SI, TEMP4
