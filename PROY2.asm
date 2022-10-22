@@ -3166,14 +3166,24 @@ INCLUDE MACP2.inc
         XOR SI, SI
         xor di, di
         xor cx, cx
+        xor BX, BX
         whileZ:
             CMP POS_SCORE, SI
             JE salir
-            MULTI SCORES_LIST[DI], 25
+
+            MULTI SCORES_LIST[SI], 25
             RESTA 750, RESULTADOPREVIO
-            
-            MOV CX, 100
-            DRAW_RECTANGLE RESULTADOPREVIO, 100, 750, 150, YELLOW
+            MOV CX, RESULTADOPREVIO
+
+            INC SI
+            INC SI
+
+            PUSH SI
+            MULTI SI, 50
+
+            MOV DI, 25
+            ADD RESULTADOPREVIO, DI
+            DRAW_RECTANGLE CX, RESULTADOPREVIO, 750, DI, YELLOW
 
         salir:
         RET
