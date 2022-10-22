@@ -1859,11 +1859,12 @@ ENDM
 
 ;*================== GRAFICO DE BARRAS ANIMATED ========================
 DRAW_BAR MACRO  ANCHURA,POS, value
-
+    PUSHA
     MOV DI, POS
     ADD DI, 100
     DRAW_RECTANGLE ANCHURA, POS, 500, DI
     poscursor 500, POS
+    POPA
 ENDM
 
 
