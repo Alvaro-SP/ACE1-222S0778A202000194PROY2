@@ -3159,6 +3159,10 @@ INCLUDE MACP2.inc
 
         RET
     QUICKSORTDESC2_ ENDP
+    
+     GRAPH_SORT_ PROC NEAR
+        RET
+    GRAPH_SORT_ ENDP
     ;!  █▀█ █▀▀ █▀█ █▀█ █▀█ ▀█▀ █▀
     ;!  █▀▄ ██▄ █▀▀ █▄█ █▀▄ ░█░ ▄█☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻ GENERACION DE REPORTES
     ;! TOP TEN
