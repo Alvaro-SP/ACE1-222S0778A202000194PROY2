@@ -252,10 +252,12 @@ INCLUDE MACP2.inc
         misdatos
         esperaenter  ;TODO: activar despues
         paint  0, 0, 800, 600, BLACK
+        DRAW_RECTANGLE 50, 100, 750, 150, YELLOW
         ; PAINTPOS 0,1, LIGHT_MAGENTA
         ; PAINTPOS 1,1, LIGHT_MAGENTA
         ; PAINTPOS 1,2, LIGHT_MAGENTA
         ; PAINTPOS 5,10, LIGHT_MAGENTA
+        readtext
         paint  0, 0, 800, 600, GREEN
         paint  0, 0, 800, 600, BLACK
         OPTIONS_QUICKSORT
@@ -3160,7 +3162,20 @@ INCLUDE MACP2.inc
         RET
     QUICKSORTDESC2_ ENDP
     
-     GRAPH_SORT_ PROC NEAR
+    GRAPH_SORT_ PROC NEAR
+        XOR SI, SI
+        xor di, di
+        xor cx, cx
+        whileZ:
+            CMP POS_SCORE, SI
+            JE salir
+            MULTI SCORES_LIST[DI], 25
+            RESTA 750, RESULTADOPREVIO
+            
+            MOV CX, 100
+            DRAW_RECTANGLE RESULTADOPREVIO, 100, 750, 150, YELLOW
+
+        salir:
         RET
     GRAPH_SORT_ ENDP
     ;!  █▀█ █▀▀ █▀█ █▀█ █▀█ ▀█▀ █▀
