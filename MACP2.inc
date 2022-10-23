@@ -182,6 +182,7 @@ poscursor MACRO POSXTEMP, POSYTEMP
     CALL poscursor_
     ; POPA
 ENDM poscursor
+
 printnum MACRO array, seek
     LOCAL Split, RepleaSplit, StringAnalizado, EndAnalisis, Minus,SIGO,ADDMINUS
     
@@ -1873,7 +1874,12 @@ GRAPH_SORT MACRO
     POPA
 ENDM
 
-
+PRINTX MACRO N
+    PUSHA
+    printnum RESULTADOPRINT, N
+    print RESULTADOPRINT
+    POPA
+ENDM
 
 
 

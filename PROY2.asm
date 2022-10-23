@@ -144,8 +144,8 @@ INCLUDE MACP2.inc
         listestadistic          dw 2000 dup('$')
         indexbbsort             DW 0000
         RESULTADOPRINT          dw 00h, '$'
-        izq   DB "LEFT $"
-        der   DB "RIGHT $"
+        izq   DB 0
+        der   DB 0
         titlebb          DB '-*-*-*-*-*-*-*-*-*-* BUBBLE SORT -*-*-*-*-*-*-*-*-*-*', "$"
         titleqs          DB '-*-*-*-*-*-*-*-*-*-* QUICK SORT -*-*-*-*-*-*-*-*-*-* ', "$"
         titlehs          DB '-*-*-*-*-*-*-*-*-*-* HEAP SORT -*-*-*-*-*-*-*-*-*-* ', "$"
@@ -252,17 +252,17 @@ INCLUDE MACP2.inc
         misdatos
         esperaenter  ;TODO: activar despues
         paint  0, 0, 800, 600, BLACK
-        DRAW_RECTANGLE 50, 100, 750, 150, YELLOW
-        ; PAINTPOS 0,1, LIGHT_MAGENTA
-        ; PAINTPOS 1,1, LIGHT_MAGENTA
-        ; PAINTPOS 1,2, LIGHT_MAGENTA
-        ; PAINTPOS 5,10, LIGHT_MAGENTA
+        MOV SCORES_LIST[0], 10
+        MOV SCORES_LIST[2], 20
+        MOV SCORES_LIST[4], 5
+        MOV SCORES_LIST[6], 3
+        MOV SCORES_LIST[8], 2
+        MOV SCORES_LIST[10], 7
+        MOV SCORES_LIST[12], 6
+        MOV SCORES_LIST[14], 0
+        MOV POS_SCORE, 16
+        GRAPH_SORT
         readtext
-        paint  0, 0, 800, 600, GREEN
-        paint  0, 0, 800, 600, BLACK
-        OPTIONS_QUICKSORT
-        readtext
-        ; UPDATECUADRO 0,14
         INICIODELJUEGO
         PRINCIPALMENULABEL:
         ;! MENUPRINCIPAL
@@ -3164,27 +3164,42 @@ INCLUDE MACP2.inc
     
     GRAPH_SORT_ PROC NEAR
         XOR SI, SI
-        xor di, di
+        MOV DI, -1
         xor cx, cx
         xor BX, BX
         whileZ:
             CMP POS_SCORE, SI
             JE salir
+            MOV BX, SCORES_LIST[SI]
+            MULTI BX, 25
+            MOV BX, RESULTADOPREVIO
+            RESTA 750, BX
+            MOV BX, RESULTADOPREVIO
+            MOV Xaux1, BX
 
-            MULTI SCORES_LIST[SI], 25
-            RESTA 750, RESULTADOPREVIO
-            MOV CX, RESULTADOPREVIO
+            mov Xaux2, 750
+            
+            MOV BX, SI
+            INC BX
+            MULTI BX, 24
+            MOV BX, RESULTADOPREVIO
+            MOV Yaux1, BX
 
+            ADD BX, 25
+            MOV Yaux2, BX
+            DRAW_RECTANGLE Xaux1,Yaux1,Xaux2,Yaux2, YELLOW
+            
+
+            MOV BX, SCORES_LIST[SI]
+            MOV RESULTADOPREVIO, BX
+            toString RESULTADOPREVIO, Stringpuntos
+            ADD DI, 3
+            MOV DX, DI
+            poscursor  dl, 95
+            print Stringpuntos
             INC SI
             INC SI
-
-            PUSH SI
-            MULTI SI, 50
-
-            MOV DI, 25
-            ADD RESULTADOPREVIO, DI
-            DRAW_RECTANGLE CX, RESULTADOPREVIO, 750, DI, YELLOW
-
+            JMP whileZ
         salir:
         RET
     GRAPH_SORT_ ENDP
