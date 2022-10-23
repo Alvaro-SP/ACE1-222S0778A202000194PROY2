@@ -3024,7 +3024,9 @@ INCLUDE MACP2.inc
         ILOOP:       ;* for i in range(0,len(list1)-1):
             INC SI
             INC SI
-            paint  0, 0, 800, 600, BLACK
+            MOV AX,4F02H           ;SETEAMOS EL MODO VIDEO INT 10   800*600
+        MOV BX,103H
+        INT 10H
             GRAPH_SORT
             DELAY 500
             JLOOP:  ;* for j in range(len(list1)-1)
