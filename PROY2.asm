@@ -150,11 +150,16 @@ INCLUDE MACP2.inc
         titlebb          DB '-*-*-*-*-*-*-*-*-*-* BUBBLE SORT -*-*-*-*-*-*-*-*-*-*', "$"
         titleqs          DB '-*-*-*-*-*-*-*-*-*-* QUICK SORT -*-*-*-*-*-*-*-*-*-* ', "$"
         titlehs          DB '-*-*-*-*-*-*-*-*-*-* HEAP SORT -*-*-*-*-*-*-*-*-*-* ', "$"
-        strSENTIDO         DB      "0$"
-        strMETRICA         DB      "T$"
-        FLECHA         DB      "<-$"
-        strVELOCIDAD       DB      4 dup ('$')
+        strSENTIDO          DB      "0$"
+        strMETRICA          DB      "T$"
+        FLECHA              DB      "<-$"
+        strVELOCIDAD        DB      4 dup ('$')
         intVELODIDAD        DW      0
+        NN        DW      0
+        II        DW      0
+        ELE        DW      0
+        ERE        DW      0
+        LARGEST        DW      0
 
     ;!-------------------------- VAR DEL JUEGO --------------------------
         Xtemp               DW      ?
@@ -3323,30 +3328,37 @@ INCLUDE MACP2.inc
     
     HEAPSORTASC1_ PROC NEAR   ;! ASCENDENTE HEAPSORT SCORE
         ;* for i in range(n // 2 - 1, -1, -1):
-        ;*  heapify(arr, n, i)
-        MOV CX, POS_SCORE
-        DIVI CX, 2
+        
+        MOV DI, POS_SCORE
+        DIVI DI, 2
         RESTA RESULTADOPREVIO, 1
-        MOV CX, RESULTADOPREVIO
+        MOV DI, RESULTADOPREVIO
         FOR1:
-            CMP CX, -2
+            CMP DI, -2
             JE EXITFOR1
-            
-            DEC CX
-            DEC CX
+            ;*  heapify(arr, n, i)
+            HEAPIFY POS_SCORE, DI
+
+            DEC DI
+            DEC DI
             JMP FOR1
         EXITFOR1:
         ;* for i in range(n - 1, 0, -1):
-        ;*     (arr[i], arr[0]) = (arr[0], arr[i])  # swap
-        ;*     heapify(arr, i, 0)
-        MOV CX, POS_SCORE
-        DEC CX
+        MOV DI, POS_SCORE
+        DEC DI
         FOR2:
-            CMP CX, 0
+            CMP DI, 0
             JE EXITFOR2
+            ;*     (arr[i], arr[0]) = (arr[0], arr[i])  # swap
+            mov CX, SCORES_LIST[0]
+            mov AX, SCORES_LIST[DI]
+            mov SCORES_LIST[0], AX
+            mov SCORES_LIST[DI], CX
+            ;*     heapify(arr, i, 0)
+            HEAPIFY DI, 0
 
-            DEC CX
-            DEC CX
+            DEC DI
+            DEC DI
             JMP FOR2
         EXITFOR2:
         RET
@@ -3365,13 +3377,60 @@ INCLUDE MACP2.inc
     HEAPSORTDESC2_ ENDP
     HEAPIFY_ PROC NEAR ;*   def heapify(arr, n, i):
         ;*   largest = i  # Initialize largest as root
-        ;*   l = 2 * i + 1  # left = 2*i + 1
-        ;*   r = 2 * i + 2  # right = 2*i + 2
+        MOV AX, II
+        MOV LARGEST, AX
+        ;*   l = 2 * i + 1      # left = 2*i + 1
+        MULTI II, 2
+        ADD RESULTADOPREVIO, 1
+        MOV AX, RESULTADOPREVIO
+        MOV ELE, AX
+        ;*   r = 2 * i + 2      # right = 2*i + 2
+        MULTI II, 2
+        ADD RESULTADOPREVIO, 2
+        MOV AX, RESULTADOPREVIO
+        MOV ERE, AX
         ;*   if l < n and arr[i] < arr[l]:
-        ;*       largest = l
+        MOV AX, ELE
+        MOV BX, NN
+        CMP AX, BX
+        JB ANDJB
+        JMP IF2
+        ANDJB:
+            MOV DI, II
+            MOV SI, ELE
+            MOV AX, SCORES_LIST[DI]
+            MOV BX, SCORES_LIST[SI]
+            CMP AX, BX
+            JB SIESAND1
+            JMP IF2
+            SIESAND1:
+                ;*       largest = l
+                MOV AX, ELE
+                MOV LARGEST, AX
+
         ;*   if r < n and arr[largest] < arr[r]:
+        IF2:
+            MOV AX, ERE
+            MOV BX, NN
+            CMP AX, BX
+            JB ANDJB2
+            JMP IF3
+            ANDJB2:
+                MOV DI, LARGEST
+                MOV SI, ERE
+                MOV AX, SCORES_LIST[DI]
+                MOV BX, SCORES_LIST[SI]
+                CMP AX, BX
+                JB SIESAND2
+                JMP IF3
+                SIESAND2:
+                    ;*       largest = l
+                    MOV AX, ELE
+                    MOV LARGEST, AX
+
         ;*       largest = r
         ;*   if largest != i:
+        IF3:
         ;*       (arr[i], arr[largest]) = (arr[largest], arr[i])  # swap
         ;*   heapify(arr, n, largest)
         RET
