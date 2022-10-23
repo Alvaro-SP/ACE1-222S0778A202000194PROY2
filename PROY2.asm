@@ -3433,6 +3433,7 @@ INCLUDE MACP2.inc
             MOV AX, LARGEST
             MOV BX, II
             JNE NOEQUAL
+            JMP EXIT
             NOEQUAL:
                 ;*(arr[i],arr[largest])=(arr[largest],arr[i])  # swap
                 MOV DI, LARGEST
@@ -3443,6 +3444,8 @@ INCLUDE MACP2.inc
                 mov SCORES_LIST[DI], AX
                 ;*   heapify(arr, n, largest)
                 HEAPIFY NN, LARGEST
+
+        EXIT:
         RET
     HEAPIFY_ ENDP
 
