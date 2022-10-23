@@ -3424,15 +3424,25 @@ INCLUDE MACP2.inc
                 JB SIESAND2
                 JMP IF3
                 SIESAND2:
-                    ;*       largest = l
-                    MOV AX, ELE
+                    ;*       largest = r
+                    MOV AX, ERE
                     MOV LARGEST, AX
 
-        ;*       largest = r
         ;*   if largest != i:
         IF3:
-        ;*       (arr[i], arr[largest]) = (arr[largest], arr[i])  # swap
-        ;*   heapify(arr, n, largest)
+            MOV AX, LARGEST
+            MOV BX, II
+            JNE NOEQUAL
+            NOEQUAL:
+                ;*(arr[i],arr[largest])=(arr[largest],arr[i])  # swap
+                MOV DI, LARGEST
+                MOV SI, II
+                mov CX, SCORES_LIST[DI]
+                mov AX, SCORES_LIST[SI]
+                mov SCORES_LIST[SI], CX
+                mov SCORES_LIST[DI], AX
+                ;*   heapify(arr, n, largest)
+                HEAPIFY NN, LARGEST
         RET
     HEAPIFY_ ENDP
 
