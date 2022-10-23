@@ -3323,12 +3323,32 @@ INCLUDE MACP2.inc
     
     HEAPSORTASC1_ PROC NEAR   ;! ASCENDENTE HEAPSORT SCORE
         ;* for i in range(n // 2 - 1, -1, -1):
-        ;* heapify(arr, n, i)
-        
+        ;*  heapify(arr, n, i)
+        MOV CX, POS_SCORE
+        DIVI CX, 2
+        RESTA RESULTADOPREVIO, 1
+        MOV CX, RESULTADOPREVIO
+        FOR1:
+            CMP CX, -2
+            JE EXITFOR1
+            
+            DEC CX
+            DEC CX
+            JMP FOR1
+        EXITFOR1:
         ;* for i in range(n - 1, 0, -1):
         ;*     (arr[i], arr[0]) = (arr[0], arr[i])  # swap
         ;*     heapify(arr, i, 0)
-        
+        MOV CX, POS_SCORE
+        DEC CX
+        FOR2:
+            CMP CX, 0
+            JE EXITFOR2
+
+            DEC CX
+            DEC CX
+            JMP FOR2
+        EXITFOR2:
         RET
     HEAPSORTASC1_ ENDP
     HEAPSORTDESC1_ PROC NEAR   ;! DESCENDENTE HEAPSORT SCORE
