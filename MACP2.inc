@@ -290,52 +290,62 @@ BUBBLESORTDESC2 MACRO
     POPA
 ENDM
 ;* /////////// QUICKSORT ////////////
-QUICKSORTASC1TEMP MACRO
+QUICKSORTASC1 MACRO
     PUSHA
-    MOV intVELODIDAD, 1000
-    ;* quickSort(data, 0, size - 1)   quickSort(array, low, high):
-    MOV lowmin, 0
-    MOV AX, POS_SCORE
-    SUB AX, 2
-    MOV highmax, AX
-    QUICKSORTASC1 lowmin, highmax
+    CALL QUICKSORTASC1_
+    
     POPA
 ENDM
-QUICKSORTASC1 MACRO  MIN, MAX; ! SCORE
-    LOCAL MAYORQUE,SALIR,,,
-    PUSHA
-    clearScreen
-    GRAPH_SORT
-    DELAY2 1000
-    MOV AX, lowmin
-    MOV BX, highmax
-    MOV lowminAUX, AX
-    MOV highmaxAUX, BX
-    CMP AX,BX       ;* p if low < high:
-    Jb MAYORQUE  ;! JB para top ten
-    JMP SALIR
-    MAYORQUE:
-        ;* partition(array, low, high)
-        partqs1ASC
-        ;* quickSort(array, low, pi - 1)
-        MOV AX, lowminAUX
-        MOV lowmin, AX
-        MOV AX, PIVOT
-        SUB AX, 2
-        MOV highmax, AX
-        QUICKSORTASC1
-        ;* quickSort(array, pi + 1, high)
-        MOV AX, highmaxAUX
-        MOV highmax, AX
-        MOV AX, PIVOT
-        ADD AX, 2
-        MOV lowmin, AX
-        QUICKSORTASC1
-    SALIR:
-        clearScreen
-        GRAPH_SORT
-    POPA
+
+partqs1ASC MACRO
+    LOCAL forJ,swap,fin1,fin
+    pusha
+    mov di, highmax
+    mov DX, SCORES_LIST[di] ;*pivot = array[high]
+    mov si, lowmin
+    dec si   ;* i = low - 1
+    dec si
+    mov bx, lowmin
+    
+    forJ:     ;*for j in range(low, high):
+        mov cx, highmax
+        dec cx
+        dec cx      ;* if array[j] <= pivot:
+        cmp bx, cx
+        jg fin
+        mov cx, SCORES_LIST[bx]
+        cmp cx, DX
+        jg fin1
+    swap:
+        inc si      ;* i = i + 1
+        inc si
+        ;*(array[i], array[j]) = (array[j], array[i])
+        mov CX, SCORES_LIST[si]
+        mov AX, SCORES_LIST[bx]
+        mov SCORES_LIST[si], AX
+        mov SCORES_LIST[bx], CX
+        ; mov PIVOTAZO, cx
+    fin1:
+        inc bx
+        inc bx
+        jmp forJ
+    fin:
+        
+    ;*(array[i + 1], array[high]) = (array[high], array[i + 1])
+        mov CX, SCORES_LIST[si + 2]
+        mov di, highmax
+        mov DX, SCORES_LIST[di]
+        mov SCORES_LIST[si + 2], DX
+        mov SCORES_LIST[di], CX
+        ; mov PIVOTAZO, cx
+        inc si
+        inc si
+        mov pivot, si
+        
+    popa    
 ENDM
+
+
 QUICKSORTDESC1 MACRO
     PUSHA
     CALL QUICKSORTDESC1_
@@ -1951,53 +1961,6 @@ clearScreen macro
     POPA
 endm
 
-
-partqs1ASC MACRO
-    LOCAL forJ,swap,fin1,fin
-    pusha
-    mov di, highmax
-    mov DX, SCORES_LIST[di] ;*pivot = array[high]
-    mov si, lowmin
-    dec si   ;* i = low - 1
-    dec si
-    mov bx, lowmin
-    
-    forJ:     ;*for j in range(low, high):
-        mov cx, highmax
-        dec cx
-        dec cx      ;* if array[j] <= pivot:
-        cmp bx, cx
-        jg fin
-        mov cx, SCORES_LIST[bx]
-        cmp cx, DX
-        jg fin1
-    swap:
-        inc si      ;* i = i + 1
-        inc si
-        ;*(array[i], array[j]) = (array[j], array[i])
-        mov CX, SCORES_LIST[si]
-        mov AX, SCORES_LIST[bx]
-        mov SCORES_LIST[si], AX
-        mov SCORES_LIST[bx], CX
-        ; mov PIVOTAZO, cx
-    fin1:
-        inc bx
-        inc bx
-        jmp forJ
-    fin:
-    ;*(array[i + 1], array[high]) = (array[high], array[i + 1])
-        mov CX, SCORES_LIST[si + 1]
-        mov di, highmax
-        mov DX, SCORES_LIST[di]
-        mov SCORES_LIST[si + 1], DX
-        mov SCORES_LIST[di], CX
-        ; mov PIVOTAZO, cx
-        inc si
-        inc si
-        mov pivot, si
-
-    popa
-ENDM
 
 
 

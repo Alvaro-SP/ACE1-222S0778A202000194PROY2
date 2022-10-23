@@ -266,7 +266,7 @@ INCLUDE MACP2.inc
         MOV SCORES_LIST[12], 6
         MOV SCORES_LIST[14], 0
         MOV POS_SCORE, 16
-        QUICKSORTASC1TEMP
+        QUICKSORTASC1
         readtext
         INICIODELJUEGO
         PRINCIPALMENULABEL:
@@ -3302,6 +3302,73 @@ INCLUDE MACP2.inc
     
     QUICKSORTASC1_ PROC NEAR   ;! ASCENDENTE QUICKSORT SCORE
         
+        ; POP highmax  ;? MAX
+        ; MOV BX, highmax
+        ; POP lowmin  ;? MIN
+        ; MOV AX, lowmin
+        ; CMP AX,BX       ;* p if low < high:
+        ; Jb MAYORQUE  ;! JB para top ten
+        ; JMP SALIR
+        ; MAYORQUE:
+            
+        ;     ;* partition(array, low, high)
+        ;     partqs1ASC
+        ;     ;* quickSort(array, low, pi - 1)
+        ;     MOV AX, PIVOT
+        ;     SUB AX, 2
+        ;     MOV highmax, AX
+        ;     PUSH lowmin
+        ;     PUSH highmax
+        ;     CALL QUICKSORTASC1_
+            
+        ;     ;* quickSort(array, pi + 1, high)
+        ;     MOV AX, PIVOT
+        ;     ADD AX, 2
+        ;     MOV lowmin, AX
+        ;     PUSH lowmin
+        ;     PUSH highmax
+        ;     CALL QUICKSORTASC1_
+            
+        ; SALIR:
+        MOV intVELODIDAD, 1000
+        mov si, sp
+        mov lowmin, 0
+        mov ax, POS_SCORE
+        sub ax, 2
+        mov highmax, ax
+        push lowmin
+        push highmax
+
+        whileZ:
+            clearScreen
+            GRAPH_SORT
+            DELAY2 1000
+            cmp sp, si
+            je fin
+            pop highmax
+            pop lowmin
+            partqs1ASC
+            mov bx, pivot
+            dec bx
+            dec bx
+            cmp bx, lowmin
+            jle fin0
+            push lowmin
+            push bx
+
+        fin0:
+            mov bx, pivot
+            inc bx
+            inc bx
+            cmp bx, highmax
+            jge fin1
+            push bx
+            push highmax
+        fin1:
+            jmp whileZ
+
+        fin:
+            
         RET
     QUICKSORTASC1_ ENDP
     QUICKSORTDESC1_ PROC NEAR   ;! DESCENDENTE QUICKSORT SCORE
