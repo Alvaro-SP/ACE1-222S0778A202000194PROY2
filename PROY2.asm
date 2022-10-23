@@ -3093,7 +3093,7 @@ INCLUDE MACP2.inc
                     MOV AX, SCORES_LIST[DI]
                     MOV BX, SCORES_LIST[DI+2]
                     CMP AX,BX
-                    JG MAYORQUE  ;! JB para top ten
+                    JB MAYORQUE  ;! JB para top ten
                     JMP JLOOP_
                     MAYORQUE:
                         MOV PIVOTAZO, DI
@@ -3125,7 +3125,57 @@ INCLUDE MACP2.inc
         RET
     BUBBLESORTDESC1_ ENDP
     BUBBLESORTASC2_ PROC NEAR   ;! ASCENDENTE BUBBLESORT TIEMPO
-        
+        MOV intVELODIDAD, 1000
+        MOV CX, POS_TIME
+        DEC CX
+        DEC CX
+        DEC CX
+        DEC CX
+        MOV SI, -2
+        MOV DI, -2
+        ILOOP:       ;* for i in range(0,len(list1)-1):
+            INC SI
+            INC SI
+            clearScreen
+            GRAPH_SORT2
+            DELAY2 500
+            JLOOP:  ;* for j in range(len(list1)-1)
+                
+                INC DI
+                INC DI
+                CONDITION:          ;*if(list1[j]>list1[j+1]):
+                    MOV AX, TIMES_LIST[DI]
+                    MOV BX, TIMES_LIST[DI+2]
+                    CMP AX,BX
+                    JA MAYORQUE  ;! JB para top ten
+                    JMP JLOOP_
+                    MAYORQUE:
+                        MOV PIVOTAZO, DI
+                        ;! SWAP DE LA LISTA
+                        MOV AX, TIMES_LIST[DI]
+                        MOV BX, TIMES_LIST[DI+2]
+                        MOV TIMES_LIST[DI], BX
+                        MOV TIMES_LIST[DI+2], AX  ;*list1[j+1] = temp
+
+                        ;! MISMOS MOVIMIENTOS PARA EL ID
+                        MOV AX, ID_LIST[DI]
+                        MOV BX, ID_LIST[DI+2]
+                        MOV ID_LIST[DI], BX
+                        MOV ID_LIST[DI+2], AX
+
+                        JMP JLOOP_
+        JLOOP_:
+            CMP DI, CX
+            JNE JLOOP
+            JE ILOOPS_
+        ILOOPS_:
+            MOV DI,-2
+            cmp SI, CX
+            JNE ILOOP
+            JE SALIR
+        SALIR:
+            clearScreen
+            GRAPH_SORT
         RET
     BUBBLESORTASC2_ ENDP
     BUBBLESORTDESC2_ PROC NEAR   ;! DESCENDENTE BUBBLESORT TIEMPO
@@ -3141,7 +3191,7 @@ INCLUDE MACP2.inc
             INC SI
             INC SI
             clearScreen
-            GRAPH_SORT
+            GRAPH_SORT2
             DELAY2 500
             JLOOP:  ;* for j in range(len(list1)-1)
                 
@@ -3151,7 +3201,7 @@ INCLUDE MACP2.inc
                     MOV AX, TIMES_LIST[DI]
                     MOV BX, TIMES_LIST[DI+2]
                     CMP AX,BX
-                    JG MAYORQUE  ;! JB para top ten
+                    JB MAYORQUE  ;! JB para top ten
                     JMP JLOOP_
                     MAYORQUE:
                         MOV PIVOTAZO, DI
@@ -3248,7 +3298,57 @@ INCLUDE MACP2.inc
     HEAPSORTDESC2_ ENDP
     
     QUICKSORTASC1_ PROC NEAR   ;! ASCENDENTE QUICKSORT SCORE
+        MOV intVELODIDAD, 1000
+        MOV CX, POS_SCORE
+        DEC CX
+        DEC CX
+        DEC CX
+        DEC CX
+        MOV SI, -2
+        MOV DI, -2
+        ILOOP:       ;* for i in range(0,len(list1)-1):
+            INC SI
+            INC SI
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
+            JLOOP:  ;* for j in range(len(list1)-1)
+                
+                INC DI
+                INC DI
+                CONDITION:          ;*if(list1[j]>list1[j+1]):
+                    MOV AX, SCORES_LIST[DI]
+                    MOV BX, SCORES_LIST[DI+2]
+                    CMP AX,BX
+                    JA MAYORQUE  ;! JB para top ten
+                    JMP JLOOP_
+                    MAYORQUE:
+                        MOV PIVOTAZO, DI
+                        ;! SWAP DE LA LISTA
+                        MOV AX, SCORES_LIST[DI]
+                        MOV BX, SCORES_LIST[DI+2]
+                        MOV SCORES_LIST[DI], BX
+                        MOV SCORES_LIST[DI+2], AX  ;*list1[j+1] = temp
 
+                        ;! MISMOS MOVIMIENTOS PARA EL ID
+                        MOV AX, ID_LIST[DI]
+                        MOV BX, ID_LIST[DI+2]
+                        MOV ID_LIST[DI], BX
+                        MOV ID_LIST[DI+2], AX
+
+                        JMP JLOOP_
+        JLOOP_:
+            CMP DI, CX
+            JNE JLOOP
+            JE ILOOPS_
+        ILOOPS_:
+            MOV DI,-2
+            cmp SI, CX
+            JNE ILOOP
+            JE SALIR
+        SALIR:
+            clearScreen
+            GRAPH_SORT
         RET
     QUICKSORTASC1_ ENDP
     QUICKSORTDESC1_ PROC NEAR   ;! DESCENDENTE QUICKSORT SCORE
