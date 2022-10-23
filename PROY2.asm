@@ -263,7 +263,7 @@ INCLUDE MACP2.inc
         MOV SCORES_LIST[12], 6
         MOV SCORES_LIST[14], 0
         MOV POS_SCORE, 16
-        GRAPH_SORT
+        BUBBLESORTASC1
         readtext
         INICIODELJUEGO
         PRINCIPALMENULABEL:
@@ -3017,7 +3017,7 @@ INCLUDE MACP2.inc
     OPTIONS_QUICKSORT_ ENDP
 
     BUBBLESORTASC1_ PROC NEAR ;! ASCENDENTE BUBBLESORT SCORE
-
+        MOV intVELODIDAD, 1000
         MOV CX, POS_SCORE
         DEC CX
         DEC CX
@@ -3030,7 +3030,7 @@ INCLUDE MACP2.inc
             INC SI
             clearScreen
             GRAPH_SORT
-            DELAY2 intVELODIDAD
+            DELAY2 500
             JLOOP:  ;* for j in range(len(list1)-1)
                 
                 INC DI
@@ -3039,7 +3039,7 @@ INCLUDE MACP2.inc
                     MOV AX, SCORES_LIST[DI]
                     MOV BX, SCORES_LIST[DI+2]
                     CMP AX,BX
-                    Ja MAYORQUE  ;! JB para top ten
+                    JB MAYORQUE  ;! JB para top ten
                     JMP JLOOP_
                     MAYORQUE:
                         MOV PIVOTAZO, DI
@@ -3198,11 +3198,12 @@ INCLUDE MACP2.inc
             MOV DX, DI
             poscursor  dl, 95
             print Stringpuntos
-            CMP DI, PIVOTAZO
+            CMP SI, PIVOTAZO
             JE A
             JNE B
                 A:
-                    poscursor  dl, 98
+                    MOV DX, DI
+                    poscursor  dl, 97
                     print FLECHA
             B:
             INC SI
