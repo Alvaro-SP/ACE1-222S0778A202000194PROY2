@@ -292,8 +292,7 @@ ENDM
 ;* /////////// QUICKSORT ////////////
 QUICKSORTASC1 MACRO
     PUSHA
-    CALL QUICKSORTASC1_
-    
+    CALL QUICKSORTASC1_    
     POPA
 ENDM
 
