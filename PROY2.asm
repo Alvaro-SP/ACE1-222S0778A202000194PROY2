@@ -3039,7 +3039,7 @@ INCLUDE MACP2.inc
                     MOV AX, SCORES_LIST[DI]
                     MOV BX, SCORES_LIST[DI+2]
                     CMP AX,BX
-                    JB MAYORQUE  ;! JB para top ten
+                    JA MAYORQUE  ;! JB para top ten
                     JMP JLOOP_
                     MAYORQUE:
                         MOV PIVOTAZO, DI
@@ -3071,7 +3071,57 @@ INCLUDE MACP2.inc
         RET
     BUBBLESORTASC1_ ENDP
     BUBBLESORTDESC1_ PROC NEAR   ;! DESCENDENTE BUBBLESORT SCORE
+        MOV intVELODIDAD, 1000
+        MOV CX, POS_SCORE
+        DEC CX
+        DEC CX
+        DEC CX
+        DEC CX
+        MOV SI, -2
+        MOV DI, -2
+        ILOOP:       ;* for i in range(0,len(list1)-1):
+            INC SI
+            INC SI
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
+            JLOOP:  ;* for j in range(len(list1)-1)
+                
+                INC DI
+                INC DI
+                CONDITION:          ;*if(list1[j]>list1[j+1]):
+                    MOV AX, SCORES_LIST[DI]
+                    MOV BX, SCORES_LIST[DI+2]
+                    CMP AX,BX
+                    JG MAYORQUE  ;! JB para top ten
+                    JMP JLOOP_
+                    MAYORQUE:
+                        MOV PIVOTAZO, DI
+                        ;! SWAP DE LA LISTA
+                        MOV AX, SCORES_LIST[DI]
+                        MOV BX, SCORES_LIST[DI+2]
+                        MOV SCORES_LIST[DI], BX
+                        MOV SCORES_LIST[DI+2], AX  ;*list1[j+1] = temp
 
+                        ;! MISMOS MOVIMIENTOS PARA EL ID
+                        MOV AX, ID_LIST[DI]
+                        MOV BX, ID_LIST[DI+2]
+                        MOV ID_LIST[DI], BX
+                        MOV ID_LIST[DI+2], AX
+
+                        JMP JLOOP_
+        JLOOP_:
+            CMP DI, CX
+            JNE JLOOP
+            JE ILOOPS_
+        ILOOPS_:
+            MOV DI,-2
+            cmp SI, CX
+            JNE ILOOP
+            JE SALIR
+        SALIR:
+            clearScreen
+            GRAPH_SORT
         RET
     BUBBLESORTDESC1_ ENDP
     BUBBLESORTASC2_ PROC NEAR   ;! ASCENDENTE BUBBLESORT TIEMPO
@@ -3079,7 +3129,57 @@ INCLUDE MACP2.inc
         RET
     BUBBLESORTASC2_ ENDP
     BUBBLESORTDESC2_ PROC NEAR   ;! DESCENDENTE BUBBLESORT TIEMPO
+        MOV intVELODIDAD, 1000
+        MOV CX, POS_TIME
+        DEC CX
+        DEC CX
+        DEC CX
+        DEC CX
+        MOV SI, -2
+        MOV DI, -2
+        ILOOP:       ;* for i in range(0,len(list1)-1):
+            INC SI
+            INC SI
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
+            JLOOP:  ;* for j in range(len(list1)-1)
+                
+                INC DI
+                INC DI
+                CONDITION:          ;*if(list1[j]>list1[j+1]):
+                    MOV AX, TIMES_LIST[DI]
+                    MOV BX, TIMES_LIST[DI+2]
+                    CMP AX,BX
+                    JG MAYORQUE  ;! JB para top ten
+                    JMP JLOOP_
+                    MAYORQUE:
+                        MOV PIVOTAZO, DI
+                        ;! SWAP DE LA LISTA
+                        MOV AX, TIMES_LIST[DI]
+                        MOV BX, TIMES_LIST[DI+2]
+                        MOV TIMES_LIST[DI], BX
+                        MOV TIMES_LIST[DI+2], AX  ;*list1[j+1] = temp
 
+                        ;! MISMOS MOVIMIENTOS PARA EL ID
+                        MOV AX, ID_LIST[DI]
+                        MOV BX, ID_LIST[DI+2]
+                        MOV ID_LIST[DI], BX
+                        MOV ID_LIST[DI+2], AX
+
+                        JMP JLOOP_
+        JLOOP_:
+            CMP DI, CX
+            JNE JLOOP
+            JE ILOOPS_
+        ILOOPS_:
+            MOV DI,-2
+            cmp SI, CX
+            JNE ILOOP
+            JE SALIR
+        SALIR:
+            clearScreen
+            GRAPH_SORT
         RET
     BUBBLESORTDESC2_ ENDP
     
@@ -3212,6 +3312,54 @@ INCLUDE MACP2.inc
         salir:
         RET
     GRAPH_SORT_ ENDP
+    GRAPH_SORT2_ PROC NEAR
+        XOR SI, SI
+        MOV DI, -1
+        xor cx, cx
+        xor BX, BX
+        whileZ:
+            CMP POS_TIME, SI
+            JE salir
+            MOV BX, TIMES_LIST[SI]
+            MULTI BX, 3
+            MOV BX, RESULTADOPREVIO
+            RESTA 750, BX
+            MOV BX, RESULTADOPREVIO
+            MOV Xaux1, BX
+
+            mov Xaux2, 750
+            
+            MOV BX, SI
+            INC BX
+            MULTI BX, 24
+            MOV BX, RESULTADOPREVIO
+            MOV Yaux1, BX
+
+            ADD BX, 25
+            MOV Yaux2, BX
+            DRAW_RECTANGLE Xaux1,Yaux1,Xaux2,Yaux2, LIGHT_GREEN
+
+            MOV BX, TIMES_LIST[SI]
+            MOV RESULTADOPREVIO, BX
+            toString RESULTADOPREVIO, Stringpuntos
+            ADD DI, 3
+            MOV DX, DI
+            poscursor  dl, 95
+            print Stringpuntos
+            CMP SI, PIVOTAZO
+            JE A
+            JNE B
+                A:
+                    MOV DX, DI
+                    poscursor  dl, 97
+                    print FLECHA
+            B:
+            INC SI
+            INC SI
+            JMP whileZ
+        salir:
+        RET
+    GRAPH_SORT2_ ENDP
     ;!  █▀█ █▀▀ █▀█ █▀█ █▀█ ▀█▀ █▀
     ;!  █▀▄ ██▄ █▀▀ █▄█ █▀▄ ░█░ ▄█☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻ GENERACION DE REPORTES
     ;! TOP TEN
