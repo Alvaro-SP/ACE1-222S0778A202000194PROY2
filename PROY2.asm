@@ -261,7 +261,7 @@ INCLUDE MACP2.inc
         MOV SCORES_LIST[12], 6
         MOV SCORES_LIST[14], 0
         MOV POS_SCORE, 16
-        GRAPH_SORT
+        BUBBLESORTASC1
         readtext
         INICIODELJUEGO
         PRINCIPALMENULABEL:
@@ -2491,16 +2491,7 @@ INCLUDE MACP2.inc
         RET
     menu_     ENDP
     ;?☻ ===================== METODO IMPRIMIR ======================= ☻
-    ; PAINTTEXT_    PROC NEAR
-    ;     MOV AX,1301H
-    ;     MOV BX,BP
-    ;     MOV CL,[BX]
-    ;     MOV CH,00H
-    ;     ADD BP,1H
-    ;     MOV BX,SI
-    ;     INT 10H
-    ;     RET
-    ; PAINTTEXT_    ENDP
+    
     PAINTTEXT_    PROC NEAR
         RET
     PAINTTEXT_    ENDP
@@ -3033,7 +3024,11 @@ INCLUDE MACP2.inc
         ILOOP:       ;* for i in range(0,len(list1)-1):
             INC SI
             INC SI
+            paint  0, 0, 800, 600, BLACK
+            GRAPH_SORT
+            DELAY 500
             JLOOP:  ;* for j in range(len(list1)-1)
+                
                 INC DI
                 INC DI
                 CONDITION:          ;*if(list1[j]>list1[j+1]):
@@ -3188,7 +3183,6 @@ INCLUDE MACP2.inc
             ADD BX, 25
             MOV Yaux2, BX
             DRAW_RECTANGLE Xaux1,Yaux1,Xaux2,Yaux2, YELLOW
-            
 
             MOV BX, SCORES_LIST[SI]
             MOV RESULTADOPREVIO, BX
