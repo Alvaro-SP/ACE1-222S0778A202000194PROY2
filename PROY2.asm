@@ -211,7 +211,7 @@ INCLUDE MACP2.inc
         auxpY2               DW -1
         auxpY3               DW -1
         auxpY4               DW -1
-
+        pivot                DW 0
         BANDERATIESO        DW 0
         POSTOSET            DW 0
         POSXHANDLE          DW 0  ;* POSICION HORIZONTAL DE LA PIEZA
@@ -223,7 +223,10 @@ INCLUDE MACP2.inc
         TEMPAUXI        DW 0
         NUMIZQ          dw 00h  ;! numero izquierdo ya parseado
         NUMDER          dw 00h  ;! numero derecho ya parseado
-        
+        lowmin          dw 0
+        highmax         dw 0
+        lowminAUX         dw 0
+        highmaxAUX         dw 0
         ;? --------------------------   COLORES   --------------------------
         GREEN               EQU  02H
         BLUE                EQU  01H
@@ -263,7 +266,7 @@ INCLUDE MACP2.inc
         MOV SCORES_LIST[12], 6
         MOV SCORES_LIST[14], 0
         MOV POS_SCORE, 16
-        BUBBLESORTASC1
+        QUICKSORTASC1TEMP
         readtext
         INICIODELJUEGO
         PRINCIPALMENULABEL:
@@ -3298,54 +3301,75 @@ INCLUDE MACP2.inc
     HEAPSORTDESC2_ ENDP
     
     QUICKSORTASC1_ PROC NEAR   ;! ASCENDENTE QUICKSORT SCORE
-        MOV intVELODIDAD, 1000
-        MOV CX, POS_SCORE
-        DEC CX
-        DEC CX
-        DEC CX
-        DEC CX
-        MOV SI, -2
-        MOV DI, -2
-        ILOOP:       ;* for i in range(0,len(list1)-1):
-            INC SI
-            INC SI
-            clearScreen
-            GRAPH_SORT
-            DELAY2 500
-            JLOOP:  ;* for j in range(len(list1)-1)
+        clearScreen
+        GRAPH_SORT
+        DELAY2 1000
+        MOV AX, lowmin
+        MOV BX, highmax
+        MOV lowminAUX, AX
+        MOV highmaxAUX, BX
+        CMP AX,BX       ;* p if low < high:
+        JB MAYORQUE  ;! JB para top ten
+        JMP SALIR
+        MAYORQUE:
+            ;* partition(array, low, high)
+            pusha
+
+            mov di, highmax
+            mov DX, SCORES_LIST[di] ;*pivot = array[high]
+            mov si, lowmin
+            dec si   ;* i = low - 1
+            dec si
+            mov bx, lowmin
+            mov cx, highmax
+            forJ:     ;*for j in range(low, high):
                 
-                INC DI
-                INC DI
-                CONDITION:          ;*if(list1[j]>list1[j+1]):
-                    MOV AX, SCORES_LIST[DI]
-                    MOV BX, SCORES_LIST[DI+2]
-                    CMP AX,BX
-                    JA MAYORQUE  ;! JB para top ten
-                    JMP JLOOP_
-                    MAYORQUE:
-                        MOV PIVOTAZO, DI
-                        ;! SWAP DE LA LISTA
-                        MOV AX, SCORES_LIST[DI]
-                        MOV BX, SCORES_LIST[DI+2]
-                        MOV SCORES_LIST[DI], BX
-                        MOV SCORES_LIST[DI+2], AX  ;*list1[j+1] = temp
+                dec cx
+                dec cx      ;* if array[j] <= pivot:
+                cmp bx, cx
+                jg fin
+                mov cx, SCORES_LIST[bx]
+                cmp cx, DX
+                jg fin1
+            swap:
+                inc si      ;* i = i + 1
+                inc si
+                xor cx, cx
+                mov CX, SCORES_LIST[si]     ;*(array[i], array[j]) = (array[j], array[i])
+                mov AX, SCORES_LIST[bx]
+                mov SCORES_LIST[si], AX
+                mov SCORES_LIST[bx], CX
+                ; mov PIVOTAZO, cx
+            fin1:
+                inc bx
+                inc bx
+                jmp forJ
+            fin:
+                mov CX, SCORES_LIST[si + 1]
+                mov di, highmax
+                mov DX, SCORES_LIST[di]
+                mov SCORES_LIST[si + 1], DX
+                mov SCORES_LIST[di], CX
+                ; mov PIVOTAZO, cx
+                inc si
+                inc si
+                mov pivot, si
 
-                        ;! MISMOS MOVIMIENTOS PARA EL ID
-                        MOV AX, ID_LIST[DI]
-                        MOV BX, ID_LIST[DI+2]
-                        MOV ID_LIST[DI], BX
-                        MOV ID_LIST[DI+2], AX
-
-                        JMP JLOOP_
-        JLOOP_:
-            CMP DI, CX
-            JNE JLOOP
-            JE ILOOPS_
-        ILOOPS_:
-            MOV DI,-2
-            cmp SI, CX
-            JNE ILOOP
-            JE SALIR
+            popa
+            ;* quickSort(array, low, pi - 1)
+            MOV AX, lowminAUX
+            MOV lowmin, AX
+            MOV AX, PIVOT
+            SUB AX, 2
+            MOV highmax, AX
+            QUICKSORTASC1
+            ;* quickSort(array, pi + 1, high)
+            MOV AX, highmaxAUX
+            MOV highmax, AX
+            MOV AX, PIVOT
+            ADD AX, 2
+            MOV lowmin, AX
+            QUICKSORTASC1
         SALIR:
             clearScreen
             GRAPH_SORT

@@ -290,6 +290,22 @@ BUBBLESORTDESC2 MACRO
     POPA
 ENDM
 ;* /////////// QUICKSORT ////////////
+QUICKSORTASC1TEMP MACRO
+    PUSHA
+    MOV intVELODIDAD, 1000
+    ;* quickSort(data, 0, size - 1)   quickSort(array, low, high):
+    MOV lowmin, 0
+    MOV ax, POS_SCORE
+    DEC AX
+    DEC AX
+    DEC AX
+    DEC AX
+    DEC AX
+    DEC AX
+    MOV highmax, AX
+    CALL QUICKSORTASC1_
+    POPA
+ENDM
 QUICKSORTASC1 MACRO ; ! SCORE
     PUSHA
     CALL QUICKSORTASC1_
