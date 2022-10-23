@@ -2881,6 +2881,8 @@ INCLUDE MACP2.inc
         getStr strVELOCIDAD
         toNumber strVELOCIDAD ;TEMP4
         MOV SI, TEMP4
+        MULTI SI, 500
+        MOV SI, RESULTADOPREVIO
         MOV intVELODIDAD, si
 
         CMP strSENTIDO, '1'; 1 = ASC
@@ -3024,11 +3026,9 @@ INCLUDE MACP2.inc
         ILOOP:       ;* for i in range(0,len(list1)-1):
             INC SI
             INC SI
-            MOV AX,4F02H           ;SETEAMOS EL MODO VIDEO INT 10   800*600
-        MOV BX,103H
-        INT 10H
+            clearScreen
             GRAPH_SORT
-            DELAY 500
+            DELAY2 2000
             JLOOP:  ;* for j in range(len(list1)-1)
                 
                 INC DI
@@ -3063,6 +3063,8 @@ INCLUDE MACP2.inc
             JNE ILOOP
             JE SALIR
         SALIR:
+            clearScreen
+            GRAPH_SORT
         RET
     BUBBLESORTASC1_ ENDP
     BUBBLESORTDESC1_ PROC NEAR   ;! DESCENDENTE BUBBLESORT SCORE

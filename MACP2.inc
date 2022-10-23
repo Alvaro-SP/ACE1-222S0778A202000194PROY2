@@ -407,6 +407,23 @@ delay MACRO fuera
     tres:
     POPA
 ENDM delay
+delay2 MACRO fuera
+    LOCAL uno,dos,tres
+    PUSHA
+    MOV SI, fuera
+    dos:
+    
+        DEC SI
+        JZ tres
+        MOV DI, fuera
+    uno:
+        
+        DEC DI
+        JNZ uno
+        JMP dos
+    tres:
+    POPA
+ENDM delay2
 
 DRAW_RECTANGLE	MACRO	CORNER1X, CORNER1Y, CORNER2X, CORNER2Y, COLOR
 	PUSHA
@@ -1880,6 +1897,13 @@ PRINTX MACRO N
     print RESULTADOPRINT
     POPA
 ENDM
+clearScreen macro
+    PUSHA
+    MOV AX,4F02H           ;SETEAMOS EL MODO VIDEO INT 10   800*600
+    MOV BX,103H
+    INT 10H
+    POPA
+endm
 
 
 
