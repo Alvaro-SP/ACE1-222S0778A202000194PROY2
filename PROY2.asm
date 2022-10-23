@@ -3301,78 +3301,7 @@ INCLUDE MACP2.inc
     HEAPSORTDESC2_ ENDP
     
     QUICKSORTASC1_ PROC NEAR   ;! ASCENDENTE QUICKSORT SCORE
-        clearScreen
-        GRAPH_SORT
-        DELAY2 1000
-        MOV AX, lowmin
-        MOV BX, highmax
-        MOV lowminAUX, AX
-        MOV highmaxAUX, BX
-        CMP AX,BX       ;* p if low < high:
-        JB MAYORQUE  ;! JB para top ten
-        JMP SALIR
-        MAYORQUE:
-            ;* partition(array, low, high)
-            pusha
-
-            mov di, highmax
-            mov DX, SCORES_LIST[di] ;*pivot = array[high]
-            mov si, lowmin
-            dec si   ;* i = low - 1
-            dec si
-            mov bx, lowmin
-            mov cx, highmax
-            forJ:     ;*for j in range(low, high):
-                
-                dec cx
-                dec cx      ;* if array[j] <= pivot:
-                cmp bx, cx
-                jg fin
-                mov cx, SCORES_LIST[bx]
-                cmp cx, DX
-                jg fin1
-            swap:
-                inc si      ;* i = i + 1
-                inc si
-                xor cx, cx
-                mov CX, SCORES_LIST[si]     ;*(array[i], array[j]) = (array[j], array[i])
-                mov AX, SCORES_LIST[bx]
-                mov SCORES_LIST[si], AX
-                mov SCORES_LIST[bx], CX
-                ; mov PIVOTAZO, cx
-            fin1:
-                inc bx
-                inc bx
-                jmp forJ
-            fin:
-                mov CX, SCORES_LIST[si + 1]
-                mov di, highmax
-                mov DX, SCORES_LIST[di]
-                mov SCORES_LIST[si + 1], DX
-                mov SCORES_LIST[di], CX
-                ; mov PIVOTAZO, cx
-                inc si
-                inc si
-                mov pivot, si
-
-            popa
-            ;* quickSort(array, low, pi - 1)
-            MOV AX, lowminAUX
-            MOV lowmin, AX
-            MOV AX, PIVOT
-            SUB AX, 2
-            MOV highmax, AX
-            QUICKSORTASC1
-            ;* quickSort(array, pi + 1, high)
-            MOV AX, highmaxAUX
-            MOV highmax, AX
-            MOV AX, PIVOT
-            ADD AX, 2
-            MOV lowmin, AX
-            QUICKSORTASC1
-        SALIR:
-            clearScreen
-            GRAPH_SORT
+        
         RET
     QUICKSORTASC1_ ENDP
     QUICKSORTDESC1_ PROC NEAR   ;! DESCENDENTE QUICKSORT SCORE
