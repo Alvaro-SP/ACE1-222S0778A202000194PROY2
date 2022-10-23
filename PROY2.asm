@@ -134,6 +134,7 @@ INCLUDE MACP2.inc
         TEMP2             DW 0
         TEMP3             DW 0
         TEMP4             DW 0
+        PIVOTAZO             DW 0
         TEMPDB            Db "0$"
         dospuntos         Db ":$"
         TEMPDB2           DB  4 dup ('$')
@@ -151,6 +152,7 @@ INCLUDE MACP2.inc
         titlehs          DB '-*-*-*-*-*-*-*-*-*-* HEAP SORT -*-*-*-*-*-*-*-*-*-* ', "$"
         strSENTIDO         DB      "0$"
         strMETRICA         DB      "T$"
+        FLECHA         DB      "<-$"
         strVELOCIDAD       DB      4 dup ('$')
         intVELODIDAD        DW      0
 
@@ -261,7 +263,7 @@ INCLUDE MACP2.inc
         MOV SCORES_LIST[12], 6
         MOV SCORES_LIST[14], 0
         MOV POS_SCORE, 16
-        BUBBLESORTASC1
+        GRAPH_SORT
         readtext
         INICIODELJUEGO
         PRINCIPALMENULABEL:
@@ -3028,7 +3030,7 @@ INCLUDE MACP2.inc
             INC SI
             clearScreen
             GRAPH_SORT
-            DELAY2 2000
+            DELAY2 intVELODIDAD
             JLOOP:  ;* for j in range(len(list1)-1)
                 
                 INC DI
@@ -3040,6 +3042,7 @@ INCLUDE MACP2.inc
                     Ja MAYORQUE  ;! JB para top ten
                     JMP JLOOP_
                     MAYORQUE:
+                        MOV PIVOTAZO, DI
                         ;! SWAP DE LA LISTA
                         MOV AX, SCORES_LIST[DI]
                         MOV BX, SCORES_LIST[DI+2]
@@ -3195,6 +3198,13 @@ INCLUDE MACP2.inc
             MOV DX, DI
             poscursor  dl, 95
             print Stringpuntos
+            CMP DI, PIVOTAZO
+            JE A
+            JNE B
+                A:
+                    poscursor  dl, 98
+                    print FLECHA
+            B:
             INC SI
             INC SI
             JMP whileZ
