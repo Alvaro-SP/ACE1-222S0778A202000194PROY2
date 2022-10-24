@@ -3350,7 +3350,7 @@ INCLUDE MACP2.inc
             MOV BX, SCORES_LIST[SI]
             MOV SCORES_LIST[0],BX
             MOV SCORES_LIST[SI], AX
-            HEAPIFY
+            HEAPIFY 0, SI
 
             ; ;*  # swap value of first indexed with last indexed
             ; mov CX, SCORES_LIST[DI];*  arr[0], arr[i] = arr[i], arr[0]
@@ -3440,7 +3440,22 @@ INCLUDE MACP2.inc
         RET
     BULIDMAXHEAP ENDP
     HEAPIFY_ PROC NEAR ; * SOLO PASO N
-        MOV DI, 2
+        MOV DI, 0
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ;* for i in range(2,n,2):
         FOR1:
             clearScreen
