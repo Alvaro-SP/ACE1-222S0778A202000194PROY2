@@ -157,6 +157,8 @@ INCLUDE MACP2.inc
         intVELODIDAD        DW      0
         NN        DW      0
         JOTA        DW      0
+        JOTA2        DW      0
+        JOTA3        DW      0
         II        DW      0
         ELE        DW      0
         ERE        DW      0
@@ -185,6 +187,8 @@ INCLUDE MACP2.inc
         POS_SCORE           DW 0
         
         INDEXX              Dw ?
+        INDEXX2              Dw ?
+        INDEXX3              Dw ?
         INDEX               Dw ?
         INDEXtemp           Dw ?
 
@@ -267,7 +271,7 @@ INCLUDE MACP2.inc
         MOV SCORES_LIST[0], 10
         MOV SCORES_LIST[2], 20
         MOV SCORES_LIST[4], 5
-        MOV SCORES_LIST[6], 3
+        MOV SCORES_LIST[6], 16
         MOV SCORES_LIST[8], 2
         MOV SCORES_LIST[10], 7
         MOV SCORES_LIST[12], 6
@@ -3327,91 +3331,101 @@ INCLUDE MACP2.inc
 
         RET
     QUICKSORTDESC2_ ENDP
-    ; TRYING ONE
+    ; TRYING THREE
     HEAPSORTASC1_ PROC NEAR
-        HEAPIFY
-        MOV DI, POS_SCORE
-        SUB DI, 2
+        MOV AX, 0
+        MOV DI, 2
+        BULIDMAXHEAP
+        
         FOR1: ;*  for i in range(n - 2, 0, -2):
             clearScreen
             GRAPH_SORT
             DELAY2 500
-            CMP DI,0
+            CMP DI,POS_SCORE
             JE SALIRFOR
-            ;*  # swap value of first indexed with last indexed
-            mov CX, SCORES_LIST[DI];*  arr[0], arr[i] = arr[i], arr[0]
             mov AX, SCORES_LIST[0]
-            mov SCORES_LIST[0], CX
-            mov SCORES_LIST[DI], AX
-            ;*  # maintaining heap property after each swapping
-            ;*  j, index = 0, 0
-            MOV INDEXX, 0
-            MOV JOTA, 0
-            ;*  while True:
-            WHILETRUE:
-                ;*      index = 2 * j + 2
-                MULTI JOTA, 2
-                INC RESULTADOPREVIO
-                INC RESULTADOPREVIO
-                MOV AX, RESULTADOPREVIO
-                MOV INDEXX, AX
-                ;*      # if left child is smaller than
-                ;*      # right child point index variable to right child
-                ;*      if (index < (i - 2) and arr[index] < arr[index +2]):
-                MOV AX, INDEX
-                MOV BX, DI
-                DEC BX
-                DEC BX
-                CMP AX, BX
-                JB ANDJB
-                JMP IF22
-                ANDJB:
-                    MOV SI, INDEXX
-                    MOV AX, SCORES_LIST[SI]
-                    INC SI
-                    INC SI
-                    MOV BX, SCORES_LIST[SI]
-                    CMP AX, BX
-                    JB SIESAND1
-                    JMP IF22
-                    SIESAND1:
-                        ;*          index += 2
-                        INC INDEXX
-                        INC INDEXX
-                ;*# if parent is smaller than child then swapping parent with child having higher value
-                IF22:    ;* if index < i and arr[j] < arr[index]:
-                    MOV AX, INDEXX
-                    MOV BX, DI
-                    CMP AX, BX
-                    JB ANDJB2
-                    JMP IF3
-                    ANDJB2:
-                        MOV SI, JOTA
-                        MOV AX, SCORES_LIST[SI]
-                        MOV SI, INDEXX
-                        MOV BX, SCORES_LIST[SI]
-                        CMP AX, BX
-                        JB SIESAND2
-                        JMP IF3
-                        SIESAND2:
-                            MOV BX, INDEXX
-                            mov CX, SCORES_LIST[BX] ;* arr[j], arr[index] = arr[index], arr[j]
-                            MOV BX, JOTA
-                            mov AX, SCORES_LIST[BX]
-                            MOV BX, JOTA
-                            mov SCORES_LIST[BX], CX
-                            MOV BX, INDEXX
-                            mov SCORES_LIST[BX], AX
-                IF3:
-                ;*      j = index
-                MOV CX, INDEXX
-                MOV JOTA, CX
-                ;*      if index >= i:
-                MOV AX, INDEXX
-                CMP AX, DI
-                JA SALLLL   ;* BREAK
-                JMP WHILETRUE
-                SALLLL:
+            MOV SI, POS_SCORE
+            DEC SI
+            DEC SI
+            MOV BX, SCORES_LIST[SI]
+            MOV SCORES_LIST[0],BX
+            MOV SCORES_LIST[SI], AX
+            HEAPIFY
+
+            ; ;*  # swap value of first indexed with last indexed
+            ; mov CX, SCORES_LIST[DI];*  arr[0], arr[i] = arr[i], arr[0]
+            ; mov AX, SCORES_LIST[0]
+            ; mov SCORES_LIST[0], CX
+            ; mov SCORES_LIST[DI], AX
+            ; ;*  # maintaining heap property after each swapping
+            ; ;*  j, index = 0, 0
+            ; MOV INDEXX, 0
+            ; MOV JOTA, 0
+            ; ;*  while True:
+            ; WHILETRUE:
+            ;     ;*      index = 2 * j + 2
+            ;     MULTI JOTA, 2
+            ;     INC RESULTADOPREVIO
+            ;     INC RESULTADOPREVIO
+            ;     MOV AX, RESULTADOPREVIO
+            ;     MOV INDEXX, AX
+            ;     ;*      # if left child is smaller than
+            ;     ;*      # right child point index variable to right child
+            ;     ;*      if (index < (i - 2) and arr[index] < arr[index +2]):
+            ;     MOV AX, INDEX
+            ;     MOV BX, DI
+            ;     DEC BX
+            ;     DEC BX
+            ;     CMP AX, BX
+            ;     JB ANDJB
+            ;     JMP IF22
+            ;     ANDJB:
+            ;         MOV SI, INDEXX
+            ;         MOV AX, SCORES_LIST[SI]
+            ;         INC SI
+            ;         INC SI
+            ;         MOV BX, SCORES_LIST[SI]
+            ;         CMP AX, BX
+            ;         JB SIESAND1
+            ;         JMP IF22
+            ;         SIESAND1:
+            ;             ;*          index += 2
+            ;             INC INDEXX
+            ;             INC INDEXX
+            ;     ;*# if parent is smaller than child then swapping parent with child having higher value
+            ;     IF22:    ;* if index < i and arr[j] < arr[index]:
+            ;         MOV AX, INDEXX
+            ;         MOV BX, DI
+            ;         CMP AX, BX
+            ;         JB ANDJB2
+            ;         JMP IF3
+            ;         ANDJB2:
+            ;             MOV SI, JOTA
+            ;             MOV AX, SCORES_LIST[SI]
+            ;             MOV SI, INDEXX
+            ;             MOV BX, SCORES_LIST[SI]
+            ;             CMP AX, BX
+            ;             JB SIESAND2
+            ;             JMP IF3
+            ;             SIESAND2:
+            ;                 MOV BX, INDEXX
+            ;                 mov CX, SCORES_LIST[BX] ;* arr[j], arr[index] = arr[index], arr[j]
+            ;                 MOV BX, JOTA
+            ;                 mov AX, SCORES_LIST[BX]
+            ;                 MOV BX, JOTA
+            ;                 mov SCORES_LIST[BX], CX
+            ;                 MOV BX, INDEXX
+            ;                 mov SCORES_LIST[BX], AX
+            ;     IF3:
+            ;     ;*      j = index
+            ;     MOV CX, INDEXX
+            ;     MOV JOTA, CX
+            ;     ;*      if index >= i:
+            ;     MOV AX, INDEXX
+            ;     CMP AX, DI
+            ;     JA SALLLL   ;* BREAK
+            ;     JMP WHILETRUE
+            ;     SALLLL:
 
             DEC DI
             DEC DI
@@ -3422,20 +3436,23 @@ INCLUDE MACP2.inc
             DELAY2 500
         RET
     HEAPSORTASC1_ ENDP
+    BULIDMAXHEAP_ PROC NEAR
+        RET
+    BULIDMAXHEAP ENDP
     HEAPIFY_ PROC NEAR ; * SOLO PASO N
         MOV DI, 2
-        ;* for i in range(0,n,2):
+        ;* for i in range(2,n,2):
         FOR1:
             clearScreen
             GRAPH_SORT
             DELAY2 500
-            CMP DI, 16
+            CMP DI, POS_SCORE
             JE SALIRFOR
             ;* if arr[i] > arr[int((i - 1) / 2)*2]:
             MOV SI, DI
             MOV AX, SCORES_LIST[SI]
             MOV SI, DI
-            DEC SI
+            ; DEC SI
             DEC SI
             DIVI SI,2
             MULTI RESULTADOPREVIO,2
@@ -3452,7 +3469,7 @@ INCLUDE MACP2.inc
                     MOV SI, JOTA
                     MOV AX, SCORES_LIST[SI]
                     DEC SI
-                    DEC SI
+                    ; DEC SI
                     DIVI SI,2
                     MULTI RESULTADOPREVIO,2
                     MOV SI, RESULTADOPREVIO
@@ -3463,7 +3480,7 @@ INCLUDE MACP2.inc
                     SIGOWHILE:
                         ;*(arr[j],arr[int((j - 1) / 2)*2]) = (arr[int((j - 1) / 2)*2],arr[j])
                         mov SI, JOTA
-                        DEC SI
+                        ; DEC SI
                         DEC SI
                         DIVI SI, 2
                         MULTI RESULTADOPREVIO,2
@@ -3476,7 +3493,7 @@ INCLUDE MACP2.inc
                         MOV SI, JOTA
                         MOV SCORES_LIST[SI], AX
                         mov SI, JOTA
-                        DEC SI
+                        ; DEC SI
                         DEC SI
                         DIVI SI, 2
                         MULTI RESULTADOPREVIO,2
@@ -3485,7 +3502,7 @@ INCLUDE MACP2.inc
 
                         ;* j = int((j - 1) / 2) *2
                         mov SI, JOTA
-                        DEC SI
+                        ; DEC SI
                         DEC SI
                         DIVI SI, 2
                         MULTI RESULTADOPREVIO,2
@@ -3738,6 +3755,7 @@ INCLUDE MACP2.inc
         salir:
         RET
     GRAPH_SORT2_ ENDP
+    
     ;!  █▀█ █▀▀ █▀█ █▀█ █▀█ ▀█▀ █▀
     ;!  █▀▄ ██▄ █▀▀ █▄█ █▀▄ ░█░ ▄█☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻ GENERACION DE REPORTES
     ;! TOP TEN
