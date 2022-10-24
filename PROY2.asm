@@ -3333,7 +3333,8 @@ INCLUDE MACP2.inc
         MOV DI, POS_SCORE
         SUB DI, 2
         FOR1: ;*  for i in range(n - 2, 0, -2):
-            CMP DI, -2
+            
+            CMP DI,-2
             JE SALIRFOR
             ;*  # swap value of first indexed with last indexed
             mov CX, SCORES_LIST[DI];*  arr[0], arr[i] = arr[i], arr[0]
@@ -3346,43 +3347,47 @@ INCLUDE MACP2.inc
             MOV JOTA, 0
             ;*  while True:
             WHILETRUE:
-                ;*      index = 2 * j + 1
+                ;*      index = 2 * j + 2
                 MULTI JOTA, 2
+                INC RESULTADOPREVIO
                 INC RESULTADOPREVIO
                 MOV AX, RESULTADOPREVIO
                 MOV INDEXX, AX
                 ;*      # if left child is smaller than
                 ;*      # right child point index variable to right child
-                ;*      if (index < (i - 1) and arr[index] < arr[index + 1]):
+                ;*      if (index < (i - 2) and arr[index] < arr[index +2]):
                 MOV AX, INDEX
                 MOV BX, DI
                 DEC BX
+                DEC BX
                 CMP AX, BX
                 JB ANDJB
-                JMP IF2
+                JMP IF22
                 ANDJB:
-                    MOV CX, INDEXX
-                    MOV AX, SCORES_LIST[CX]
-                    INC CX
-                    MOV BX, SCORES_LIST[CX]
+                    MOV SI, INDEXX
+                    MOV AX, SCORES_LIST[SI]
+                    INC SI
+                    INC SI
+                    MOV BX, SCORES_LIST[SI]
                     CMP AX, BX
                     JB SIESAND1
-                    JMP IF2
+                    JMP IF22
                     SIESAND1:
-                        ;*          index += 1
+                        ;*          index += 2
+                        INC INDEXX
                         INC INDEXX
                 ;*# if parent is smaller than child then swapping parent with child having higher value
-                IF2:    ;* if index < i and arr[j] < arr[index]:
+                IF22:    ;* if index < i and arr[j] < arr[index]:
                     MOV AX, INDEXX
                     MOV BX, DI
                     CMP AX, BX
                     JB ANDJB2
                     JMP IF3
                     ANDJB2:
-                        MOV CX, JOTA
-                        MOV AX, SCORES_LIST[CX]
-                        MOV CX, INDEXX
-                        MOV BX, SCORES_LIST[CX]
+                        MOV SI, JOTA
+                        MOV AX, SCORES_LIST[SI]
+                        MOV SI, INDEXX
+                        MOV BX, SCORES_LIST[SI]
                         CMP AX, BX
                         JB SIESAND2
                         JMP IF3
@@ -3409,69 +3414,75 @@ INCLUDE MACP2.inc
             DEC DI
             DEC DI
             JMP FOR1
-        SALIRFOR
+        SALIRFOR:
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
         RET
     HEAPSORTASC1_ ENDP
     HEAPIFY_ PROC NEAR ; * SOLO PASO N
         XOR DI, DI
         ;* for i in range(0,n,2):
         FOR1:
-            CMP POS_SCORE, DI
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
+            CMP DI, 16
             JE SALIRFOR
-            ;*    if arr[i] > arr[int((i - 1) / 2)]:
-            MOV CX, DI
-            MOV AX, SCORES_LIST[CX]
-            MOV CX, DI
-            DEC CX
-            DEC CX
-            DIVI CX,2
-            MOV CX, RESULTADOPREVIO
-            MOV BX, SCORES_LIST[CX]
+            ;* if arr[i] > arr[int((i - 1) / 2)*2]:
+            MOV SI, DI
+            MOV AX, SCORES_LIST[SI]
+            MOV SI, DI
+            DEC SI
+            DIVI SI,2
+            MULTI RESULTADOPREVIO,2
+            MOV SI, RESULTADOPREVIO
+            MOV BX, SCORES_LIST[SI]
             CMP AX, BX
             JG ANDJB2
             JMP PRESAL
             ANDJB2:
                 ;*        j = i
                 MOV JOTA, DI
-                ;*        while arr[j] > arr[int((j - 1) / 2)]:
+                ;*        while arr[j] > arr[int((j - 1) / 2)*2]:
                 WHILEZ:
-                    MOV CX, JOTA
-                    MOV AX, SCORES_LIST[CX]
-                    MOV CX, JOTA
-                    DEC CX
-                    DEC CX
-                    DIVI CX,2
-                    MOV CX, RESULTADOPREVIO
-                    MOV BX, SCORES_LIST[CX]
+                    MOV SI, JOTA
+                    MOV AX, SCORES_LIST[SI]
+                    DEC SI
+                    DIVI SI,2
+                    MULTI RESULTADOPREVIO,2
+                    MOV SI, RESULTADOPREVIO
+                    MOV BX, SCORES_LIST[SI]
                     CMP AX, BX
-                    JG SIGOWHILE
+                    Ja SIGOWHILE
                     JMP PRESAL
                     SIGOWHILE:
-                        ;*(arr[j],arr[int((j - 1) / 2)]) = (arr[int((j - 1) / 2)],arr[j])
-                        mov cx, JOTA
-                        DEC CX
-                        DEC CX
-                        DIVI CX, 2
-                        MOV CX, RESULTADOPREVIO
-                        MOV AX, SCORES_LIST[CX]
-                        MOV CX, JOTA
-                        MOV BX, SCORES_LIST[CX]
+                        ;*(arr[j],arr[int((j - 1) / 2)*2]) = (arr[int((j - 1) / 2)*2],arr[j])
+                        mov SI, JOTA
+                        DEC SI
+                        DIVI SI, 2
+                        MULTI RESULTADOPREVIO,2
+                        MOV SI, RESULTADOPREVIO
+                        MOV AX, SCORES_LIST[SI]
+                        MOV SI, JOTA
+                        MOV SCORES_LIST[SI], AX
 
-                        MOV  SCORES_LIST[CX], AX
-                        mov cx, JOTA
-                        DEC CX
-                        DEC CX
-                        DIVI CX, 2
-                        MOV CX, RESULTADOPREVIO
-                        MOV  SCORES_LIST[CX], BX
+                        MOV SI, JOTA
+                        MOV BX, SCORES_LIST[SI]
+                        mov SI, JOTA
+                        DEC SI
+                        DIVI SI, 2
+                        MULTI RESULTADOPREVIO,2
+                        MOV SI, RESULTADOPREVIO
+                        MOV  SCORES_LIST[SI], BX
 
-                        ;* j = int((j - 1) / 2)
-                        mov cx, JOTA
-                        DEC CX
-                        DEC CX
-                        DIVI CX, 2
-                        MOV CX, RESULTADOPREVIO
-                        MOV JOTA, CX
+                        ;* j = int((j - 1) / 2) *2
+                        mov SI, JOTA
+                        DEC SI
+                        DIVI SI, 2
+                        MULTI RESULTADOPREVIO,2
+                        MOV SI, RESULTADOPREVIO
+                        MOV JOTA, SI
                         JMP WHILEZ
 
             PRESAL:
@@ -3496,130 +3507,130 @@ INCLUDE MACP2.inc
     HEAPSORTDESC2_ ENDP
     
     ;! NO SIRVIO F
-    HEAPSORTASC1ZZZ_ PROC NEAR   ;! ASCENDENTE HEAPSORT SCORE
-        ;* for i in range(n // 2 - 1, -1, -1):
-        MOV DI, POS_SCORE
-        DIVI DI, 2
-        DEC RESULTADOPREVIO
-        DEC RESULTADOPREVIO
-        MOV DI, RESULTADOPREVIO
-        FOR1:
-            clearScreen
-            GRAPH_SORT
-            DELAY2 500
-            CMP DI, -2
-            JE EXITFOR1
-            ;*  heapify(arr, n, i)
-            PUSH POS_SCORE
-            PUSH DI
-            HEAPIFY POS_SCORE, DI
+    ; HEAPSORTASC1ZZZ_ PROC NEAR   ;! ASCENDENTE HEAPSORT SCORE
+    ;     ;* for i in range(n // 2 - 1, -1, -1):
+    ;     MOV DI, POS_SCORE
+    ;     DIVI DI, 2
+    ;     DEC RESULTADOPREVIO
+    ;     DEC RESULTADOPREVIO
+    ;     MOV DI, RESULTADOPREVIO
+    ;     FOR1:
+    ;         clearScreen
+    ;         GRAPH_SORT
+    ;         DELAY2 500
+    ;         CMP DI, -2
+    ;         JE EXITFOR1
+    ;         ;*  heapify(arr, n, i)
+    ;         PUSH POS_SCORE
+    ;         PUSH DI
+    ;         HEAPIFY POS_SCORE, DI
 
-            DEC DI
-            DEC DI
-            JMP FOR1
-        EXITFOR1:
-        ;* for i in range(n - 1, 0, -1):
-        MOV DI, POS_SCORE
-        DEC DI
-        FOR2:
-            clearScreen
-            GRAPH_SORT
-            DELAY2 500
-            CMP DI, 0
-            JE EXITFOR2
-            ;*     (arr[i], arr[0]) = (arr[0], arr[i])  # swap
-            mov CX, SCORES_LIST[0]
-            mov AX, SCORES_LIST[DI]
-            mov SCORES_LIST[0], AX
-            mov SCORES_LIST[DI], CX
-            ;*     heapify(arr, i, 0)
-            HEAPIFY DI, 0
+    ;         DEC DI
+    ;         DEC DI
+    ;         JMP FOR1
+    ;     EXITFOR1:
+    ;     ;* for i in range(n - 1, 0, -1):
+    ;     MOV DI, POS_SCORE
+    ;     DEC DI
+    ;     FOR2:
+    ;         clearScreen
+    ;         GRAPH_SORT
+    ;         DELAY2 500
+    ;         CMP DI, 0
+    ;         JE EXITFOR2
+    ;         ;*     (arr[i], arr[0]) = (arr[0], arr[i])  # swap
+    ;         mov CX, SCORES_LIST[0]
+    ;         mov AX, SCORES_LIST[DI]
+    ;         mov SCORES_LIST[0], AX
+    ;         mov SCORES_LIST[DI], CX
+    ;         ;*     heapify(arr, i, 0)
+    ;         HEAPIFY DI, 0
 
-            DEC DI
-            DEC DI
-            JMP FOR2
-        EXITFOR2:
-            clearScreen
-            GRAPH_SORT
-            DELAY2 1000
-        RET
-    HEAPSORTASC1ZZZ_ ENDP
-    HEAPIFYZZZ_ PROC NEAR ;*   def heapify(arr, n, i):
-        ;*   largest = i  # Initialize largest as root
-        POP II
-        POP NN
-        MOV AX, II
-        MOV LARGEST, AX
-        ;*   l = 2 * i + 1      # left = 2*i + 1
-        MULTI II, 2
-        MOV BX, RESULTADOPREVIO
-        INC BX
-        INC BX
-        MOV ELE, BX
-        ;*   r = 2 * i + 2      # right = 2*i + 2
-        MULTI II, 2
-        ADD RESULTADOPREVIO, 2
-        MOV BX, RESULTADOPREVIO
-        MOV ERE, BX
-        ;*   if l < n and arr[i] < arr[l]:
-        MOV AX, ELE
-        MOV BX, NN
-        CMP AX, BX
-        JB ANDJB
-        JMP IF222
-        ANDJB:
-            MOV DI, II
-            MOV SI, ELE
-            MOV AX, SCORES_LIST[DI]
-            MOV BX, SCORES_LIST[SI]
-            CMP AX, BX
-            JB SIESAND1
-            JMP IF222
-            SIESAND1:
-                ;*       largest = l
-                MOV AX, ELE
-                MOV LARGEST, AX
+    ;         DEC DI
+    ;         DEC DI
+    ;         JMP FOR2
+    ;     EXITFOR2:
+    ;         clearScreen
+    ;         GRAPH_SORT
+    ;         DELAY2 1000
+    ;     RET
+    ; HEAPSORTASC1ZZZ_ ENDP
+    ; HEAPIFYZZZ_ PROC NEAR ;*   def heapify(arr, n, i):
+    ;     ;*   largest = i  # Initialize largest as root
+    ;     POP II
+    ;     POP NN
+    ;     MOV AX, II
+    ;     MOV LARGEST, AX
+    ;     ;*   l = 2 * i + 1      # left = 2*i + 1
+    ;     MULTI II, 2
+    ;     MOV BX, RESULTADOPREVIO
+    ;     INC BX
+    ;     INC BX
+    ;     MOV ELE, BX
+    ;     ;*   r = 2 * i + 2      # right = 2*i + 2
+    ;     MULTI II, 2
+    ;     ADD RESULTADOPREVIO, 2
+    ;     MOV BX, RESULTADOPREVIO
+    ;     MOV ERE, BX
+    ;     ;*   if l < n and arr[i] < arr[l]:
+    ;     MOV AX, ELE
+    ;     MOV BX, NN
+    ;     CMP AX, BX
+    ;     JB ANDJB
+    ;     JMP IF222
+    ;     ANDJB:
+    ;         MOV DI, II
+    ;         MOV SI, ELE
+    ;         MOV AX, SCORES_LIST[DI]
+    ;         MOV BX, SCORES_LIST[SI]
+    ;         CMP AX, BX
+    ;         JB SIESAND1
+    ;         JMP IF222
+    ;         SIESAND1:
+    ;             ;*       largest = l
+    ;             MOV AX, ELE
+    ;             MOV LARGEST, AX
 
-        ;*   if r < n and arr[largest] < arr[r]:
-        IF222:
-            MOV AX, ERE
-            MOV BX, NN
-            CMP AX, BX
-            JB ANDJB2
-            JMP IF3
-            ANDJB2:
-                MOV DI, LARGEST
-                MOV SI, ERE
-                MOV AX, SCORES_LIST[DI]
-                MOV BX, SCORES_LIST[SI]
-                CMP AX, BX
-                JB SIESAND2
-                JMP IF3
-                SIESAND2:
-                    ;*       largest = r
-                    MOV AX, ERE
-                    MOV LARGEST, AX
+    ;     ;*   if r < n and arr[largest] < arr[r]:
+    ;     IF222:
+    ;         MOV AX, ERE
+    ;         MOV BX, NN
+    ;         CMP AX, BX
+    ;         JB ANDJB2
+    ;         JMP IF3
+    ;         ANDJB2:
+    ;             MOV DI, LARGEST
+    ;             MOV SI, ERE
+    ;             MOV AX, SCORES_LIST[DI]
+    ;             MOV BX, SCORES_LIST[SI]
+    ;             CMP AX, BX
+    ;             JB SIESAND2
+    ;             JMP IF3
+    ;             SIESAND2:
+    ;                 ;*       largest = r
+    ;                 MOV AX, ERE
+    ;                 MOV LARGEST, AX
 
-        ;*   if largest != i:
-        IF3:
-            MOV AX, LARGEST
-            MOV BX, II
-            JNE NOEQUAL
-            JMP EXIT
-            NOEQUAL:
-                ;*(arr[i],arr[largest])=(arr[largest],arr[i])  # swap
-                MOV DI, LARGEST
-                MOV SI, II
-                mov CX, SCORES_LIST[DI]
-                mov AX, SCORES_LIST[SI]
-                mov SCORES_LIST[SI], CX
-                mov SCORES_LIST[DI], AX
-                ;*   heapify(arr, n, largest)
-                HEAPIFY NN, LARGEST
+    ;     ;*   if largest != i:
+    ;     IF3:
+    ;         MOV AX, LARGEST
+    ;         MOV BX, II
+    ;         JNE NOEQUAL
+    ;         JMP EXIT
+    ;         NOEQUAL:
+    ;             ;*(arr[i],arr[largest])=(arr[largest],arr[i])  # swap
+    ;             MOV DI, LARGEST
+    ;             MOV SI, II
+    ;             mov CX, SCORES_LIST[DI]
+    ;             mov AX, SCORES_LIST[SI]
+    ;             mov SCORES_LIST[SI], CX
+    ;             mov SCORES_LIST[DI], AX
+    ;             ;*   heapify(arr, n, largest)
+    ;             HEAPIFY NN, LARGEST
 
-        EXIT:
-        RET
-    HEAPIFYZZZ_ ENDP
+    ;     EXIT:
+    ;     RET
+    ; HEAPIFYZZZ_ ENDP
 
     GRAPH_SORT_ PROC NEAR
         XOR SI, SI
