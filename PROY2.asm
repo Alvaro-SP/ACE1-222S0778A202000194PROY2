@@ -156,6 +156,7 @@ INCLUDE MACP2.inc
         strVELOCIDAD        DB      4 dup ('$')
         intVELODIDAD        DW      0
         NN        DW      0
+        JOTA        DW      0
         II        DW      0
         ELE        DW      0
         ERE        DW      0
@@ -183,6 +184,7 @@ INCLUDE MACP2.inc
         POS_TIME            DW 0
         POS_SCORE           DW 0
         
+        INDEXX              Dw ?
         INDEX               Dw ?
         INDEXtemp           Dw ?
 
@@ -271,7 +273,7 @@ INCLUDE MACP2.inc
         MOV SCORES_LIST[12], 6
         MOV SCORES_LIST[14], 0
         MOV POS_SCORE, 16
-        QUICKSORTASC1
+        HEAPSORTASC1
         readtext
         INICIODELJUEGO
         PRINCIPALMENULABEL:
@@ -3325,18 +3327,85 @@ INCLUDE MACP2.inc
 
         RET
     QUICKSORTDESC2_ ENDP
+    ; TRYING ONE
+    HEAPSORTASC1_ PROC NEAR
+        HEAPIFY
+        MOV DI, POS_SCORE
+        SUB DI, 2
+        FOR1: ;*  for i in range(n - 1, 0, -1):
+            CMP DI, 0
+            JE SALIRFOR
+            ;*  # swap value of first indexed with last indexed
+            mov CX, SCORES_LIST[DI];*  arr[0], arr[i] = arr[i], arr[0]
+            mov AX, SCORES_LIST[0]
+            mov SCORES_LIST[0], CX
+            mov SCORES_LIST[DI], AX
+            ;*  # maintaining heap property after each swapping
+            ;*  j, index = 0, 0
+
+            ;*  while True:
+            ;*      index = 2 * j + 1
+            ;*      # if left child is smaller than
+            ;*      # right child point index variable
+            ;*      # to right child
+            ;*      if (index < (i - 1) and
+            ;*          arr[index] < arr[index + 1]):
+            ;*          index += 1
+            ;*      # if parent is smaller than child
+            ;*      # then swapping parent with child
+            ;*      # having higher value
+            ;*      if index < i and arr[j] < arr[index]:
+            ;*          arr[j], arr[index] = arr[index], arr[j]
+            ;*      j = index
+            ;*      if index >= i:
+            ;*          break
+            INC DI
+            INC DI
+            JMP FOR1
+        SALIRFOR
+        RET
+    HEAPSORTASC1_ ENDP
+    HEAPIFY_ PROC NEAR ; * SOLO PASO N
+        ;* for i in range(n):
+        ;*    if arr[i] > arr[int((i - 1) / 2)]:
+        ;*        j = i
+        ;*        while arr[j] > arr[int((j - 1) / 2)]:
+        ;*            (arr[j],
+        ;*            arr[int((j - 1) / 2)]) = (arr[int((j - 1) / 2)],arr[j])
+        ;*            j = int((j - 1) / 2)
+        RET
+    HEAPIFY_ ENDP
     
-    HEAPSORTASC1_ PROC NEAR   ;! ASCENDENTE HEAPSORT SCORE
+    HEAPSORTDESC1_ PROC NEAR   ;! DESCENDENTE HEAPSORT SCORE
+
+        RET
+    HEAPSORTDESC1_ ENDP
+    HEAPSORTASC2_ PROC NEAR   ;! ASCENDENTE HEAPSORT TIEMPO
+
+        RET
+    HEAPSORTASC2_ ENDP
+    HEAPSORTDESC2_ PROC NEAR   ;! DESCENDENTE HEAPSORT TIEMPO
+
+        RET
+    HEAPSORTDESC2_ ENDP
+    
+    ;! NO SIRVIO F
+    HEAPSORTASC1ZZZ_ PROC NEAR   ;! ASCENDENTE HEAPSORT SCORE
         ;* for i in range(n // 2 - 1, -1, -1):
-        
         MOV DI, POS_SCORE
         DIVI DI, 2
-        RESTA RESULTADOPREVIO, 1
+        DEC RESULTADOPREVIO
+        DEC RESULTADOPREVIO
         MOV DI, RESULTADOPREVIO
         FOR1:
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
             CMP DI, -2
             JE EXITFOR1
             ;*  heapify(arr, n, i)
+            PUSH POS_SCORE
+            PUSH DI
             HEAPIFY POS_SCORE, DI
 
             DEC DI
@@ -3347,6 +3416,9 @@ INCLUDE MACP2.inc
         MOV DI, POS_SCORE
         DEC DI
         FOR2:
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
             CMP DI, 0
             JE EXITFOR2
             ;*     (arr[i], arr[0]) = (arr[0], arr[i])  # swap
@@ -3361,40 +3433,34 @@ INCLUDE MACP2.inc
             DEC DI
             JMP FOR2
         EXITFOR2:
+            clearScreen
+            GRAPH_SORT
+            DELAY2 1000
         RET
-    HEAPSORTASC1_ ENDP
-    HEAPSORTDESC1_ PROC NEAR   ;! DESCENDENTE HEAPSORT SCORE
-
-        RET
-    HEAPSORTDESC1_ ENDP
-    HEAPSORTASC2_ PROC NEAR   ;! ASCENDENTE HEAPSORT TIEMPO
-
-        RET
-    HEAPSORTASC2_ ENDP
-    HEAPSORTDESC2_ PROC NEAR   ;! DESCENDENTE HEAPSORT TIEMPO
-
-        RET
-    HEAPSORTDESC2_ ENDP
-    HEAPIFY_ PROC NEAR ;*   def heapify(arr, n, i):
+    HEAPSORTASC1ZZZ_ ENDP
+    HEAPIFYZZZ_ PROC NEAR ;*   def heapify(arr, n, i):
         ;*   largest = i  # Initialize largest as root
+        POP II
+        POP NN
         MOV AX, II
         MOV LARGEST, AX
         ;*   l = 2 * i + 1      # left = 2*i + 1
         MULTI II, 2
-        ADD RESULTADOPREVIO, 1
-        MOV AX, RESULTADOPREVIO
-        MOV ELE, AX
+        MOV BX, RESULTADOPREVIO
+        INC BX
+        INC BX
+        MOV ELE, BX
         ;*   r = 2 * i + 2      # right = 2*i + 2
         MULTI II, 2
         ADD RESULTADOPREVIO, 2
-        MOV AX, RESULTADOPREVIO
-        MOV ERE, AX
+        MOV BX, RESULTADOPREVIO
+        MOV ERE, BX
         ;*   if l < n and arr[i] < arr[l]:
         MOV AX, ELE
         MOV BX, NN
         CMP AX, BX
         JB ANDJB
-        JMP IF2
+        JMP IF222
         ANDJB:
             MOV DI, II
             MOV SI, ELE
@@ -3402,14 +3468,14 @@ INCLUDE MACP2.inc
             MOV BX, SCORES_LIST[SI]
             CMP AX, BX
             JB SIESAND1
-            JMP IF2
+            JMP IF222
             SIESAND1:
                 ;*       largest = l
                 MOV AX, ELE
                 MOV LARGEST, AX
 
         ;*   if r < n and arr[largest] < arr[r]:
-        IF2:
+        IF222:
             MOV AX, ERE
             MOV BX, NN
             CMP AX, BX
@@ -3447,7 +3513,7 @@ INCLUDE MACP2.inc
 
         EXIT:
         RET
-    HEAPIFY_ ENDP
+    HEAPIFYZZZ_ ENDP
 
     GRAPH_SORT_ PROC NEAR
         XOR SI, SI
