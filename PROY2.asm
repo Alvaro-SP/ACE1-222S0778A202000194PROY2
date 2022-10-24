@@ -3421,16 +3421,59 @@ INCLUDE MACP2.inc
             ;*    if arr[i] > arr[int((i - 1) / 2)]:
             MOV CX, DI
             MOV AX, SCORES_LIST[CX]
+            MOV CX, DI
+            DEC CX
+            DEC CX
+            DIVI CX,2
+            MOV CX, RESULTADOPREVIO
+            MOV BX, SCORES_LIST[CX]
             CMP AX, BX
-            JB ANDJB2
+            JG ANDJB2
             JMP PRESAL
             ANDJB2:
+                ;*        j = i
+                MOV JOTA, DI
+                ;*        while arr[j] > arr[int((j - 1) / 2)]:
+                WHILEZ:
+                    MOV CX, JOTA
+                    MOV AX, SCORES_LIST[CX]
+                    MOV CX, JOTA
+                    DEC CX
+                    DEC CX
+                    DIVI CX,2
+                    MOV CX, RESULTADOPREVIO
+                    MOV BX, SCORES_LIST[CX]
+                    CMP AX, BX
+                    JG SIGOWHILE
+                    JMP PRESAL
+                    SIGOWHILE:
+                        ;*(arr[j],arr[int((j - 1) / 2)]) = (arr[int((j - 1) / 2)],arr[j])
+                        mov cx, JOTA
+                        DEC CX
+                        DEC CX
+                        DIVI CX, 2
+                        MOV CX, RESULTADOPREVIO
+                        MOV AX, SCORES_LIST[CX]
+                        MOV CX, JOTA
+                        MOV BX, SCORES_LIST[CX]
 
-            ;*        j = i
-            ;*        while arr[j] > arr[int((j - 1) / 2)]:
-            ;*            (arr[j],
-            ;*            arr[int((j - 1) / 2)]) = (arr[int((j - 1) / 2)],arr[j])
-            ;*            j = int((j - 1) / 2)
+                        MOV  SCORES_LIST[CX], AX
+                        mov cx, JOTA
+                        DEC CX
+                        DEC CX
+                        DIVI CX, 2
+                        MOV CX, RESULTADOPREVIO
+                        MOV  SCORES_LIST[CX], BX
+
+                        ;* j = int((j - 1) / 2)
+                        mov cx, JOTA
+                        DEC CX
+                        DEC CX
+                        DIVI CX, 2
+                        MOV CX, RESULTADOPREVIO
+                        MOV JOTA, CX
+                        JMP WHILEZ
+
             PRESAL:
             INC DI
             INC DI
