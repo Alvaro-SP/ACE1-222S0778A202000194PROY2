@@ -3332,8 +3332,8 @@ INCLUDE MACP2.inc
         HEAPIFY
         MOV DI, POS_SCORE
         SUB DI, 2
-        FOR1: ;*  for i in range(n - 1, 0, -1):
-            CMP DI, 0
+        FOR1: ;*  for i in range(n - 2, 0, -2):
+            CMP DI, -2
             JE SALIRFOR
             ;*  # swap value of first indexed with last indexed
             mov CX, SCORES_LIST[DI];*  arr[0], arr[i] = arr[i], arr[0]
@@ -3342,23 +3342,70 @@ INCLUDE MACP2.inc
             mov SCORES_LIST[DI], AX
             ;*  # maintaining heap property after each swapping
             ;*  j, index = 0, 0
-
+            MOV INDEXX, 0
+            MOV JOTA, 0
             ;*  while True:
-            ;*      index = 2 * j + 1
-            ;*      # if left child is smaller than
-            ;*      # right child point index variable
-            ;*      # to right child
-            ;*      if (index < (i - 1) and
-            ;*          arr[index] < arr[index + 1]):
-            ;*          index += 1
-            ;*      # if parent is smaller than child
-            ;*      # then swapping parent with child
-            ;*      # having higher value
-            ;*      if index < i and arr[j] < arr[index]:
-            ;*          arr[j], arr[index] = arr[index], arr[j]
-            ;*      j = index
-            ;*      if index >= i:
-            ;*          break
+            WHILETRUE:
+                ;*      index = 2 * j + 1
+                MULTI JOTA, 2
+                INC RESULTADOPREVIO
+                MOV AX, RESULTADOPREVIO
+                MOV INDEXX, AX
+                ;*      # if left child is smaller than
+                ;*      # right child point index variable to right child
+                ;*      if (index < (i - 1) and arr[index] < arr[index + 1]):
+                MOV AX, INDEX
+                MOV BX, DI
+                DEC BX
+                CMP AX, BX
+                JB ANDJB
+                JMP IF2
+                ANDJB:
+                    MOV CX, INDEXX
+                    MOV AX, SCORES_LIST[CX]
+                    INC CX
+                    MOV BX, SCORES_LIST[CX]
+                    CMP AX, BX
+                    JB SIESAND1
+                    JMP IF2
+                    SIESAND1:
+                        ;*          index += 1
+                        INC INDEXX
+                ;*# if parent is smaller than child then swapping parent with child having higher value
+                IF2:    ;* if index < i and arr[j] < arr[index]:
+                    MOV AX, INDEXX
+                    MOV BX, DI
+                    CMP AX, BX
+                    JB ANDJB2
+                    JMP IF3
+                    ANDJB2:
+                        MOV CX, JOTA
+                        MOV AX, SCORES_LIST[CX]
+                        MOV CX, INDEXX
+                        MOV BX, SCORES_LIST[CX]
+                        CMP AX, BX
+                        JB SIESAND2
+                        JMP IF3
+                        SIESAND2:
+                            MOV BX, INDEXX
+                            mov CX, SCORES_LIST[BX] ;* arr[j], arr[index] = arr[index], arr[j]
+                            MOV BX, JOTA
+                            mov AX, SCORES_LIST[BX]
+                            MOV BX, JOTA
+                            mov SCORES_LIST[BX], CX
+                            MOV BX, INDEXX
+                            mov SCORES_LIST[BX], AX
+                IF3:
+                ;*      j = index
+                MOV CX, INDEXX
+                MOV JOTA, CX
+                ;*      if index >= i:
+                MOV AX, INDEXX
+                CMP AX, DI
+                JGE SALLLL   ;* BREAK
+                JMP WHILETRUE
+                SALLLL:
+
             INC DI
             INC DI
             JMP FOR1
@@ -3366,7 +3413,7 @@ INCLUDE MACP2.inc
         RET
     HEAPSORTASC1_ ENDP
     HEAPIFY_ PROC NEAR ; * SOLO PASO N
-        ;* for i in range(n):
+        ;* for i in range(0,n,2)::
         ;*    if arr[i] > arr[int((i - 1) / 2)]:
         ;*        j = i
         ;*        while arr[j] > arr[int((j - 1) / 2)]:
