@@ -3333,7 +3333,9 @@ INCLUDE MACP2.inc
         MOV DI, POS_SCORE
         SUB DI, 2
         FOR1: ;*  for i in range(n - 2, 0, -2):
-            
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
             CMP DI,0
             JE SALIRFOR
             ;*  # swap value of first indexed with last indexed
@@ -3426,7 +3428,7 @@ INCLUDE MACP2.inc
         FOR1:
             clearScreen
             GRAPH_SORT
-            DELAY2 2000
+            DELAY2 500
             CMP DI, 16
             JE SALIRFOR
             ;* if arr[i] > arr[int((i - 1) / 2)*2]:
