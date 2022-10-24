@@ -271,7 +271,7 @@ INCLUDE MACP2.inc
         MOV SCORES_LIST[8], 2
         MOV SCORES_LIST[10], 7
         MOV SCORES_LIST[12], 6
-        MOV SCORES_LIST[14], 0
+        MOV SCORES_LIST[14], 1
         MOV POS_SCORE, 16
         HEAPSORTASC1
         readtext
@@ -3334,7 +3334,7 @@ INCLUDE MACP2.inc
         SUB DI, 2
         FOR1: ;*  for i in range(n - 2, 0, -2):
             
-            CMP DI,-2
+            CMP DI,0
             JE SALIRFOR
             ;*  # swap value of first indexed with last indexed
             mov CX, SCORES_LIST[DI];*  arr[0], arr[i] = arr[i], arr[0]
@@ -3407,7 +3407,7 @@ INCLUDE MACP2.inc
                 ;*      if index >= i:
                 MOV AX, INDEXX
                 CMP AX, DI
-                JGE SALLLL   ;* BREAK
+                JA SALLLL   ;* BREAK
                 JMP WHILETRUE
                 SALLLL:
 
@@ -3421,12 +3421,12 @@ INCLUDE MACP2.inc
         RET
     HEAPSORTASC1_ ENDP
     HEAPIFY_ PROC NEAR ; * SOLO PASO N
-        XOR DI, DI
+        MOV DI, 2
         ;* for i in range(0,n,2):
         FOR1:
             clearScreen
             GRAPH_SORT
-            DELAY2 500
+            DELAY2 2000
             CMP DI, 16
             JE SALIRFOR
             ;* if arr[i] > arr[int((i - 1) / 2)*2]:
@@ -3434,12 +3434,13 @@ INCLUDE MACP2.inc
             MOV AX, SCORES_LIST[SI]
             MOV SI, DI
             DEC SI
+            DEC SI
             DIVI SI,2
             MULTI RESULTADOPREVIO,2
             MOV SI, RESULTADOPREVIO
             MOV BX, SCORES_LIST[SI]
-            CMP AX, BX
-            JG ANDJB2
+            CMP BX, AX
+            JB ANDJB2
             JMP PRESAL
             ANDJB2:
                 ;*        j = i
@@ -3449,27 +3450,31 @@ INCLUDE MACP2.inc
                     MOV SI, JOTA
                     MOV AX, SCORES_LIST[SI]
                     DEC SI
+                    DEC SI
                     DIVI SI,2
                     MULTI RESULTADOPREVIO,2
                     MOV SI, RESULTADOPREVIO
                     MOV BX, SCORES_LIST[SI]
-                    CMP AX, BX
-                    Ja SIGOWHILE
+                    CMP  BX,AX
+                    JBE SIGOWHILE
                     JMP PRESAL
                     SIGOWHILE:
                         ;*(arr[j],arr[int((j - 1) / 2)*2]) = (arr[int((j - 1) / 2)*2],arr[j])
                         mov SI, JOTA
+                        DEC SI
                         DEC SI
                         DIVI SI, 2
                         MULTI RESULTADOPREVIO,2
                         MOV SI, RESULTADOPREVIO
                         MOV AX, SCORES_LIST[SI]
                         MOV SI, JOTA
-                        MOV SCORES_LIST[SI], AX
+                        MOV BX, SCORES_LIST[SI]
+
 
                         MOV SI, JOTA
-                        MOV BX, SCORES_LIST[SI]
+                        MOV SCORES_LIST[SI], AX
                         mov SI, JOTA
+                        DEC SI
                         DEC SI
                         DIVI SI, 2
                         MULTI RESULTADOPREVIO,2
@@ -3479,10 +3484,13 @@ INCLUDE MACP2.inc
                         ;* j = int((j - 1) / 2) *2
                         mov SI, JOTA
                         DEC SI
+                        DEC SI
                         DIVI SI, 2
                         MULTI RESULTADOPREVIO,2
                         MOV SI, RESULTADOPREVIO
                         MOV JOTA, SI
+
+                       
                         JMP WHILEZ
 
             PRESAL:
