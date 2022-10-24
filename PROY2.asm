@@ -3406,20 +3406,36 @@ INCLUDE MACP2.inc
                 JMP WHILETRUE
                 SALLLL:
 
-            INC DI
-            INC DI
+            DEC DI
+            DEC DI
             JMP FOR1
         SALIRFOR
         RET
     HEAPSORTASC1_ ENDP
     HEAPIFY_ PROC NEAR ; * SOLO PASO N
-        ;* for i in range(0,n,2)::
-        ;*    if arr[i] > arr[int((i - 1) / 2)]:
-        ;*        j = i
-        ;*        while arr[j] > arr[int((j - 1) / 2)]:
-        ;*            (arr[j],
-        ;*            arr[int((j - 1) / 2)]) = (arr[int((j - 1) / 2)],arr[j])
-        ;*            j = int((j - 1) / 2)
+        XOR DI, DI
+        ;* for i in range(0,n,2):
+        FOR1:
+            CMP POS_SCORE, DI
+            JE SALIRFOR
+            ;*    if arr[i] > arr[int((i - 1) / 2)]:
+            MOV CX, DI
+            MOV AX, SCORES_LIST[CX]
+            CMP AX, BX
+            JB ANDJB2
+            JMP PRESAL
+            ANDJB2:
+
+            ;*        j = i
+            ;*        while arr[j] > arr[int((j - 1) / 2)]:
+            ;*            (arr[j],
+            ;*            arr[int((j - 1) / 2)]) = (arr[int((j - 1) / 2)],arr[j])
+            ;*            j = int((j - 1) / 2)
+            PRESAL:
+            INC DI
+            INC DI
+            JMP FOR1
+        SALIRFOR:
         RET
     HEAPIFY_ ENDP
     
