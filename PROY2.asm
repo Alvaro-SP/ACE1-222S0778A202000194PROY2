@@ -3441,97 +3441,132 @@ INCLUDE MACP2.inc
     BULIDMAXHEAP ENDP
     HEAPIFY_ PROC NEAR ; * SOLO PASO N
         MOV DI, 0
-        
+        MOV SI, II
+        MULTI SI, 2
+        MOV SI, RESULTADOPREVIO
+        INC SI
+        FOR1:
+            MOV CX, DI
 
+            MOV AX, DI
+            INC AX
+            MOV BX, NN
+            CMP AX, BX
+            JB IF2
+            JMP IF3
+            IF2:
+                MOV AX, SCORES_LIST[DI]
+                MOV SI, DI
+                INC SI
+                MOV BX,  SCORES_LIST[SI]
+                CMP AX, BX
+                JB SIADDBCI
+                JMP IF3
+                SIADDBCI:
+                    MOV SI, DI
+                    INC SI
+                    MOV CX, SI
+            IF3:
+            MOV SI, II
+            MOV AX, SCORES_LIST[SI]
+            MOV SI, CX
+            MOV BX, SCORES_LIST[SI]
+            CMP AX, BX
+            JB HAGOSWAP
+            JMP SALGOPRRO
+            HAGOSWAP:
+                MOV SI, II
+                MOV BX, SCORES_LIST[SI]
+                MOV SI, CX
+                MOV AX, SCORES_LIST[SI]
 
+                MOV SI, II
+                mov SCORES_LIST[SI], AX
+                MOV SI, CX
+                MOV SCORES_LIST[SI], BX
 
-
-
-
-
-
-
-
-
-
+            MOV II, CX
+            JMP FOR1
+            SALGOPRRO:
 
 
         ;* for i in range(2,n,2):
-        FOR1:
-            clearScreen
-            GRAPH_SORT
-            DELAY2 500
-            CMP DI, POS_SCORE
-            JE SALIRFOR
-            ;* if arr[i] > arr[int((i - 1) / 2)*2]:
-            MOV SI, DI
-            MOV AX, SCORES_LIST[SI]
-            MOV SI, DI
-            ; DEC SI
-            DEC SI
-            DIVI SI,2
-            MULTI RESULTADOPREVIO,2
-            MOV SI, RESULTADOPREVIO
-            MOV BX, SCORES_LIST[SI]
-            CMP BX, AX
-            JB ANDJB2
-            JMP PRESAL
-            ANDJB2:
-                ;*        j = i
-                MOV JOTA, DI
-                ;*        while arr[j] > arr[int((j - 1) / 2)*2]:
-                WHILEZ:
-                    MOV SI, JOTA
-                    MOV AX, SCORES_LIST[SI]
-                    DEC SI
-                    ; DEC SI
-                    DIVI SI,2
-                    MULTI RESULTADOPREVIO,2
-                    MOV SI, RESULTADOPREVIO
-                    MOV BX, SCORES_LIST[SI]
-                    CMP  BX,AX
-                    JBE SIGOWHILE
-                    JMP PRESAL
-                    SIGOWHILE:
-                        ;*(arr[j],arr[int((j - 1) / 2)*2]) = (arr[int((j - 1) / 2)*2],arr[j])
-                        mov SI, JOTA
-                        ; DEC SI
-                        DEC SI
-                        DIVI SI, 2
-                        MULTI RESULTADOPREVIO,2
-                        MOV SI, RESULTADOPREVIO
-                        MOV AX, SCORES_LIST[SI]
-                        MOV SI, JOTA
-                        MOV BX, SCORES_LIST[SI]
+        ; FOR1:
+        ;     clearScreen
+        ;     GRAPH_SORT
+        ;     DELAY2 500
+        ;     MOV SI, DI
+        ;     CMP DI, POS_SCORE
+        ;     JE SALIRFOR
+        ;     ;* if arr[i] > arr[int((i - 1) / 2)*2]:
+        ;     MOV SI, DI
+        ;     MOV AX, SCORES_LIST[SI]
+        ;     MOV SI, DI
+        ;     ; DEC SI
+        ;     DEC SI
+        ;     DIVI SI,2
+        ;     MULTI RESULTADOPREVIO,2
+        ;     MOV SI, RESULTADOPREVIO
+        ;     MOV BX, SCORES_LIST[SI]
+        ;     CMP BX, AX
+        ;     JB ANDJB2
+        ;     JMP PRESAL
+        ;     ANDJB2:
+        ;         ;*        j = i
+        ;         MOV JOTA, DI
+        ;         ;*        while arr[j] > arr[int((j - 1) / 2)*2]:
+        ;         WHILEZ:
+        ;             MOV SI, JOTA
+        ;             MOV AX, SCORES_LIST[SI]
+        ;             DEC SI
+        ;             ; DEC SI
+        ;             DIVI SI,2
+        ;             MULTI RESULTADOPREVIO,2
+        ;             MOV SI, RESULTADOPREVIO
+        ;             MOV BX, SCORES_LIST[SI]
+        ;             CMP  BX,AX
+        ;             JBE SIGOWHILE
+        ;             JMP PRESAL
+        ;             SIGOWHILE:
+        ;                 ;*(arr[j],arr[int((j - 1) / 2)*2]) = (arr[int((j - 1) / 2)*2],arr[j])
+        ;                 mov SI, JOTA
+        ;                 ; DEC SI
+        ;                 DEC SI
+        ;                 DIVI SI, 2
+        ;                 MULTI RESULTADOPREVIO,2
+        ;                 MOV SI, RESULTADOPREVIO
+        ;                 MOV AX, SCORES_LIST[SI]
+        ;                 MOV SI, JOTA
+        ;                 MOV BX, SCORES_LIST[SI]
 
 
-                        MOV SI, JOTA
-                        MOV SCORES_LIST[SI], AX
-                        mov SI, JOTA
-                        ; DEC SI
-                        DEC SI
-                        DIVI SI, 2
-                        MULTI RESULTADOPREVIO,2
-                        MOV SI, RESULTADOPREVIO
-                        MOV  SCORES_LIST[SI], BX
+        ;                 MOV SI, JOTA
+        ;                 MOV SCORES_LIST[SI], AX
+        ;                 mov SI, JOTA
+        ;                 ; DEC SI
+        ;                 DEC SI
+        ;                 DIVI SI, 2
+        ;                 MULTI RESULTADOPREVIO,2
+        ;                 MOV SI, RESULTADOPREVIO
+        ;                 MOV  SCORES_LIST[SI], BX
 
-                        ;* j = int((j - 1) / 2) *2
-                        mov SI, JOTA
-                        ; DEC SI
-                        DEC SI
-                        DIVI SI, 2
-                        MULTI RESULTADOPREVIO,2
-                        MOV SI, RESULTADOPREVIO
-                        MOV JOTA, SI
+        ;                 ;* j = int((j - 1) / 2) *2
+        ;                 mov SI, JOTA
+        ;                 ; DEC SI
+        ;                 DEC SI
+        ;                 DIVI SI, 2
+        ;                 MULTI RESULTADOPREVIO,2
+        ;                 MOV SI, RESULTADOPREVIO
+        ;                 MOV JOTA, SI
 
                        
-                        JMP WHILEZ
+        ;                 JMP WHILEZ
 
-            PRESAL:
-            INC DI
-            INC DI
-            JMP FOR1
-        SALIRFOR:
+        ;     PRESAL:
+        ;     INC DI
+        ;     INC DI
+        ;     JMP FOR1
+        ; SALIRFOR:
         RET
     HEAPIFY_ ENDP
     

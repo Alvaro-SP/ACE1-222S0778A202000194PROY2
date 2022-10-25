@@ -3,12 +3,12 @@
 void heapify(int a[],int i,int n)
 {
     int j;
-    for(j=2*i+1; j < n; j = 2*i+1)
+    for(j=2*i+2; j < n; j = 2*i+2)
     {
         int temp,bci = j;
-        if(j+1 < n)
-            if(a[j] < a[j+1])
-                bci = j+1;
+        if(j+2 < n)
+            if(a[j] < a[j+2])
+                bci = j+2;
         if(a[i] < a[bci])
         {
             temp=a[i];
@@ -24,7 +24,8 @@ void heapify(int a[],int i,int n)
 void BuildMaxHeap(int a[],int n)
 {
     int i,j;
-    for(i=n/2;i>=0;i--){
+    int nt=n+2;
+    for(i=nt/2;i>=0;i-=2){
         heapify(a,i,n);
     }
        
@@ -33,22 +34,22 @@ void sort(int a[],int n)
 {
     int temp,i;
     BuildMaxHeap(a,n);
-    for(i=1;i<n;i++)
+    for(i=2;i<n;i+=2)
     {
         temp=a[0];
         a[0]=a[n-i];
         a[n-i]=temp;
         heapify(a,0,n-i);
-    }
+    }   
 }
 int main()
 {
     int n,i;
-    scanf("%d",&n);
-    int a[n];
-    for(i=0;i<n;i++)
-        scanf("%d",&a[i]);
+    // 100, 'k',10,'a', 20,'a', 15,'a', 17,'a', 9,'a', 21,'a'
+    n=14;
+    int a[14] = {1, 'k',2,'a', 20,'a', 15,'a', 17,'a', 9,'a', 21,'a'};
+
     sort(a,n);
-    for(i=0;i<n;i++)
+    for(i=0;i<n;i+=2)
         printf("%d  ",a[i]);
 }
