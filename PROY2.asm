@@ -3335,24 +3335,32 @@ INCLUDE MACP2.inc
     HEAPSORTASC1_ PROC NEAR
         MOV AX, 0
         MOV DI, 2
+        MOV CX, POS_SCORE
+        DEC CX
+        DEC CX
         BULIDMAXHEAP
         
-        FOR1: ;*  for i in range(n - 2, 0, -2):
+        FOR1111: ;*  for i in range(n - 2, 0, -2):
             clearScreen
             GRAPH_SORT
             DELAY2 500
-            CMP DI,POS_SCORE
+            CMP DI,CX
             JE SALIRFOR
             mov AX, SCORES_LIST[0]
-            MOV SI, POS_SCORE
-            DEC SI
-            DEC SI
+            MOV SI, CX
+            SUB SI, DI
             MOV BX, SCORES_LIST[SI]
-            MOV SCORES_LIST[0],BX
+            MOV SCORES_LIST[0], BX
             MOV SCORES_LIST[SI], AX
             HEAPIFY 0, SI
-
-            ; ;*  # swap value of first indexed with last indexed
+            INC DI
+            INC DI
+            JMP FOR1111
+        SALIRFOR:
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
+        ; ;*  # swap value of first indexed with last indexed
             ; mov CX, SCORES_LIST[DI];*  arr[0], arr[i] = arr[i], arr[0]
             ; mov AX, SCORES_LIST[0]
             ; mov SCORES_LIST[0], CX
@@ -3427,36 +3435,55 @@ INCLUDE MACP2.inc
             ;     JMP WHILETRUE
             ;     SALLLL:
 
-            DEC DI
-            DEC DI
-            JMP FOR1
-        SALIRFOR:
-            clearScreen
-            GRAPH_SORT
-            DELAY2 500
+            
         RET
     HEAPSORTASC1_ ENDP
     BULIDMAXHEAP_ PROC NEAR
-        RET
-    BULIDMAXHEAP ENDP
-    HEAPIFY_ PROC NEAR ; * SOLO PASO N
         MOV DI, 0
-        MOV SI, II
-        MULTI SI, 2
-        MOV SI, RESULTADOPREVIO
-        INC SI
+        MOV SI, POS_SCORE
+        DIVI SI, 2
+        MOV DI, RESULTADOPREVIO
+        MOV BX, POS_SCORE
+        SUB BX, 2
         FOR1:
-            MOV CX, DI
+            clearScreen
+            GRAPH_SORT
+            DELAY2 500
+            CMP DI, 0
+            JE SALIR
 
+            HEAPIFY DI, BX
+
+            DEC DI
+            DEC DI
+            JMP FOR1
+        SALIR:
+
+        RET
+    BULIDMAXHEAP_ ENDP
+    HEAPIFY_ PROC NEAR ; * SOLO PASO N
+        FOR1:
+            MOV SI, II
+            MULTI SI, 2
+            MOV SI, RESULTADOPREVIO
+            INC SI
+            INC SI
+            MOV DI, SI
+            mov BX, NN
+            CMP BX, DI
+            JE SALGOPRRO
+            MOV CX, DI
             MOV AX, DI
+            INC AX
             INC AX
             MOV BX, NN
             CMP AX, BX
-            JB IF2
+            JB IF222
             JMP IF3
-            IF2:
+            IF222:
                 MOV AX, SCORES_LIST[DI]
                 MOV SI, DI
+                INC SI
                 INC SI
                 MOV BX,  SCORES_LIST[SI]
                 CMP AX, BX
@@ -3464,6 +3491,7 @@ INCLUDE MACP2.inc
                 JMP IF3
                 SIADDBCI:
                     MOV SI, DI
+                    INC SI
                     INC SI
                     MOV CX, SI
             IF3:
@@ -3486,9 +3514,9 @@ INCLUDE MACP2.inc
                 MOV SCORES_LIST[SI], BX
 
             MOV II, CX
+            
             JMP FOR1
-            SALGOPRRO:
-
+        SALGOPRRO:
 
         ;* for i in range(2,n,2):
         ; FOR1:

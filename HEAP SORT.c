@@ -5,7 +5,7 @@ void heapify(int a[],int i,int n)
     int j;
     for(j=2*i+2; j < n; j = 2*i+2)
     {
-        int temp,bci = j;
+        int temp,bci = j;           DI==J   BCI ==CX
         if(j+2 < n)
             if(a[j] < a[j+2])
                 bci = j+2;
