@@ -161,7 +161,7 @@ INCLUDE MACP2.inc
         strVELOCIDAD        DB      4 dup ('$')
         intVELODIDAD        DW      0
         NN        DW      0
-        JOTA        DW      0
+        bci        DW      0
         JOTA2        DW      0
         JOTA3        DW      0
         II        DW      0
@@ -272,8 +272,8 @@ INCLUDE MACP2.inc
         ; CALL recorrerm1_
         misdatos
         esperaenter  ;TODO: activar despues
-        TOP10GENERAL
-        readtext
+        ; TOP10GENERAL
+        ; readtext
         paint  0, 0, 800, 600, BLACK
         MOV SCORES_LIST[0], 10
         MOV SCORES_LIST[2], 20
@@ -3342,30 +3342,33 @@ INCLUDE MACP2.inc
     HEAPSORTASC1_ PROC NEAR
         MOV AX, 0
         MOV DI, 2
-        MOV CX, POS_SCORE
-        DEC CX
-        DEC CX
-        BULIDMAXHEAP
+        ;BULIDMAXHEAP
         
         FOR1111: ;*  for i in range(n - 2, 0, -2):
             clearScreen
             GRAPH_SORT
             DELAY2 500
-            CMP DI,CX
+            CMP DI,POS_SCORE
             JE SALIRFOR
             ;* ----------------------------------
             mov AX, SCORES_LIST[0]
-            MOV SI, CX
+            MOV SI, POS_SCORE
             RESTA SI, DI
             MOV SI, RESULTADOPREVIO
             MOV BX, SCORES_LIST[SI]
             MOV SCORES_LIST[0], BX
             MOV SCORES_LIST[SI], AX
+
+            MOV SI, POS_SCORE
+            RESTA SI, DI
+            MOV SI, RESULTADOPREVIO
             HEAPIFY 0, SI
+            ;* ----------------------------------
             INC DI
             INC DI
             JMP FOR1111
         SALIRFOR:
+            BUBBLESORTASC1
             clearScreen
             GRAPH_SORT
             DELAY2 500
@@ -3453,12 +3456,8 @@ INCLUDE MACP2.inc
         DIVI SI, 2
         MOV DI, RESULTADOPREVIO
         MOV BX, POS_SCORE
-        SUB BX, 2
         FOR1:
-            clearScreen
-            GRAPH_SORT
-            DELAY2 500
-            CMP DI, 0
+            CMP DI, -2
             JE SALIR
 
             HEAPIFY DI, BX
@@ -3479,9 +3478,10 @@ INCLUDE MACP2.inc
             INC SI
             MOV DI, SI
             mov BX, NN
+            ;* *************
             CMP BX, DI
-            JE SALGOPRRO
-            MOV CX, DI
+            JAE SALGOPRRO
+            MOV bci, DI
             MOV AX, DI
             INC AX
             INC AX
@@ -3502,11 +3502,11 @@ INCLUDE MACP2.inc
                     MOV SI, DI
                     INC SI
                     INC SI
-                    MOV CX, SI
+                    MOV bci, SI
             IF3:
             MOV SI, II
             MOV AX, SCORES_LIST[SI]
-            MOV SI, CX
+            MOV SI, bci
             MOV BX, SCORES_LIST[SI]
             CMP AX, BX
             JB HAGOSWAP
@@ -3514,15 +3514,15 @@ INCLUDE MACP2.inc
             HAGOSWAP:
                 MOV SI, II
                 MOV BX, SCORES_LIST[SI]
-                MOV SI, CX
+                MOV SI, bci
                 MOV AX, SCORES_LIST[SI]
 
                 MOV SI, II
                 mov SCORES_LIST[SI], AX
-                MOV SI, CX
+                MOV SI, bci
                 MOV SCORES_LIST[SI], BX
-
-            MOV II, CX
+            MOV SI, bci
+            MOV II, SI
             
             JMP FOR1
         SALGOPRRO:
@@ -3991,7 +3991,6 @@ INCLUDE MACP2.inc
         RET
     BUBBLESORTASCTOP2_ ENDP
     
-
     ; TOP10GENERAL_ PROC NEAR
     ;     RET
     ; TOP10GENERAL_ ENDP
