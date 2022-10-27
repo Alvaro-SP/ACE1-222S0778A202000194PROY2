@@ -3353,9 +3353,11 @@ INCLUDE MACP2.inc
             DELAY2 500
             CMP DI,CX
             JE SALIRFOR
+            ;* ----------------------------------
             mov AX, SCORES_LIST[0]
             MOV SI, CX
-            SUB SI, DI
+            RESTA SI, DI
+            MOV SI, RESULTADOPREVIO
             MOV BX, SCORES_LIST[SI]
             MOV SCORES_LIST[0], BX
             MOV SCORES_LIST[SI], AX
@@ -4020,64 +4022,64 @@ end     MAIN
 
 
 ;! ANEXOS
-;*  HEAPSORT     Algorithm      BASE:
+    ;*  HEAPSORT     Algorithm      BASE:
 
-;*    /* sorts the given array of n size */
-;*    void heapsort(int* arr, int n)
-;*    {
-;*        // build the binary max heap
-;*        for (int i = n / 2 - 1; i >= 0; i--)
-;*        {
-;*            heapify(arr, n, i);
-;*        }
-;*        // sort the max heap
-;*        for (int i = n - 1; i >= 0; i--)
-;*        {
-;*            // swap the root node and the last leaf node
-;*            int temp = arr[i];
-;*            arr[i] = arr[0];
-;*            arr[0] = temp;
-;*            // again heapify the max heap from the root
-;*            heapify(arr, i, 0);
-;*        }
-;*    }
-;*    /* heapify the subtree with root i */
-;*    void heapify(int* arr, int n, int i)
-;*    {
-;*        // store largest as the root element
-;*        int largest = i;
-;*        int left = 2 * i + 1;
-;*        int right  = 2 * i + 2;
-;*        // now check whether the right and left right is larger than the root or not
-;*        if (left < n && arr[left] > arr[largest])
-;*        {
-;*            largest = left;
-;*        }
-;*        if (right < n && arr[right] > arr[largest])
-;*        {
-;*            largest = right;
-;*        }
-;*        // if the root is smaller than the children then swap it with the largest children's value
-;*        if (largest != i)
-;*        {
-;*            int temp = arr[i];
-;*            arr[i] = arr[largest];
-;*            arr[largest] = temp;
-;*            // again heapify that side of the heap where the root has gone
-;*            heapify(arr, n, largest);
-;*        }
-;*    }
+    ;*    /* sorts the given array of n size */
+    ;*    void heapsort(int* arr, int n)
+    ;*    {
+    ;*        // build the binary max heap
+    ;*        for (int i = n / 2 - 1; i >= 0; i--)
+    ;*        {
+    ;*            heapify(arr, n, i);
+    ;*        }
+    ;*        // sort the max heap
+    ;*        for (int i = n - 1; i >= 0; i--)
+    ;*        {
+    ;*            // swap the root node and the last leaf node
+    ;*            int temp = arr[i];
+    ;*            arr[i] = arr[0];
+    ;*            arr[0] = temp;
+    ;*            // again heapify the max heap from the root
+    ;*            heapify(arr, i, 0);
+    ;*        }
+    ;*    }
+    ;*    /* heapify the subtree with root i */
+    ;*    void heapify(int* arr, int n, int i)
+    ;*    {
+    ;*        // store largest as the root element
+    ;*        int largest = i;
+    ;*        int left = 2 * i + 1;
+    ;*        int right  = 2 * i + 2;
+    ;*        // now check whether the right and left right is larger than the root or not
+    ;*        if (left < n && arr[left] > arr[largest])
+    ;*        {
+    ;*            largest = left;
+    ;*        }
+    ;*        if (right < n && arr[right] > arr[largest])
+    ;*        {
+    ;*            largest = right;
+    ;*        }
+    ;*        // if the root is smaller than the children then swap it with the largest children's value
+    ;*        if (largest != i)
+    ;*        {
+    ;*            int temp = arr[i];
+    ;*            arr[i] = arr[largest];
+    ;*            arr[largest] = temp;
+    ;*            // again heapify that side of the heap where the root has gone
+    ;*            heapify(arr, n, largest);
+    ;*        }
+    ;*    }
 
 
 
-; A:
-; MOV AH, 00h  ; interrupcion para jalar el tiempo en el sistema
-;             INT 1AH      ; CX:DX  toma numeros del reloj desde medianoche
-;             mov  ax, dx
-;             xor  dx, dx
-;             mov  cx, 6
-;             div  cx       ;DX tiene la divicion en mi caso - de 0 a 5
-;             add  dl, '0'  ; DL TIENE EL VALOR ENTRE 0 Y 5
-;             mov ah,2h
-;             int 21h    
-;             JMP A
+    ; A:
+    ; MOV AH, 00h  ; interrupcion para jalar el tiempo en el sistema
+    ;             INT 1AH      ; CX:DX  toma numeros del reloj desde medianoche
+    ;             mov  ax, dx
+    ;             xor  dx, dx
+    ;             mov  cx, 6
+    ;             div  cx       ;DX tiene la divicion en mi caso - de 0 a 5
+    ;             add  dl, '0'  ; DL TIENE EL VALOR ENTRE 0 Y 5
+    ;             mov ah,2h
+    ;             int 21h    
+    ;             JMP A
