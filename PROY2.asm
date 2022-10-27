@@ -99,6 +99,9 @@ INCLUDE MACP2.inc
         msgNIVEL          DB 'NIVEL : ', "$"
         msgPUNTEO          DB 'PUNTEO : ', "$"
         msgTIEMPO          DB 'TIEMPO : ', "$"
+        numtopten          DB 'No.', "$"
+        usrtopten          DB 'USUARIO ', "$"
+        puntostopten          DB 'PUNTUACION ', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
@@ -150,6 +153,8 @@ INCLUDE MACP2.inc
         titlebb          DB '-*-*-*-*-*-*-*-*-*-* BUBBLE SORT -*-*-*-*-*-*-*-*-*-*', "$"
         titleqs          DB '-*-*-*-*-*-*-*-*-*-* QUICK SORT -*-*-*-*-*-*-*-*-*-* ', "$"
         titlehs          DB '-*-*-*-*-*-*-*-*-*-* HEAP SORT -*-*-*-*-*-*-*-*-*-* ', "$"
+        titletopuser     DB '-*-*-*-*-*-*-*-*-* TOP 10 USUARIO -*-*-*-*-*-*-*-*-* ', "$"
+        titletopgeneral  DB '-*-*-*-*-*-*-*-*-* TOP 10 GENERAL -*-*-*-*-*-*-*-*-* ', "$"
         strSENTIDO          DB      "0$"
         strMETRICA          DB      "T$"
         FLECHA              DB      "<-$"
@@ -267,6 +272,8 @@ INCLUDE MACP2.inc
         ; CALL recorrerm1_
         misdatos
         esperaenter  ;TODO: activar despues
+        TOP10GENERAL
+        readtext
         paint  0, 0, 800, 600, BLACK
         MOV SCORES_LIST[0], 10
         MOV SCORES_LIST[2], 20
@@ -2310,7 +2317,7 @@ INCLUDE MACP2.inc
         TOPUSER:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            TOP10USUARIO
+            TOP10PERSONAL
             JMP Inicio
         BubbleSortLB:
             paint  0, 0, 800, 600, GREEN
@@ -2363,7 +2370,7 @@ INCLUDE MACP2.inc
         TOPUSER:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
-            TOP10USUARIO
+            TOP10PERSONAL
             JMP Inicio
         JUGARRRR:
             paint  0, 0, 800, 600, GREEN
@@ -3838,6 +3845,45 @@ INCLUDE MACP2.inc
     ;!  █▀▄ ██▄ █▀▀ █▄█ █▀▄ ░█░ ▄█☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻ GENERACION DE REPORTES
     ;! TOP TEN
     TOP10GENERAL_ PROC NEAR
+        paint  0, 0, 800, 600, BLACK
+        ; BUBBLESORTASCTOP1
+        PAINTTEXT titletopgeneral , 0516H , LIGHT_CYAN
+        PAINTTEXT numtopten , 0708H , LIGHT_MAGENTA
+        PAINTTEXT usrtopten , 071CH , LIGHT_MAGENTA
+        PAINTTEXT puntostopten , 0746H , LIGHT_MAGENTA
+        readtext
+        MOV CX, 10 ;*  y
+        MOV SI, 0
+        CICLO10:
+            MOV DX, 8 ; *  x
+            CMP SI, 20
+            JE EXIT
+            poscursor cl, dl
+            MOV RESULTADOPREVIO, SI
+            INC RESULTADOPREVIO
+            toString RESULTADOPREVIO, Stringpuntos
+            print Stringpuntos
+            ADD DX, 10
+            poscursor cl, dl
+            print MyuserName
+
+            ADD DX, 25
+            poscursor cl, dl
+            MOV DI, SCORES_LIST[SI]
+            MOV RESULTADOPREVIO, DI
+            toString RESULTADOPREVIO, Stringpuntos
+            print Stringpuntos
+
+            ADD CX, 2
+            ADD SI, 2
+            JMP CICLO10
+        EXIT:
+        RET
+    TOP10GENERAL_ ENDP
+    TOP10PERSONAL_ PROC NEAR
+        paint  0, 0, 800, 600, BLACK
+        BUBBLESORTASCTOP2
+        PAINTTEXT titletopuser , 0816H , LIGHT_CYAN
         MOV SI, 1
         CICLO10:
             CMP SI, 11
@@ -3847,11 +3893,8 @@ INCLUDE MACP2.inc
             JMP CICLO10
         EXIT:
         RET
-    TOP10GENERAL_ ENDP
-    TOP10PERSONAL_ PROC NEAR
-        RET
     TOP10PERSONAL_ ENDP
-    BUBBLESORTASCTOP1_ PROC NEAR ;! ASCENDENTE BUBBLESORT SCORE
+    BUBBLESORTASCTOP1_ PROC NEAR
         MOV intVELODIDAD, 1000
         MOV CX, POS_SCORE
         DEC CX
@@ -3898,7 +3941,7 @@ INCLUDE MACP2.inc
         SALIR:
         RET
     BUBBLESORTASCTOP1_ ENDP
-    BUBBLESORTASCTOP2_ PROC NEAR   ;! DESCENDENTE BUBBLESORT TIEMPO
+    BUBBLESORTASCTOP2_ PROC NEAR
         MOV intVELODIDAD, 1000
         MOV CX, POS_TIME
         DEC CX
