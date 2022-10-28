@@ -199,6 +199,7 @@ INCLUDE MACP2.inc
 
         MYuserPass          db 20 dup ('$') ; ! USUARIO Y CONTRASENA
         MYuserName          db 15 dup ('$')
+        MYuserNamePARATOP   db 15 dup ('$')
         MYauxUserName       db 15 dup ('$')
         MYauxUserName2      db 15 dup ('$')
         MYauxPass           db 20 dup ('$')
@@ -272,8 +273,8 @@ INCLUDE MACP2.inc
         ; CALL recorrerm1_
         misdatos
         esperaenter  ;TODO: activar despues
-        ; TOP10GENERAL
-        ; readtext
+        TOP10GENERAL
+        readtext
         paint  0, 0, 800, 600, BLACK
         MOV SCORES_LIST[0], 10
         MOV SCORES_LIST[2], 20
@@ -2313,12 +2314,18 @@ INCLUDE MACP2.inc
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
             TOP10GENERAL
+            TEMPbuclespace:
+                xor ax, ax  ;* TOMO VALOR DE LA TECLA
+                int 16h
+                cmp al, 32  ;* SPACE GIRAR PIEZA
+                je Inicio
+                JMP TEMPbuclespace
             JMP Inicio
         TOPUSER:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
             TOP10PERSONAL
-            JMP Inicio
+            JMP TEMPbuclespace
         BubbleSortLB:
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
@@ -2364,17 +2371,22 @@ INCLUDE MACP2.inc
             JNE Inicio
         TOPGEN:
             paint  0, 0, 800, 600, GREEN
-            paint  0, 0, 800, 600, BLACK
+            clearScreen
             TOP10GENERAL
-            JMP Inicio
+            TEMPbuclespace:
+                xor ax, ax  ;* TOMO VALOR DE LA TECLA
+                int 16h
+                cmp al, 32  ;* SPACE GIRAR PIEZA
+                je Inicio
+                JMP TEMPbuclespace
         TOPUSER:
             paint  0, 0, 800, 600, GREEN
-            paint  0, 0, 800, 600, BLACK
+            clearScreen
             TOP10PERSONAL
-            JMP Inicio
+            JMP TEMPbuclespace
         JUGARRRR:
             paint  0, 0, 800, 600, GREEN
-            paint  0, 0, 800, 600, BLACK
+            clearScreen
             INICIODELJUEGO
             JMP Inicio
         FIN:
@@ -3847,6 +3859,7 @@ INCLUDE MACP2.inc
     ;!  █▀▄ ██▄ █▀▀ █▄█ █▀▄ ░█░ ▄█☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻☻ GENERACION DE REPORTES
     ;! TOP TEN
     TOP10GENERAL_ PROC NEAR
+        LOAD_ALLUSER
         paint  0, 0, 800, 600, BLACK
         ; BUBBLESORTASCTOP1
         PAINTTEXT titletopgeneral , 0516H , LIGHT_CYAN
@@ -3865,11 +3878,13 @@ INCLUDE MACP2.inc
             INC RESULTADOPREVIO
             toString RESULTADOPREVIO, Stringpuntos
             print Stringpuntos
-            ADD DX, 10
+            ADD DX, 15
             poscursor cl, dl
-            print MyuserName
-
-            ADD DX, 25
+            MOV DI, ID_LIST[SI]
+            OBTAIN_USERNAME DI ;* envio el username a ID_LIST
+            print MYuserNamePARATOP
+            cleanBuffer MYuserNamePARATOP
+            ADD DX, 50
             poscursor cl, dl
             MOV DI, SCORES_LIST[SI]
             MOV RESULTADOPREVIO, DI
@@ -3877,27 +3892,51 @@ INCLUDE MACP2.inc
             print Stringpuntos
 
             ADD CX, 2
-            ADD SI, 2
+            INC SI
+            INC SI
             JMP CICLO10
         EXIT:
         RET
     TOP10GENERAL_ ENDP
     TOP10PERSONAL_ PROC NEAR
+        LOAD_CURRENT_USER
         paint  0, 0, 800, 600, BLACK
         BUBBLESORTASCTOP2
-        PAINTTEXT titletopuser , 0816H , LIGHT_CYAN
-        MOV SI, 1
+        PAINTTEXT titletopgeneral , 0516H , LIGHT_CYAN
+        PAINTTEXT numtopten , 0708H , LIGHT_MAGENTA
+        PAINTTEXT usrtopten , 071CH , LIGHT_MAGENTA
+        PAINTTEXT puntostopten , 0746H , LIGHT_MAGENTA
+        readtext
+        MOV CX, 10 ;*  y
+        MOV SI, 0
         CICLO10:
-            CMP SI, 11
+            MOV DX, 8 ; *  x
+            CMP SI, 20
             JE EXIT
+            poscursor cl, dl
+            MOV RESULTADOPREVIO, SI
+            INC RESULTADOPREVIO
+            toString RESULTADOPREVIO, Stringpuntos
+            print Stringpuntos
+            ADD DX, 15
+            poscursor cl, dl
+            MOV DI, ID_LIST[SI]
+            print MYuserName
+            ADD DX, 50
+            poscursor cl, dl
+            MOV DI, SCORES_LIST[SI]
+            MOV RESULTADOPREVIO, DI
+            toString RESULTADOPREVIO, Stringpuntos
+            print Stringpuntos
 
-
+            ADD CX, 2
+            INC SI
+            INC SI
             JMP CICLO10
         EXIT:
         RET
     TOP10PERSONAL_ ENDP
     BUBBLESORTASCTOP1_ PROC NEAR
-        MOV intVELODIDAD, 1000
         MOV CX, POS_SCORE
         DEC CX
         DEC CX
@@ -3944,7 +3983,6 @@ INCLUDE MACP2.inc
         RET
     BUBBLESORTASCTOP1_ ENDP
     BUBBLESORTASCTOP2_ PROC NEAR
-        MOV intVELODIDAD, 1000
         MOV CX, POS_TIME
         DEC CX
         DEC CX

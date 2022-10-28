@@ -1990,7 +1990,15 @@ clearScreen macro
     POPA
 endm
 
-
+MOSTRARATRIBUTOS MACRO
+    LOCAL 
+    CMP TEMPATRIBUTOS, 1 ; es bubblesort
+    JE BBSORT
+    CMP TEMPATRIBUTOS, 1 ; es bubblesort
+    JE BBSORT
+    CMP TEMPATRIBUTOS, 1 ; es bubblesort
+    JE BBSORT
+ENDM
 
 
 
