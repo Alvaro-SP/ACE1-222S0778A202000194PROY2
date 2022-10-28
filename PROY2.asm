@@ -102,6 +102,8 @@ INCLUDE MACP2.inc
         numtopten          DB 'No.', "$"
         usrtopten          DB 'USUARIO ', "$"
         puntostopten          DB 'PUNTUACION ', "$"
+        txtASCENDENTE          DB 'ASCENDENTE ', "$"
+        txtDESCENDENTE          DB 'DESCENDENTE ', "$"
             ;*--------------------------  ERRORES MESSAGES -----------------------------
             error1      db "ALERTA == credenciales incorrectas",10,'$'
             error2      db "ALERTA == Nombre de usuario tiene caracteres no permitidos.",10,'$'
