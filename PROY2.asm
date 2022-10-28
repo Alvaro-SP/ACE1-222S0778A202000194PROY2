@@ -273,7 +273,7 @@ INCLUDE MACP2.inc
         ; CALL recorrerm1_
         misdatos
         esperaenter  ;TODO: activar despues
-        TOP10GENERAL
+        MOSTRARATRIBUTOS
         readtext
         paint  0, 0, 800, 600, BLACK
         MOV SCORES_LIST[0], 10

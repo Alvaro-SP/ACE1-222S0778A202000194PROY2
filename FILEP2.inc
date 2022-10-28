@@ -858,7 +858,8 @@ LOAD_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             ;* POSICIONO Y AGREGO A SCORES_LIST
             PUSH DI
             MOV DI, POS_SCORE
-            MOV SCORES_LIST[DI], TEMP4
+            MOV BX, TEMP4
+            MOV SCORES_LIST[DI], BX
             INC POS_SCORE
             INC POS_SCORE
             POP DI
@@ -869,7 +870,8 @@ LOAD_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             ;* POSICIONO Y AGREGO A TIMES_LIST
             PUSH DI
             MOV DI, POS_TIME
-            MOV TIMES_LIST[DI], TEMP4
+            MOV BX, TEMP4
+            MOV TIMES_LIST[DI], BX
             INC POS_TIME
             INC POS_TIME
             POP DI
@@ -880,7 +882,8 @@ LOAD_ALLUSER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             ;* POSICIONO Y AGREGO A ID_LIST
             PUSH DI
             MOV DI, POS_ID
-            MOV ID_LIST[DI], TEMP4
+            MOV BX, TEMP4
+            MOV ID_LIST[DI], BX
             INC POS_ID
             INC POS_ID
             POP DI
@@ -946,7 +949,8 @@ LOAD_CURRENT_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             ;* POSICIONO Y AGREGO A SCORES_LIST
             PUSH DI
             MOV DI, POS_SCORE
-            MOV SCORES_LIST[DI], TEMP4
+            MOV BX, TEMP4
+            MOV SCORES_LIST[DI], BX
             INC POS_SCORE
             INC POS_SCORE
             POP DI
@@ -957,7 +961,8 @@ LOAD_CURRENT_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             ;* POSICIONO Y AGREGO A TIMES_LIST
             PUSH DI
             MOV DI, POS_TIME
-            MOV TIMES_LIST[DI], TEMP4
+            MOV BX, TEMP4
+            MOV TIMES_LIST[DI], BX
             INC POS_TIME
             INC POS_TIME
             POP DI
@@ -968,7 +973,8 @@ LOAD_CURRENT_USER MACRO ;! IMPORTANTE BUSCAR EL USUARIO EN EL ARCHIVO
             ;* POSICIONO Y AGREGO A ID_LIST
             PUSH DI
             MOV DI, POS_ID
-            MOV ID_LIST[DI], TEMP4
+            MOV BX, TEMP4
+            MOV ID_LIST[DI], BX
             INC POS_ID
             INC POS_ID
             POP DI

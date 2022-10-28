@@ -1991,13 +1991,23 @@ clearScreen macro
 endm
 
 MOSTRARATRIBUTOS MACRO
-    LOCAL 
+    LOCAL QSORT, HPSORT, BBSORT,CONTINUAR
     CMP TEMPATRIBUTOS, 1 ; es bubblesort
     JE BBSORT
-    CMP TEMPATRIBUTOS, 1 ; es bubblesort
-    JE BBSORT
-    CMP TEMPATRIBUTOS, 1 ; es bubblesort
-    JE BBSORT
+    CMP TEMPATRIBUTOS, 2 ; es bubblesort
+    JE HPSORT
+    CMP TEMPATRIBUTOS, 3 ; es bubblesort
+    JE QSORT
+    BBSORT:
+        PAINTTEXT titlebb , 2416H , LIGHT_GREEN
+        JMP CONTINUAR
+    HPSORT:
+        PAINTTEXT titlebb , 2416H , LIGHT_GREEN
+        JMP CONTINUAR
+    QSORT:
+        PAINTTEXT titlebb , 2416H , LIGHT_GREEN
+        JMP CONTINUAR
+    CONTINUAR:
 ENDM
 
 
