@@ -2933,6 +2933,7 @@ INCLUDE MACP2.inc
         PAINTTEXT presshome , 1d16H , LIGHT_RED
         readtext
         POPA
+        INICIOTIEMPO ;* SETEO EL TIEMPO DE INICIO EL CUAL CORRERA MIN, SEC, CENTISEC
         CMP strSENTIDO, '1'; 1 = ASC
         JE ST1
         JNE ST2
@@ -2985,7 +2986,12 @@ INCLUDE MACP2.inc
         toNumber strVELOCIDAD ;TEMP4
         MOV SI, TEMP4
         MOV intVELODIDAD, si
-
+        PUSHA
+        PAINTTEXT presshome , 1d16H , LIGHT_RED
+        readtext
+        POPA
+        INICIOTIEMPO ;* SETEO EL TIEMPO DE INICIO EL CUAL CORRERA MIN, SEC, CENTISEC
+        
         CMP strSENTIDO, '1'; 1 = ASC
         JE ST1
         JNE ST2
@@ -3038,7 +3044,12 @@ INCLUDE MACP2.inc
         toNumber strVELOCIDAD ;TEMP4
         MOV SI, TEMP4
         MOV intVELODIDAD, si
-
+        PUSHA
+        PAINTTEXT presshome , 1d16H , LIGHT_RED
+        readtext
+        POPA
+        INICIOTIEMPO ;* SETEO EL TIEMPO DE INICIO EL CUAL CORRERA MIN, SEC, CENTISEC
+        
         CMP strSENTIDO, '1'; 1 = ASC
         JE ST1
         JNE ST2
@@ -3070,7 +3081,7 @@ INCLUDE MACP2.inc
 
     BUBBLESORTASC1_ PROC NEAR ;! ASCENDENTE BUBBLESORT SCORE
         INICIOTIEMPO ;* SETEO EL TIEMPO DE INICIO EL CUAL CORRERA MIN, SEC, CENTISEC
-        MOV intVELODIDAD, 1000
+
         MOV CX, POS_SCORE
         DEC CX
         DEC CX
@@ -3125,7 +3136,7 @@ INCLUDE MACP2.inc
         RET
     BUBBLESORTASC1_ ENDP
     BUBBLESORTDESC1_ PROC NEAR   ;! DESCENDENTE BUBBLESORT SCORE
-        MOV intVELODIDAD, 1000
+
         MOV CX, POS_SCORE
         DEC CX
         DEC CX
