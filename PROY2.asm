@@ -32,6 +32,8 @@ INCLUDE MACP2.inc
         tAD6             DB   'F5. Heap Sort$'
         tAD7             DB   'F6. Quick Sort$'
         tAD8             DB   'F10. Cerrar sesión$'
+        presshome             DB   '*******Presione HOME para iniciar el ordenamiento *******$'
+        pressescparasalir             DB   '*******Presione ESC para salir *******$'
         
         tAD9             DB   "------- MENU USUARIO QUE ES ADMINISTRADOR ------", "$"
         tAD10             DB   'F2. Mostrar el top 10 general de puntuaciones$'
@@ -275,8 +277,7 @@ INCLUDE MACP2.inc
         ; CALL recorrerm1_
         misdatos
         esperaenter  ;TODO: activar despues
-        MOSTRARATRIBUTOS
-        readtext
+        
         paint  0, 0, 800, 600, BLACK
         MOV SCORES_LIST[0], 10
         MOV SCORES_LIST[2], 20
@@ -287,6 +288,8 @@ INCLUDE MACP2.inc
         MOV SCORES_LIST[12], 6
         MOV SCORES_LIST[14], 1
         MOV POS_SCORE, 16
+        OPTIONS_BUBBLESORT
+        readtext
         HEAPSORTASC1
         readtext
         INICIODELJUEGO
@@ -2927,7 +2930,10 @@ INCLUDE MACP2.inc
         MULTI SI, 500
         MOV SI, RESULTADOPREVIO
         MOV intVELODIDAD, si
-
+        PUSHA
+        PAINTTEXT presshome , 1d16H , LIGHT_RED
+        readtext
+        POPA
         CMP strSENTIDO, '1'; 1 = ASC
         JE ST1
         JNE ST2
@@ -2952,6 +2958,8 @@ INCLUDE MACP2.inc
             BUBBLESORTDESC1
             JMP SALIR
         SALIR:
+            PAINTTEXT pressescparasalir , 211DH , WHITE
+            readtext
         RET
     OPTIONS_BUBBLESORT_ ENDP
     OPTIONS_HEAPSORT_ PROC NEAR
@@ -3058,6 +3066,7 @@ INCLUDE MACP2.inc
     OPTIONS_QUICKSORT_ ENDP
 
     BUBBLESORTASC1_ PROC NEAR ;! ASCENDENTE BUBBLESORT SCORE
+        INICIOTIEMPO ;* SETEO EL TIEMPO DE INICIO EL CUAL CORRERA MIN, SEC, CENTISEC
         MOV intVELODIDAD, 1000
         MOV CX, POS_SCORE
         DEC CX
@@ -3109,6 +3118,7 @@ INCLUDE MACP2.inc
         SALIR:
             clearScreen
             GRAPH_SORT
+            DELAY2 500
         RET
     BUBBLESORTASC1_ ENDP
     BUBBLESORTDESC1_ PROC NEAR   ;! DESCENDENTE BUBBLESORT SCORE
