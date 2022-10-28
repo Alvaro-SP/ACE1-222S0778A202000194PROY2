@@ -2910,7 +2910,6 @@ INCLUDE MACP2.inc
         PAINTTEXT msgSENTIDO ,   1310H , LIGHT_GREEN
         PAINTTEXT msgMETRICA ,   1510H , LIGHT_GREEN
         PAINTTEXT msgVELOCIDAD , 1710H , LIGHT_GREEN
-
         PAINTTEXT msgSENTIDOP ,   132BH , YELLOW
         PAINTTEXT msgMETRICAP ,   152BH , YELLOW
         PAINTTEXT msgVELOCIDADP , 172BH , YELLOW
@@ -3011,6 +3010,8 @@ INCLUDE MACP2.inc
             HEAPSORTDESC1
             JMP SALIR
         SALIR:
+            PAINTTEXT pressescparasalir , 211DH , WHITE
+            readtext
         RET
     OPTIONS_HEAPSORT_ ENDP
     OPTIONS_QUICKSORT_ PROC NEAR
@@ -3062,6 +3063,8 @@ INCLUDE MACP2.inc
             QUICKSORTDESC1
             JMP SALIR
         SALIR:
+            PAINTTEXT pressescparasalir , 211DH , WHITE
+            readtext
         RET
     OPTIONS_QUICKSORT_ ENDP
 
