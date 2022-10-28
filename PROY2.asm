@@ -163,7 +163,7 @@ INCLUDE MACP2.inc
         NN        DW      0
         bci        DW      0
         JOTA2        DW      0
-        JOTA3        DW      0
+        TEMPATRIBUTOS        DB      0
         II        DW      0
         ELE        DW      0
         ERE        DW      0
@@ -2243,32 +2243,35 @@ INCLUDE MACP2.inc
             JNE Inicio
         DESBLOQUEARLB:
             paint  0, 0, 800, 600, GREEN
-            paint  0, 0, 800, 600, BLACK
+            clearScreen
             DESBLOQUEAR
             JMP Inicio
         PROMOVERLB:
-            paint  0, 0, 800, 600, GREEN
-            paint  0, 0, 800, 600, BLACK
+            paint  0, 0, 800, 600, CYAN
+            clearScreen
             PROMOVER
             JMP Inicio
         DegradarLB:
-            paint  0, 0, 800, 600, GREEN
-            paint  0, 0, 800, 600, BLACK
+            paint  0, 0, 800, 600, YELLOW
+            clearScreen
             DEGRADAR
             JMP Inicio
         BubbleSortLB:
-            paint  0, 0, 800, 600, GREEN
-            paint  0, 0, 800, 600, BLACK
+            MOV TEMPATRIBUTOS, 1
+            paint  0, 0, 800, 600, LIGHT_BLUE
+            clearScreen
             OPTIONS_BUBBLESORT
             JMP Inicio
         HeapSortLB:
-            paint  0, 0, 800, 600, GREEN
-            paint  0, 0, 800, 600, BLACK
+            MOV TEMPATRIBUTOS, 2
+            paint  0, 0, 800, 600, LIGHT_MAGENTA
+            clearScreen
             OPTIONS_HEAPSORT
             JMP Inicio
         QuickSortLB:
-            paint  0, 0, 800, 600, GREEN
-            paint  0, 0, 800, 600, BLACK
+            MOV TEMPATRIBUTOS, 3
+            paint  0, 0, 800, 600, RED
+            clearScreen
             OPTIONS_QUICKSORT
             JMP Inicio
         FIN:
@@ -2327,16 +2330,19 @@ INCLUDE MACP2.inc
             TOP10PERSONAL
             JMP TEMPbuclespace
         BubbleSortLB:
+            MOV TEMPATRIBUTOS, 1
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
             OPTIONS_BUBBLESORT
             JMP Inicio
         HeapSortLB:
+            MOV TEMPATRIBUTOS, 2
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
             OPTIONS_HEAPSORT
             JMP Inicio
         QuickSortLB:
+            MOV TEMPATRIBUTOS, 3
             paint  0, 0, 800, 600, GREEN
             paint  0, 0, 800, 600, BLACK
             OPTIONS_QUICKSORT
