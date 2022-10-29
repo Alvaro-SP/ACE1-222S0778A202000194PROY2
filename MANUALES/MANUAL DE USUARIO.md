@@ -26,8 +26,8 @@
 
 ---
 
-<center> <h1>PRACTICA #3</h1> </center>
-<center> <h1>CALCULADORA</h1> </center>
+<center> <h1>PROYECTO #2</h1> </center>
+<center> <h1>JUEGO DEL TETRIS</h1> </center>
 
 
 
@@ -78,9 +78,9 @@
 ---
 
 # <a name="nothing"></a>MANUAL DE USUARIO
-Este documento contiene toda la información sobre los recursos utilizados por el programa para poder jugarlo, explicando todo el trabajo que se ha realizado al crear el juego de Laberinto el uso adecuado que usted como usuario debe darle , explicado paso a paso.
+Este documento contiene toda la información sobre los recursos utilizados por el programa para poder jugarlo, explicando todo el trabajo que se ha realizado al crear el juego de Tetris el uso adecuado que usted como usuario debe darle , explicado paso a paso.
 
->“Programa desarrollado en ASSEMBLER.                                                                                                                .”
+>“Programa desarrollado en ASSEMBLER MASM.                                                                                                                .”
 ## <a name="intro" ></a>ÍNDICE
 
 | Topico | Link |
@@ -94,29 +94,56 @@ Este documento contiene toda la información sobre los recursos utilizados por e
 | Interfaz del programa | [Ir](#inter) |
 | Conclusiones | [Ir](#Conclu) |
 ## <a name="intro" ></a>INTRODUCCIÓN
-El presente manual de usuario tiene como finalidad describir la estructura y diseño del programa CALCULADORA BASICA que se realizo como parte de Practica 4, así como dar explicación hacia los usuarios de como pueden ejecutar y USAR la calculadora en su casa. El sistema cuenta con implementación de varias librerías propias de Arduino Online como parte del conocimiento adquirido en los laboratorios de arquitectura de ensambladores y computadores 1, en base a ello tratarémos de explicar como ejecutar la calculadora para poder disfrutarlo.
+El presente manual de usuario tiene como finalidad describir la estructura y diseño del programa Tetris que se realizo como parte de PROYECTO 2, así como dar explicación de los como usted como usuario puede ejecutar y jugarlo en su computador . El sistema cuenta con implementación de codigo ASSEMBLER como parte del conocimiento adquirido en los laboratorios de Arquitectura de Computadores y Ensambladores 1, en base a ello trataré de explicar como y que es lo que debe instalar para la ejecucion.
 
+Se ha implementado estructuras de ordenamiento como lo es Quicksort, Bubblesort, y Heapsort como parte de practica de los ordenamientos acoplandolos al lenguaje de programacion ASSEMBLER.
+
+El juego cuenta con distintos niveles, figuras, movimientos y rotaciones posibles.
+en el mismo proyecto se evaluará la implementación de funciones para manipular la información del juego y/o generar salidas de datos con criterios específicos.
+
+Dentro del desarrollo de los menús se solicitará que haga uso de las teclas de funcion del 
+teclado, por ejemplo, F7 se referirá a la tecla de funcion con dicho nombre, lo mismo a ESC, 
+HOME u otra que solicite. Validando que dos teclas no correspondan al mismo funcionamiento.
+
+Los ordenamientos tienen el objetivo de visualizar que la implementación de los algoritmos 
+solicitados sea correcta. Estos deben de tener la representación animada, de lo contrario se 
+tendrá 0 en la nota del ordenamiento.
+Al seleccionar cualquiera de los 3 ordenamientos se mostrará un submenú en el que se va a 
+solicitar el sentido del ordenamiento, mostrando el nombre del ordenamiento y el usuario que 
+solicito el ordenamiento.
 
 ## <a name="inf"></a>Informacion del Sistema
-Una calculadora básica es un aparato electrónico que nos ayuda a realizar las tareas mas comunes en cuanto a cálculo se refiere, la calculadora básica ofrece las operaciones más habituales como suma, resta, multiplicación y división, además suelen incluir para calcular porcentajes y algunos botones de memoria para realizar operaciones con resultados anteriores.
+- En el Tetris se juega con los tetrominós, el caso especial de cuatro elementos de poliominós. 
 
-- La calculadora de fuentes de alimentación es una calculadora que nos ayudará a la hora de elegir una fuente de alimentación ideal para nuestro PC, en ella introducimos los componentes que tenemos, calcula el consumo que tienen estos componentes, y nos ofrece un resultado en vatios para que, como mínimo, deba tener nuestra fuente de alimentación. 
+- Los poliominós se han utilizado en los rompecabezas populares por lo menos desde 1907, Distintos tetriminos, figuras geométricas compuestas por cuatro bloques cuadrados unidos de forma ortogonal, las cuales se generan de una zona que ocupa 4x4 bloques en el área derecho de la pantalla. 
 
-- La notación polaca inversa, notación de postfijo, o notación posfija (en inglés, Reverse Polish Notation, o RPN), es un método algebraico alternativo de introducción de datos. Su nombre viene por analogía con la relacionada notación polaca, una notación de prefijo introducida en 1920 por el matemático polaco Jan Łukasiewicz en donde cada operador está antes de sus operandos. En la notación polaca inversa es al revés: primero están los operandos y después viene el operador que va a realizar los cálculos sobre ellos. Tanto la notación polaca como la notación polaca inversa no necesitan usar paréntesis para indicar el orden de las operaciones, mientras la aridad del operador sea fija.
+- No hay consenso en cuanto a las dimensiones para el área del juego, variando en cada versión.20​ Sin embargo, dos filas de más arriba están ocultas al jugador.
 
-- Expresiones en notaciones infija, prefija y sufija — Solución de problemas con algoritmos y estructuras de datos.
- - Las notaciones sirven de base para expresar sentencias bien definidas. El uso más extendido de las notaciones sirve para expresar operaciones aritméticas. Las expresiones aritméticas se pueden expresar de tres formas distintas: infija, prefija y postfija.
+- El jugador no puede impedir esta caída, pero puede decidir la rotación de la pieza (0°, 90°, 180°, 270°) y en qué lugar debe caer.
+
+- Cuando una línea horizontal se completa, esa línea desaparece y todas las piezas que están por encima descienden una posición, liberando espacio de juego y por tanto facilitando la tarea de situar nuevas piezas. La caída de las piezas se acelera progresivamente. 
+
+- El juego acaba cuando las piezas se amontonan hasta llegar a lo más alto (3x4 bloques en el área visible), interfiriendo la creación de más piezas21​ y finalizando el juego.
+
+- Existen distintas versiones del juego. La original tiene siete piezas diferentes. Licencias posteriores añadieron formas suplementarias y existen incluso ciertas licencias para formas tridimensionales.
 ## <a name="ob"></a>Objetivos y alcances del sistema
 
 ### Objetivo General
-- Que el estudiante aplique los conocimientos adquiridos en el curso sobre el lenguaje ensamblador
+- Que el desarrollador puede aplicar los conocimientos adquiridos en el curso y que éste 
+sea capaz de construir un sistema complejo mediante el lenguaje ensamblador 
+haciendo uso de algoritmos creativos para solucionar los distintos requerimientos 
+solicitados.
 
 ### Objetivos Específicos
-- Aplicar el conocimiento de operaciones básicas a nivel ensamblador.
-- Conocer el funcionamiento de las interrupciones.
-- Comprender el uso de la memoria en los programas escritos en ensamblador.
-- Aplicar el manejo de archivos a bajo nivel.
-- Comprender el uso de registros bandera.
+- ● Implementar soluciones creativas para algoritmos complejos .
+
+- ● Manipular correctamente la memoria del sistema.
+- ● Mezclar diferentes familias de funciones en interrupción.
+- ● Aplicar instrucciones aritméticas a la solución de algoritmos.
+- ● Aplicar instrucciones lógicas a la solución de algoritmos.
+- ● Aprender a utilizar como entrada teclas auxiliares.
+- ● Comprender y aplicar el manejo de memoria de vídeo en ensamblador
+
 
 ## <a name="sis"></a>Especificaciones del Sistema requerido
 
@@ -145,8 +172,8 @@ Windows
 -	Oracle Linux 5.5+1 
 -	Oracle Linux 6.x (32 bits), 6.x (64 bits)2 
 -	Exploradores: Firefox
--	Arduino
--	Proteus
+-	MASM
+-	DOSBOX
 
 
 
@@ -158,9 +185,9 @@ Windows
 ## <a name="inter"></a>Interfaz Utilizada
 En la interfaz utilizada podemos encontrar diferentes enlementos que nos ayudan con el funcionamiento integro del juego, entre los cuales podemos encontrar los siguientes: 
 
-- <span style="color:green">AREA DE ENTRADA DE BARCOS:</span> Igresara los barcos por medio de coordenadas mostradas y su posicion en el tablero
-- <span style="color:green">INICIO DEL JUEGO:</span> se muestran 2 planos los cuales muestran los disparos realizados y barcos en el tablero
-- <span style="color:green">FIN DEL JUEGO:</span> se muestra quien es el ganador de la partida
+- <span style="color:green">AREA DE MENUS Y SUBMENUS:</span> Se muestran menus y solicitud de datos de inicio de sesion.
+- <span style="color:green">INICIO DEL JUEGO:</span> se muestra LA INTERFAZ GRAFICA
+- <span style="color:green">AREA DE ORDENACIONES VISUALES:</span> se muestra quien es el mejor puntaje o tiempo de juego con un ordenamiento grafico funcional.
 
 <p align="center">
   <a href="#"><img src="a1.png"/></a>
@@ -177,6 +204,39 @@ En la interfaz utilizada podemos encontrar diferentes enlementos que nos ayudan 
 <p align="center">
   <a href="#"><img src="a5.png"/></a>
 </p>
+<p align="center">
+  <a href="#"><img src="a6.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a7.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a8.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a9.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a10.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a11.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a12.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a13.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a14.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a15.png"/></a>
+</p>
+<p align="center">
+  <a href="#"><img src="a16.png"/></a>
+</p>
 
 ## <a name="Conclu"></a>Conclusiones
 
@@ -186,5 +246,6 @@ En la interfaz utilizada podemos encontrar diferentes enlementos que nos ayudan 
 
 - Este lenguaje es creado a base de instrucciones para intentar sustituir al lenguaje maquina por uno similar utilizado por el hombre.
 
-- ¿Qué es un operador infijo?
-La notación de infijo es la notación común de fórmulas aritméticas y lógicas, en la cual se escriben los operadores entre los operandos en que están actuando (ej. 2 + 2) usando un estilo de infijo.
+- Estos números representan uno de los modos de video más utilizado para la programación de videojuegos. Cada modo de video tiene dos características, primero la resolución o número de pixels horizontales y verticales, 320 y 200 en nuestro caso, y segundo el número de colores que pueden aparecer simultáneamente en pantalla, 256 para nosotros. Por píxel se entiende mínimo elemento (punto) que se puede representar en pantalla.
+
+-    En el mercado existen varios tipos de tarjetas de video: EGA, VGA y Super-VGA. La primera ya esta obsoleta y la última es nuestros propósitos inmediatos. Comenzaremos con el modo 13h de la VGA para realizar los programas y no otros modos con más resolución como el 0Eh (640x200), el 10h (640x350) o el 12h (640x480), debido al número de colores. 

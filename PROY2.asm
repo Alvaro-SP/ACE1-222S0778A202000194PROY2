@@ -1,6 +1,6 @@
 
-;TODO █░█░█ █▀▀ █░░ █▀▀ █▀█ █▀▄▀█ █▀▀   █▀▄▀█ █▄█   █▀█ █▀█ ▄▀█ █▀▀ ▀█▀ █ █▀▀ █▀▀   █░█
-;TODO ▀▄▀▄▀ ██▄ █▄▄ █▄▄ █▄█ █░▀░█ ██▄   █░▀░█ ░█░   █▀▀ █▀▄ █▀█ █▄▄ ░█░ █ █▄▄ ██▄   ▀▀█
+;TODO █░█░█ █▀▀ █░░ █▀▀ █▀█ █▀▄▀█ █▀▀ 
+;TODO ▀▄▀▄▀ ██▄ █▄▄ █▄▄ █▄█ █░▀░█ ██▄ 
 
 INCLUDE FILEP2.inc
 INCLUDE MACP2.inc
@@ -279,20 +279,22 @@ INCLUDE MACP2.inc
         esperaenter  ;TODO: activar despues
         
         paint  0, 0, 800, 600, BLACK
-        MOV SCORES_LIST[0], 10
-        MOV SCORES_LIST[2], 20
-        MOV SCORES_LIST[4], 5
-        MOV SCORES_LIST[6], 16
-        MOV SCORES_LIST[8], 2
-        MOV SCORES_LIST[10], 7
-        MOV SCORES_LIST[12], 6
-        MOV SCORES_LIST[14], 1
-        MOV POS_SCORE, 16
-        OPTIONS_BUBBLESORT
-        readtext
-        HEAPSORTASC1
-        readtext
-        INICIODELJUEGO
+        ; MOV SCORES_LIST[0], 10
+        ; MOV SCORES_LIST[2], 20
+        ; MOV SCORES_LIST[4], 5
+        ; MOV SCORES_LIST[6], 16
+        ; MOV SCORES_LIST[8], 2
+        ; MOV SCORES_LIST[10], 7
+        ; MOV SCORES_LIST[12], 6
+        ; MOV SCORES_LIST[14], 1
+        ; MOV POS_SCORE, 16
+        ; OPTIONS_BUBBLESORT
+        ; readtext
+        ; OPTIONS_BUBBLESORT
+        ; readtext
+        ; HEAPSORTASC1
+        ; readtext
+        ; INICIODELJUEGO
         PRINCIPALMENULABEL:
         ;! MENUPRINCIPAL
         Inicio:
@@ -417,7 +419,7 @@ INCLUDE MACP2.inc
         INICIOTIEMPO ;* SETEO EL TIEMPO DE INICIO EL CUAL CORRERA MIN, SEC, CENTISEC
         RANDOMPIECE
         MOV SI, TEMP
-        MOV NEXTPIECE, 4
+        MOV NEXTPIECE, SI
         GENFIGURA:
             PINTARBLOQUESTIESOS
             MOV DI, 0
@@ -429,7 +431,7 @@ INCLUDE MACP2.inc
             ;! GENERO LA PIEZA Y GUARDO LA SIGUIENTE
             RANDOMPIECE ; * Genero la pieza siguiente para despues
             MOV SI, TEMP
-            MOV NEXTPIECE, 4
+            MOV NEXTPIECE, SI
             PINTARPIEZASIGUIENTE NEXTPIECE
             RANDOMPOSITION ;* Genero la posicion random de inicio
 
@@ -2518,7 +2520,7 @@ INCLUDE MACP2.inc
         MOV BX,103H
         INT 10H
         ; imprimo el texto de inicio
-        PAINTTEXT tb1 , 0820H , 0FF22H
+        PAINTTEXT tb1 , 0820H , LIGHT_MAGENTA
         PAINTTEXT tb2 , 1010h , 0FF0FH
         PAINTTEXT tb3 , 1210H , 0FF0FH
         PAINTTEXT tb4 , 1410H , 0FF0FH
@@ -3080,8 +3082,7 @@ INCLUDE MACP2.inc
     OPTIONS_QUICKSORT_ ENDP
 
     BUBBLESORTASC1_ PROC NEAR ;! ASCENDENTE BUBBLESORT SCORE
-        INICIOTIEMPO ;* SETEO EL TIEMPO DE INICIO EL CUAL CORRERA MIN, SEC, CENTISEC
-
+        
         MOV CX, POS_SCORE
         DEC CX
         DEC CX

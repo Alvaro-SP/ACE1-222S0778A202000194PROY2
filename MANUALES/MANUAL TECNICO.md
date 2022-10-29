@@ -26,8 +26,8 @@
 
 ---
 
-<center> <h1>PRACTICA #4</h1> </center>
-<center> <h1>CALCULADORA</h1> </center>
+<center> <h1>PROYECTO #2</h1> </center>
+<center> <h1>JUEGO DEL TETRIS</h1> </center>
 
 
 
@@ -82,7 +82,7 @@
 ---
 
 # <a name="nothing"></a>MANUAL TECNICO
-Programa desarrollado en Assembler que permite ste programa realiza operaci5ones aritmeticas (+, -, x, /) entre dos numeros enteros positivos O negativos exclusivamente en consola.
+Programa desarrollado en Assembler que permite jugar TETRIS y realizar ordenamientos.
 
 
 >“El manual técnico es el que proporciona todas las pautas de configuración y la lógica con la que se ha desarrollado en el programa, con el objetivo de que cualquier programador entienda la idea propia y su estructura; por lo que se considera necesario ser documentada.”
@@ -105,18 +105,30 @@ Programa desarrollado en Assembler que permite ste programa realiza operaci5ones
 ## <a name="intro" ></a>INTRODUCCIÓN
 El presente manual técnico tiene como finalidad describir la estructura y diseño del programa analizador de escritorio de un archivo XML, así como dar explicación de los métodos, clases y procesos de cada apartado del programa y la modificación que se le podría dar para cualquier finalidad como el de mejorar el sistema o cambiar algunos atributos propios del analizador. El sistema cuenta con implementación de varias librerías propias de python como re, ios, pathlab, entre otros, como parte del conocimiento adquirido en los laboratorios de programación de computadoras en base a ello trataré de explicar en que métodos se fueron utilizando y como hacen funcionar el programa en los distintos sistemas operativos.
 La implementación de librerías externas a python también fueron una opción para poder pedir y abrir ventanas para elegir los archivos necesarios, también se explicará paso a paso cual es el camino para entender perfectamente la arquitectura del programa. Resulta ser bastante fácil de implementar los ciclos y condiciones, también los métodos de interfaces gráficas puesto que es una función que viene integrada con la paquetería por defecto de ASSEMBLER y así solo instanciarlos importando las librerías y utilizarlas.  
+Dentro del desarrollo de los menús se solicitará que haga uso de las teclas de funcion del 
+teclado, por ejemplo, F7 se referirá a la tecla de funcion con dicho nombre, lo mismo a ESC, 
+HOME u otra que solicite. Validando que dos teclas no correspondan al mismo funcionamiento.
 
+Los ordenamientos tienen el objetivo de visualizar que la implementación de los algoritmos 
+solicitados sea correcta. Estos deben de tener la representación animada, de lo contrario se 
+tendrá 0 en la nota del ordenamiento.
+Al seleccionar cualquiera de los 3 ordenamientos se mostrará un submenú en el que se va a 
+solicitar el sentido del ordenamiento, mostrando el nombre del ordenamiento y el usuario que 
+solicito el ordenamiento.
 ## <a name="ob"></a>Objetivos y alcances del sistema
 
 ### Objetivo General
 - Que el estudiante aplique los conocimientos adquiridos en el curso sobre el lenguaje ensamblador
 
 ### Objetivos Específicos
-- Aplicar el conocimiento de operaciones básicas a nivel ensamblador Conocer el funcionamiento de las interrupciones
-- Comprender el uso de la memoria en los programas escritos en ensamblador Aplicar el manejo de archivos a bajo nivel
-- Aplicar el uso de registros bandera
-- Manejar entrada, proceso y salida de datos numéricos en - ensamblador Adquirir y aplicar conocimiento sobre manejo de - números 16 bits con signo.
+- ● Implementar soluciones creativas para algoritmos complejos .
 
+- ● Manipular correctamente la memoria del sistema.
+- ● Mezclar diferentes familias de funciones en interrupción.
+- ● Aplicar instrucciones aritméticas a la solución de algoritmos.
+- ● Aplicar instrucciones lógicas a la solución de algoritmos.
+- ● Aprender a utilizar como entrada teclas auxiliares.
+- ● Comprender y aplicar el manejo de memoria de vídeo en ensamblador
 
 
 ## <a name="specs"></a>Especificaciones Técnicas
@@ -148,18 +160,19 @@ Linux
 •	Oracle Linux 5.5+1 
 •	Oracle Linux 6.x (32 bits), 6.x (64 bits)2 
 •	Exploradores: Firefox
-•	Arduino
-•	Proteus
+•	ASSEMBLER
+•	DOS BOX
 
 ## <a name="lengprog"></a>Lenguaje de Programación e IDE
-Para el desarrollo del programa se utilizó el lenguaje de Programación C y el IDE Arduino y Visual Studio Code para el desarrollo de interfaz se utilizo Proteus 8.10
+Para el desarrollo del programa se utilizó el lenguaje de Programación MASM Assembler y el IDE DOS BOX y Visual Studio Code para el desarrollo de interfaz se utilizo MODO VIDEO
 
 ## <a name="tech"></a>Tecnologías utilizadas (Lógica del programa)
 - Assembler es tipo de programa informático que se encarga de traducir un fichero fuente escrito en un lenguaje ensamblador, a un fichero objeto que contiene código máquina, ejecutable directamente por el microprocesador.
 
 - MASM es El Microsoft Macro Assembler (MASM) es un ensamblador para la familia x86 de microprocesadores. Fue producido originalmente por Microsoft para el trabajo de desarrollo en su sistema operativo MS-DOS, y fue durante cierto tiempo el ensamblador más popular disponible para ese sistema operativo. 
 
-## <a name="func"></a>Funciones utilizadas 
+- Algunos lenguajes como C y Pascal suministran unos controladores e instrucciones especiales para trabajar en modo gráfico, pero nosotros en la medida de lo posible evitaremos el uso de estos servicios, ya que además de tener que cargar con los controladores gráficos ,dígase BGI o como sea, suelen ser bastante lentos derivadas del hecho de ser una "librería gráfica no especializada". Por otra parte, su principal ventaja era que nos permitía trabajar en cualquier modo de video sin apenas trabajo de creación de nuestra parte.
+## <a name="func"></a>Funciones utilizadas
 
 ![Imagen](1.png)
 ![Imagen](2.png)
@@ -169,9 +182,12 @@ Para el desarrollo del programa se utilizó el lenguaje de Programación C y el 
 ![Imagen](6.png)
 ![Imagen](7.png)
 ![Imagen](8.png)
+
 ![Imagen](9.png)
 ![Imagen](10.png)
 ![Imagen](11.png)
+![Imagen](12.png)
+![Imagen](13.png)
 
 ## <a name="flujo"></a>Flujo del programa
 Tengo pantalla de bienvenida 
